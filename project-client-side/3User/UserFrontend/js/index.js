@@ -48,7 +48,7 @@ function renderUsers(arr) {
         tableBodyEl.innerHTML += `
             <tr>
                 <td>${i + 1}</td>
-                <td>${u.fullName}</td>
+                <td>${u.name}</td>
                 <td>${u.email}</td>
                 <td>${u.phone}</td>
                 <td>${u.address}</td>

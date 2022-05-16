@@ -78,8 +78,8 @@ public class UserController {
     @PostMapping("/users/{id}/upload-file")
     public ResponseEntity<?> uploadFile(@PathVariable int id,
                                         @ModelAttribute("file") MultipartFile file) {
-        UploadFileResponse res = fileService.uploadFile(id, file);
-        return ResponseEntity.ok(res);
+        String filePath = fileService.uploadFile(id, file);
+        return ResponseEntity.ok(filePath);
     }
 
     @GetMapping("users/{id}/files/{fileName}")

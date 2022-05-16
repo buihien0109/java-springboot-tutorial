@@ -1,5 +1,5 @@
 // Truy cập vào ô input
-const fullnameEl = document.getElementById("fullname");
+const nameEl = document.getElementById("name");
 const emailEl = document.getElementById("email");
 const phoneEl = document.getElementById("phone");
 const addressEl = document.getElementById("address");
@@ -18,7 +18,7 @@ btnSave.addEventListener("click", async function () {
     try {
         // Tạo object với dữ liệu đã được cập nhật
         let userNew = {
-            fullName: fullnameEl.value,
+            name: nameEl.value,
             phone: phoneEl.value,
             email: emailEl.value,
             address: addressEl.value,

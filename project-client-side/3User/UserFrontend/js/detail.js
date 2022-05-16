@@ -1,8 +1,20 @@
+// URL kết nối API
 const API_URL = "http://localhost:8080/api/v1/users";
 
+// Truy cập vào các thành phần
+const nameEl = document.getElementById("name");
+const emailEl = document.getElementById("email");
+const phoneEl = document.getElementById("phone");
+const addressEl = document.getElementById("address");
+const avatarEl = document.getElementById("avatar-preview");
+
+const btnForgotPassword = document.getElementById("btn-forgot-password");
+
+// Lấy thông tin id trên URL
 let params = new URLSearchParams(window.location.search);
 let id = params.get("id");
 
+// API lấy thông tin user
 const getUser = async (id) => {
     try {
         let res = await axios.get(`${API_URL}/${id}`);
@@ -13,19 +25,14 @@ const getUser = async (id) => {
     }
 };
 
-// Truy cập vào ô input
-const fullnameEl = document.getElementById("fullname");
-const emailEl = document.getElementById("email");
-const phoneEl = document.getElementById("phone");
-const addressEl = document.getElementById("address");
-const avatarEl = document.getElementById("avatar-preview");
-
+// Hiển thị thông tin user lên trên giao diện
 const renderUser = (user) => {
-    fullnameEl.value = user.fullName;
+    nameEl.value = user.name;
     emailEl.value = user.email;
     phoneEl.value = user.phone;
     addressEl.value = user.address;
 
+    // Nếu user không có avatar thì lấy avatar mặc định
     if(user.avatar) {
         avatarEl.src = "http://localhost:8080" + user.avatar;
     } else {
@@ -46,11 +53,9 @@ btnSave.addEventListener("click", async function () {
     try {
         // Tạo object với dữ liệu đã được cập nhật
         let userUpdate = {
-            fullName: fullnameEl.value,
+            name: nameEl.value,
             phone: phoneEl.value,
-            email: emailEl.value,
             address: addressEl.value,
-            avatar: avatarEl.value,
         };
 
         // Gọi API để cập nhật
@@ -78,7 +83,6 @@ const modalChangePasswordConfig = new bootstrap.Modal(modalChangePasswordEl, {
     keyboard: false
 })
 
-
 // Thay đổi mật khẩu
 btnChangePassword.addEventListener("click", async function () {
     try {
@@ -102,8 +106,6 @@ btnChangePassword.addEventListener("click", async function () {
 });
 
 // Quên mật khẩu
-const btnForgotPassword = document.getElementById("btn-forgot-password");
-
 btnForgotPassword.addEventListener("click", async function() {
     try {
         let res = await axios.post(`${API_URL}/${id}/forgot-password`)
@@ -113,7 +115,7 @@ btnForgotPassword.addEventListener("click", async function() {
     }
 })
 
-// Hiển thị danh sách tỉnh - thành phố
+// API lấy danh sách tỉnh - thành phố
 async function getProvince() {
     try {
         // Gọi API lấy danh sách tỉnh thành phố
@@ -126,6 +128,7 @@ async function getProvince() {
     }
 }
 
+// Hiển thị thông tin tỉnh - thành phố lên trên giao diện
 function renderProvince(arr) {
     for (let i = 0; i < arr.length; i++) {
         const p = arr[i];

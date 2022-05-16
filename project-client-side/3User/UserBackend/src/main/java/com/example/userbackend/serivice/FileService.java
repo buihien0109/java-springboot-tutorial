@@ -42,7 +42,7 @@ public class FileService {
         }
     }
 
-    public UploadFileResponse uploadFile(int id, MultipartFile file) {
+    public String uploadFile(int id, MultipartFile file) {
         // Kiểm tra user id
         Optional<User> userOptional = userService.findById(id);
         if (userOptional.isEmpty()) {
@@ -69,12 +69,16 @@ public class FileService {
             stream.close();
 
             // Tính tổng số page
-            int totalPage = getTotalPage(userDir);
+            // int totalPage = getTotalPage(userDir);
 
             // Tạo filePath -> fileUpload
             String filePath = "/api/v1/users/" + id + "/files/" + genarateFileName;
 
-            return new UploadFileResponse(filePath, totalPage);
+            // Set avatar cho user
+            userOptional.get().setAvatar(filePath);
+
+            return filePath;
+            // return new UploadFileResponse(filePath, totalPage);
         } catch (Exception e) {
             throw new RuntimeException("Lỗi khi upload file");
         }
