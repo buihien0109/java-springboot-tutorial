@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="col-md-8 col-sm-12">
+            <div class="quiz">
+                <div class="quiz-progress">
+                    <div class="quiz-progress-bar progress"></div>
+                </div>
+
+                <div class="quiz-results">
+                    <div class="quiz-results-container">
+                        <h2>Quiz complete!</h2>
+                        <h3 class="quiz-results-score"></h3>
+                        <button class="back-btn">Play Again</button>
+                    </div>
+                </div>
+
+                <div class="quiz-bottom">
+                    <div class="quiz-container">
+                        <div class="quiz-page">
+                            <div class="quiz-content">
+                                <div class="quiz-question">
+                                    <p></p>
+                                </div>
+                                <div class="quiz-answer">
+                                  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quiz-controller">
+                        <button class="next-btn">Next Question</button>
+                        <button class="finish-btn disable">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./main.js"></script>
+</body>
+
+</html>
