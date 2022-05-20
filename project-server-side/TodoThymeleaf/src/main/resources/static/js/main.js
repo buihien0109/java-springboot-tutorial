@@ -7,10 +7,8 @@ const todo_option_item = document.querySelectorAll(".todo-option-item input");
 const API_URL = "http://localhost:8080/api/v1"
 
 // Khai báo biến
-let todos = [];
 let isUpdate = false;
 let idUpdate = null;
-
 
 // ============== API ===============
 // API lấy danh sách todo
@@ -57,7 +55,7 @@ function renderUI(arr) {
     todo_list.innerHTML = "";
 
     // Kiểm tra mảng rỗng
-    if (arr.length == 0) {
+    if (arr.length === 0) {
         todo_list.innerHTML = "<p class='todos-empty'>Không có công việc nào trong danh sách</p>";
         return;
     }
@@ -122,7 +120,7 @@ async function deleteTodo(id) {
 
         // Xóa todo trong mảng todos ban đầu
         todos.forEach((todo, index) => {
-            if(todo.id == id) {
+            if(todo.id === id) {
                 todos.splice(index, 1)
             }
         })
@@ -137,13 +135,13 @@ async function deleteTodo(id) {
 // Hàm xử lý thay đổi trạng thái công việc
 async function toggleStatus(id) {
     try {
-        let todo = todos.find((todo) => todo.id == id);
+        let todo = todos.find((todo) => todo.id === id);
         todo.status = !todo.status;
 
         let res = await updateTodoAPI(todo);
 
         todos.forEach((todo, index) => {
-            if (todo.id == id) {
+            if (todo.id === id) {
                 todos[index] = res.data;
             }
         });
@@ -159,7 +157,7 @@ async function updateTodo(todoUpdate) {
         let res = await updateTodoAPI(todoUpdate);
 
         todos.forEach((todo, index) => {
-            if (todo.id == todoUpdate.id) {
+            if (todo.id === todoUpdate.id) {
                 todos[index] = res.data;
             }
         });
@@ -193,12 +191,12 @@ todo_option_item.forEach((btn) => {
 // Thêm công việc và cập nhật tiêu đề công việc
 btn_add.addEventListener("click", function () {
     let todoTitle = todo_input.value;
-    if (todoTitle == "") {
+    if (todoTitle === "") {
         alert("Nội dung không được để trống!");
         return;
     }
     if (isUpdate) {
-        let todo = todos.find((todo) => todo.id == idUpdate);
+        let todo = todos.find((todo) => todo.id === idUpdate);
         todo.title = todoTitle;
 
         updateTodo(todo);
@@ -213,7 +211,7 @@ btn_add.addEventListener("click", function () {
 function updateTitle(id) {
     let title;
     todos.forEach((todo) => {
-        if (todo.id == id) {
+        if (todo.id === id) {
             title = todo.title;
         }
     });
@@ -226,7 +224,3 @@ function updateTitle(id) {
     idUpdate = id;
     isUpdate = true;
 }
-
-window.onload = () => {
-    getTodos();
-};
