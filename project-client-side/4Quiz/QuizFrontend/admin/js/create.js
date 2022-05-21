@@ -1,3 +1,4 @@
+// Truy cập vào các thành phần
 const quizAnswerContainerEl = document.querySelector(".quiz-answer");
 const btnAddAnswer = document.getElementById("btn-add-answer");
 const btnSave = document.getElementById("btn-save");
@@ -9,6 +10,7 @@ btnBack.addEventListener("click", function () {
     window.location.href = "/";
 });
 
+// Xử lý khi thêm câu trả lời trên giao diện
 btnAddAnswer.addEventListener("click", function () {
     quizAnswerContainerEl.insertAdjacentHTML(
         "beforeend",
@@ -22,16 +24,20 @@ btnAddAnswer.addEventListener("click", function () {
     );
 });
 
+// Xử lý khi xóa câu trả lời
 function removeAnswer(btn) {
     let answerItem = btn.parentElement;
     answerItem.parentElement.removeChild(answerItem);
 }
 
+// Xử lý khi tạo câu hỏi mới
 btnSave.addEventListener("click", async function () {
     try {
         // Lấy danh sách câu trả lời
         let quizAnswers = [];
 
+        // Truy cập vào các phần tử ".quiz-answer-item"
+        // để lấy ra thông tin về các câu trả lời & xem câu trả lời đó có chính xác hay không
         const quizAnswersEl = document.querySelectorAll(".quiz-answer-item");
         quizAnswersEl.forEach(q => {
             quizAnswers.push({

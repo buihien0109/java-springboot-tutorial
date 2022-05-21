@@ -1,8 +1,10 @@
+// Truy cập vào các thành phần
 const quizAnswerContainerEl = document.querySelector(".quiz-answer");
 const btnAddAnswer = document.getElementById("btn-add-answer");
 const btnSave = document.getElementById("btn-save");
 const quizTitleEl = document.getElementById("title");
 
+// Khai báo API URL
 const API_URL = "http://localhost:8080/api/v1/quizzes";
 
 // Xử lý quay lại trang index
@@ -11,7 +13,7 @@ btnBack.addEventListener("click", function () {
     window.location.href = "/";
 });
 
-// Lấy ID trên URL
+// Lấy ID của quiz hiện tại trên URL
 let params = new URLSearchParams(window.location.search);
 let id = params.get("id");
 
@@ -28,6 +30,7 @@ const getQuiz = async (id) => {
     }
 };
 
+// Hiển thị thông tin quiz lên trên giao diện
 function renderQuiz(quiz) {
     // Render tiêu đề quiz
     quizTitleEl.value = quiz.title;
@@ -46,6 +49,7 @@ function renderQuiz(quiz) {
     }
 }
 
+// Xử lý phần thêm câu trả lời
 btnAddAnswer.addEventListener("click", async function () {
     try {
         // Gọi API tạo câu trả lời trên server
@@ -67,6 +71,7 @@ btnAddAnswer.addEventListener("click", async function () {
     }
 });
 
+// Xử lý phần xóa câu trả lời
 async function removeAnswer(btn, quizAnswerId) {
     try {
         // Gọi API xóa trên server
@@ -80,11 +85,14 @@ async function removeAnswer(btn, quizAnswerId) {
     }
 }
 
+// Xử lý phần cập nhật thông tin quiz
 btnSave.addEventListener("click", async function () {
     try {
         // Lấy danh sách câu trả lời
         let quizAnswers = [];
 
+        // Truy cập vào các phần tử ".quiz-answer-item"
+        // để lấy ra thông tin về các câu trả lời & xem câu trả lời đó có chính xác hay không
         const quizAnswersEl = document.querySelectorAll(".quiz-answer-item");
         quizAnswersEl.forEach(q => {
             quizAnswers.push({
@@ -101,7 +109,6 @@ btnSave.addEventListener("click", async function () {
             return
         }
 
-
         // Gửi API
         let res = await axios.put(`${API_URL}/${id}`, {
             title: quizTitleEl.value,
@@ -114,18 +121,7 @@ btnSave.addEventListener("click", async function () {
         }
 
     } catch (error) {
-        let errorData = error.response.data.message
-        if (typeof errorData == "object") {
-            let message = ""
-            for (const key in errorData) {
-                message += `${key} - ${errorData[key]}
-`
-            }
-            alert(message);
-        } else {
-            alert(errorData);
-        }
-
+        console.log(error.response.data.message);
     }
 })
 
