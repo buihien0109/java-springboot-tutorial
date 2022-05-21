@@ -1,2 +1,4 @@
-package com.example.blogbackend.utils;public class JwtUntil {
+package com.example.blogbackend.utils;
+
+public class JwtUntil {
 }

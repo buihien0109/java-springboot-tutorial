@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Component
 public class QuizAnswer {
     private int id;
     private String title;

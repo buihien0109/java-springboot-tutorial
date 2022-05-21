@@ -5,19 +5,36 @@ const btnNext = document.querySelector(".next-btn");
 const btnFinish = document.querySelector(".finish-btn");
 const btnBack = document.querySelector(".back-btn");
 
-const progressBarEl = document.querySelector(".quiz-progress-bar")
-const resultsEl = document.querySelector(".quiz-results")
-const resultsScoreEl = document.querySelector(".quiz-results-score")
-const quizBottomEl = document.querySelector(".quiz-bottom")
+const progressBarEl = document.querySelector(".quiz-progress-bar");
+const resultsEl = document.querySelector(".quiz-results");
+const resultsScoreEl = document.querySelector(".quiz-results-score");
+const quizBottomEl = document.querySelector(".quiz-bottom");
 
 // Khai báo API URL
-const API_URL = "http://localhost:8080/user/api/v1/quizzes"
+const API_URL = "http://localhost:8080/user/api/v1/quizzes";
+
 // Khai báo biến
 let questions; // lưu trữ danh sách các câu hỏi sau khi gọi API
 
 let current_question = 0; // Câu hỏi hiện tại có chỉ số bao nhiêu trong mảng
 let score = 0; // Số điểm hiện tại
 let answerId; // Đáp án mà người dùng chọn với câu hỏi hiện tại
+
+// Lấy danh sách quiz khi vào trang
+async function getQuiz() {
+    try {
+        // Gọi API để lấy danh sách quiz
+        let res = await axios.get(API_URL);
+
+        // Lưu lại danh sách quiz
+        questions = res.data;
+
+        // Hiển thị câu hỏi lên giao diện
+        showQuestion(current_question);
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 // Hiển thị câu hỏi theo index
 function showQuestion(count) {
@@ -63,12 +80,12 @@ function showQuestion(count) {
     let inputs = document.querySelectorAll(".quiz-item input");
     Array.from(inputs).forEach((input) => {
         input.addEventListener("change", function () {
-            if(current_question != questions.length - 1) {
-                btnNext.classList.remove('disable');
+            if (current_question != questions.length - 1) {
+                btnNext.classList.remove("disable");
             } else {
-                btnFinish.classList.remove('disable');
+                btnFinish.classList.remove("disable");
             }
-            
+
             answerId = input.dataset.id;
         });
     });
@@ -76,25 +93,33 @@ function showQuestion(count) {
 
 btnNext.addEventListener("click", nextQuestion);
 btnFinish.addEventListener("click", showResult);
+
 btnBack.addEventListener("click", function () {
     window.location.reload();
 });
 
+// Xử lý khi next câu hỏi
 async function nextQuestion() {
     try {
-        let res = await axios.post(`${API_URL}/${questions[current_question].id}/check`, {
-            id : answerId
-        })
-        if(res.data) {
+        // Gửi API để kiểm tra đáp án
+        let res = await axios.post(
+            `${API_URL}/${questions[current_question].id}/check`,
+            {
+                id: answerId,
+            }
+        );
+
+        // Nếu câu trả lời đúng thì tăng điểm lên 1
+        if (res.data) {
             score++;
         }
 
+        // Hiển thị câu hỏi tiếp theo
         current_question++;
         if (current_question > questions.length - 1) {
             current_question = questions.length - 1;
         }
         showQuestion(current_question);
-    
     } catch (error) {
         console.log(error);
     }
@@ -102,13 +127,20 @@ async function nextQuestion() {
 
 async function showResult() {
     try {
-        let res = await axios.post(`${API_URL}/${questions[current_question].id}/check`, {
-            id : answerId
-        })
-        if(res.data) {
+        // Gửi API để kiểm tra đáp án
+        let res = await axios.post(
+            `${API_URL}/${questions[current_question].id}/check`,
+            {
+                id: answerId,
+            }
+        );
+
+        // Nếu câu trả lời đúng thì tăng điểm lên 1
+        if (res.data) {
             score++;
         }
 
+        // Show phần kết quả
         quizBottomEl.style.display = "none";
         progressBarEl.style.display = "none";
         resultsEl.style.display = "block";
@@ -120,18 +152,9 @@ async function showResult() {
 
 // Cập nhật thanh tiến trình
 function updateProgressBar() {
-    progressBarEl.style.width = `${((current_question + 1) * 100) / questions.length}%`;
-}
-
-// Lấy danh sách quiz
-async function getQuiz() {
-    try {
-        let res = await axios.get(API_URL);
-        questions = res.data;
-        showQuestion(current_question);
-    } catch (error) {
-        console.log(error);
-    }
+    progressBarEl.style.width = `${
+        ((current_question + 1) * 100) / questions.length
+    }%`;
 }
 
 getQuiz();

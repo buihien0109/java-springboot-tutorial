@@ -23,53 +23,60 @@ public class QuizAdminServiceImpl implements QuizAdminService {
     @Override
     public void init() {
         Random rd = new Random();
-
         // Quiz 1
-        List<QuizAnswer> listQuizAnswers1 = new ArrayList<>();
-        listQuizAnswers1.add(new QuizAnswer(rd.nextInt(1000), "Hải Phòng", false));
-        listQuizAnswers1.add(new QuizAnswer(rd.nextInt(1000), "Hà Nội", true));
-        listQuizAnswers1.add(new QuizAnswer(rd.nextInt(1000), "Huế", false));
-        listQuizAnswers1.add(new QuizAnswer(rd.nextInt(1000), "Thành phố Hồ Chí Minh", false));
-
-        Quiz quiz1 = new Quiz(rd.nextInt(1000), "Thủ đô hiện nay của việt nam là gì?", listQuizAnswers1);
+        Quiz quiz1 = Quiz.builder()
+                .id(1)
+                .title("Thủ đô hiện nay của việt nam là gì?")
+                .quizAnswers(Arrays.asList(
+                        new QuizAnswer(rd.nextInt(1000), "Hải Phòng", false),
+                        new QuizAnswer(rd.nextInt(1000), "Hà Nội", true),
+                        new QuizAnswer(rd.nextInt(1000), "Huế", false),
+                        new QuizAnswer(rd.nextInt(1000), "Thành phố Hồ Chí Minh", false)
+                )).build();
 
         // Quiz 2
-        List<QuizAnswer> listQuizAnswers2 = new ArrayList<>();
-        listQuizAnswers2.add(new QuizAnswer(rd.nextInt(1000), "1", false));
-        listQuizAnswers2.add(new QuizAnswer(rd.nextInt(1000), "2", false));
-        listQuizAnswers2.add(new QuizAnswer(rd.nextInt(1000), "3", true));
-        listQuizAnswers2.add(new QuizAnswer(rd.nextInt(1000), "4", false));
-
-        Quiz quiz2 = new Quiz(rd.nextInt(1000), "Quân Mông Nguyên sang xâm lược nước ta mấy lần", listQuizAnswers2);
+        Quiz quiz2 = Quiz.builder()
+                .id(2)
+                .title("Quân Mông Nguyên sang xâm lược nước ta mấy lần")
+                .quizAnswers(Arrays.asList(
+                        new QuizAnswer(rd.nextInt(1000), "1", false),
+                        new QuizAnswer(rd.nextInt(1000), "2", false),
+                        new QuizAnswer(rd.nextInt(1000), "3", true),
+                        new QuizAnswer(rd.nextInt(1000), "4", false)
+                )).build();
 
         // Quiz 3
-        List<QuizAnswer> listQuizAnswers3 = new ArrayList<>();
-        listQuizAnswers3.add(new QuizAnswer(rd.nextInt(1000), "1910", false));
-        listQuizAnswers3.add(new QuizAnswer(rd.nextInt(1000), "1911", true));
-        listQuizAnswers3.add(new QuizAnswer(rd.nextInt(1000), "1912", false));
-        listQuizAnswers3.add(new QuizAnswer(rd.nextInt(1000), "1913", false));
-
-        Quiz quiz3 = new Quiz(rd.nextInt(1000), "Bác Hồ ra đi tìm đường cứu nước vào năm nào", listQuizAnswers3);
-
+        Quiz quiz3 = Quiz.builder()
+                .id(3)
+                .title("Bác Hồ ra đi tìm đường cứu nước vào năm nào")
+                .quizAnswers(Arrays.asList(
+                        new QuizAnswer(rd.nextInt(1000), "1910", false),
+                        new QuizAnswer(rd.nextInt(1000), "1911", true),
+                        new QuizAnswer(rd.nextInt(1000), "1912", false),
+                        new QuizAnswer(rd.nextInt(1000), "1913", false)
+                )).build();
         // Quiz 4
-        List<QuizAnswer> listQuizAnswers4 = new ArrayList<>();
-        listQuizAnswers4.add(new QuizAnswer(rd.nextInt(1000), "Hoa hồng", false));
-        listQuizAnswers4.add(new QuizAnswer(rd.nextInt(1000), "Hoa huệ", false));
-        listQuizAnswers4.add(new QuizAnswer(rd.nextInt(1000), "Hoa sen", true));
-        listQuizAnswers4.add(new QuizAnswer(rd.nextInt(1000), "Hoa ly", false));
-
-        Quiz quiz4 = new Quiz(rd.nextInt(1000), "Quốc hoa của Viêt Nam là gì", listQuizAnswers4);
-
+        Quiz quiz4 = Quiz.builder()
+                .id(4)
+                .title("Quốc hoa của Viêt Nam là gì")
+                .quizAnswers(Arrays.asList(
+                        new QuizAnswer(rd.nextInt(1000), "Hoa hồng", false),
+                        new QuizAnswer(rd.nextInt(1000), "Hoa huệ", false),
+                        new QuizAnswer(rd.nextInt(1000), "Hoa sen", true),
+                        new QuizAnswer(rd.nextInt(1000), "Hoa ly", false)
+                )).build();
         // Quiz 5
-        List<QuizAnswer> listQuizAnswers5 = new ArrayList<>();
-        listQuizAnswers5.add(new QuizAnswer(rd.nextInt(1000), "Nghệ An", true));
-        listQuizAnswers5.add(new QuizAnswer(rd.nextInt(1000), "Thanh Hóa", false));
-        listQuizAnswers5.add(new QuizAnswer(rd.nextInt(1000), "Lai Châu", false));
-        listQuizAnswers5.add(new QuizAnswer(rd.nextInt(1000), "Hà Nội", false));
+        Quiz quiz5 = Quiz.builder()
+                .id(5)
+                .title("Tỉnh nào có diện tích lớn nhất nước ta")
+                .quizAnswers(Arrays.asList(
+                        new QuizAnswer(rd.nextInt(1000), "Nghệ An", true),
+                        new QuizAnswer(rd.nextInt(1000), "Thanh Hóa", false),
+                        new QuizAnswer(rd.nextInt(1000), "Lai Châu", false),
+                        new QuizAnswer(rd.nextInt(1000), "Hà Nội", false)
+                )).build();
 
-        Quiz quiz5 = new Quiz(rd.nextInt(1000), "Tỉnh nào có diện tích lớn nhất nước ta", listQuizAnswers5);
-
-        // Danh sach quiz
+        // Thêm các câu hỏi vào danh sách quiz ban đầu
         quizzes.addAll(Arrays.asList(quiz1, quiz2, quiz3, quiz4, quiz5));
     }
 

@@ -7,6 +7,7 @@ import com.example.blogbackend.model.request.CreateBlogRequest;
 import com.example.blogbackend.model.request.UpdateBlogRequest;
 import com.example.blogbackend.model.response.BlogResponse;
 import com.example.blogbackend.model.response.BlogReturn;
+import com.github.javafaker.Faker;
 import com.github.slugify.Slugify;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +40,9 @@ public class BlogAdminService {
 
     // Tạo 1 số bài blog
     public void init() {
+        // Fake content
+        Faker faker = new Faker();
+
         // Lấy danh sách user
         List<User> users = userAdminService.getUsers();
 
@@ -46,11 +50,14 @@ public class BlogAdminService {
         blogs = new ArrayList<>();
         IntStream.range(1, 30).forEach(n -> {
             Blog blog = new Blog();
+
+            // Set nội dung bài viết
             blog.setId(n);
-            blog.setTitle("Bài viết is simply dummy text " + n);
-            blog.setContent("Nội dung bài viết " + n);
-            blog.setDescription("Mô tả bài viết Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's " + n);
-            blog.setSlug(slugify.slugify("Bài viết " + n));
+            String title = faker.lorem().sentence(10);
+            blog.setTitle(title);
+            blog.setContent(faker.lorem().sentence(200));
+            blog.setDescription(faker.lorem().sentence(30));
+            blog.setSlug(slugify.slugify(title));
             blog.setImage("blog-image-0" + (rd.nextInt(10) + 1) + ".jpeg");
 
             // Set status
