@@ -53,7 +53,6 @@ btnSave.addEventListener("click", async function () {
             return
         }
         
-
         // Gửi API
         let res = await axios.post("http://localhost:8080/api/v1/quizzes", {
             title : quizTitleEl.value,

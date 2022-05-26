@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{/layout :: main-fragment(~{:: title}, ~{}, ~{:: #main-content}, ~{:: #jsResources})}">
+
+<head>
+    <title>Danh sách User</title>
+</head>
+
+<body>
+<th:block id="main-content">
+    <div class="container mt-5 mb-5">
+        <h2 class="text-center text-uppercase">Danh sách user</h2>
+
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+
+                <div class="d-flex justify-content-between align-items-center mt-5 mb-4">
+                    <a th:href="@{/users/create}" class="btn btn-warning">Tạo user</a>
+                    <input type="text" id="search" class="form-control w-50" placeholder="Tìm kiếm user" />
+                </div>
+
+                <div class="bg-light p-4">
+                    <table th:if="${not users.empty}" class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Address</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr th:each="user, state : ${users}">
+                            <td th:text="${state.index + 1}">1</td>
+                            <td th:text="${user.name}">Nguyễn Văn A</td>
+                            <td th:text="${user.email}">a@gmail.com</td>
+                            <td th:text="${user.phone}">0987654321</td>
+                            <td th:text="${user.address}">Hà Nội</td>
+                            <td>
+                                <a th:href="@{/users/{id} (id=${user.id})}" class="btn btn-success">Xem chi tiết</a>
+                                <button class="btn btn-danger" th:onclick="|deleteUser(${user.id})|">Xóa</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <p th:if="${users.empty}" class="message">Danh sách user trống!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+
+<th:block id="jsResources">
+    <script th:inline="javascript">
+        let users = /*[[${users}]]*/;
+    </script>
+    <script th:src="@{/js/index.js}"></script>
+</th:block>
+</body>
+
+</html>

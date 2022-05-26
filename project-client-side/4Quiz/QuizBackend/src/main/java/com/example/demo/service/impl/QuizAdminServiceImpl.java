@@ -55,6 +55,7 @@ public class QuizAdminServiceImpl implements QuizAdminService {
                         new QuizAnswer(rd.nextInt(1000), "1912", false),
                         new QuizAnswer(rd.nextInt(1000), "1913", false)
                 )).build();
+
         // Quiz 4
         Quiz quiz4 = Quiz.builder()
                 .id(4)
@@ -66,6 +67,7 @@ public class QuizAdminServiceImpl implements QuizAdminService {
                         new QuizAnswer(rd.nextInt(1000), "Hoa ly", false)
                 )).build();
         // Quiz 5
+
         Quiz quiz5 = Quiz.builder()
                 .id(5)
                 .title("Tỉnh nào có diện tích lớn nhất nước ta")

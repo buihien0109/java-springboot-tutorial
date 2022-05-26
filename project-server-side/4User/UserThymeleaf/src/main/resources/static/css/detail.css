@@ -1,0 +1,17 @@
+img {
+    max-width: 100%;
+    display: block;
+    margin: auto;
+}
+
+.avatar-preview {
+    width: 200px;
+    height: 200px;
+    border: 2px solid #ddd;
+}
+
+#avatar-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

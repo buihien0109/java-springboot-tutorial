@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center pt-3 pb-3">
+                <div class="logo">
+                    <a href="./index.html" class="text-white text-uppercase fs-5">BuiHien Blog</a>
+                </div>
+                <div class="avatar">
+                    <span class="text-white fs-5" data-bs-toggle="modal" data-bs-target="#login-modal">
+                        <i class="fa-solid fa-user"></i>
+                    </span>
+
+                    <span class="text-white fs-5" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-circle-user"></i>
+                    </span>
+
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="#">Trang quản trị</a></li>
+                        <li><a class="dropdown-item" href="#">Viết bài</a></li>
+                        <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Modal -->
+    <div class="modal fade" id="login-modal" tabindex="-1" aria-labelledby="login-modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header justify-content-center">
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <button class="nav-link active" id="nav-signin-tab" data-bs-toggle="tab" data-bs-target="#nav-signin" type="button" role="tab" aria-controls="nav-signin" aria-selected="true">Đăng nhập</button>
+                        <button class="nav-link" id="nav-signup-tab" data-bs-toggle="tab" data-bs-target="#nav-signup" type="button" role="tab" aria-controls="nav-signup" aria-selected="false">Đăng ký</button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-signin" role="tabpanel" aria-labelledby="nav-signin-tab">
+                            <div class="mb-3">
+                                <input type="text" class="form-control" id="username" placeholder="Enter Username ...">
+                            </div>
+                            <div class="mb-3">
+                                <input type="password" class="form-control" id="password" placeholder="Enter Password ...">
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-success" id="btn-signin">Đăng nhập</button>
+                            </div>
+                        </div>
+    
+                        <div class="tab-pane fade" id="nav-signup" role="tabpanel" aria-labelledby="nav-signup-tab">
+                            <div class="mb-3">
+                                <input type="text" class="form-control" id="username" placeholder="Enter Username ...">
+                            </div>
+                            <div class="mb-3">
+                                <input type="password" class="form-control" id="password" placeholder="Enter Password ...">
+                            </div>
+                            <div class="mb-3">
+                                <input type="password" class="form-control" id="confirm-password" placeholder="Enter Confirm Password ...">
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-success" id="btn-signup">Đăng ký</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="blog">
+        <div class="container">
+            <h2 class="text-center mt-4 mb-4">Bùi Hiên's Blog</h2>
+            <div class="row blog-container">
+                <div class="col-lg-4">
+                    <a class="blog-link rounded-3 mb-4 d-block" href="./detail.html?id=1">
+                        <div class="blog-item shadow-sm">
+                            <div class="image">
+                                <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YmxvZ3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60"
+                                    alt="">
+                            </div>
+                            <div class="content p-3">
+                                <h4 class="mt-3 mb-3">Lorem ipsum, dolor sit amet conse</h4>
+                                <p class="text-muted">
+                                    <span>Bùi Hiên</span> |
+                                    <span>22/01/2022</span> |
+                                    <span>12 comments</span>
+                                </p>
+                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. A, alias blanditiis
+                                    praesentium voluptate voluptatum illum repudiandae debitis quae.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="pagination-container">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="module" src="./js/controller/blogController.js"></script>
+</body>
+
+</html>
