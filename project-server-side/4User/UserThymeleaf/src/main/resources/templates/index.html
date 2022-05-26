@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{/layout :: main-fragment(~{:: title}, ~{}, ~{:: #main-content}, ~{:: #jsResources})}">
+<html xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout :: main-fragment(~{:: title}, ~{}, ~{:: #main-content}, ~{:: #jsResources})}"
+      lang="en">
 
 <head>
     <title>Danh sách User</title>
@@ -19,7 +21,7 @@
                 </div>
 
                 <div class="bg-light p-4">
-                    <table th:if="${not users.empty}" class="table table-hover">
+                    <table class="table table-hover" th:classappend="${#lists.isEmpty(users)} ? d-none : ''">
                         <thead>
                         <tr>
                             <th>STT</th>
@@ -46,7 +48,7 @@
                         </tbody>
                     </table>
 
-                    <p th:if="${users.empty}" class="message">Danh sách user trống!</p>
+                    <p class="message m-0" th:classappend="${not #lists.isEmpty(users)} ? d-none : ''">Danh sách user trống!</p>
                 </div>
             </div>
         </div>
