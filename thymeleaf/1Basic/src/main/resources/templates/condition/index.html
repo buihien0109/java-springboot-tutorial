@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+</head>
+<body>
+<!--Câu lệnh if-->
+<p th:if="${age} < 18">Chưa đủ tuổi vị thành niên</p>
+
+<!--Câu lệnh unless-->
+<p th:unless="${age} > 18">Chưa đủ tuổi vị thành niên</p>
+
+<!--Toán tử 3 ngôi-->
+<p th:text="${age} < 18 ? 'Chưa đủ tuổi vị thành niên' : 'Đủ tuổi vị thành niên'"></p>
+
+<!--Câu lệnh switch-case-->
+<div th:switch="${day}">
+    <p th:case="1">Thứ 2</p>
+    <p th:case="2">Thứ 3</p>
+    <p th:case="3">Thứ 4</p>
+    <p th:case="4">Thứ 5</p>
+    <p th:case="5">Thứ 6</p>
+    <p th:case="6">Thứ 7</p>
+    <p th:case="0">Chủ nhật</p>
+    <p th:case="*">Ngày không hợp lệ</p>
+</div>
+</body>
+</html>

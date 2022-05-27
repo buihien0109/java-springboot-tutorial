@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <!--Danh sách user-->
+            <h2 class="mt-4 mb-4 text-center">Danh sách user</h2>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Role</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user, state : ${users}">
+                    <th th:text="${state.index + 1}">1</th>
+                    <td th:text="${user.name}">Mark</td>
+                    <td th:text="${user.email}">Otto</td>
+                    <td th:text="${user.phone}">@mdo</td>
+                    <td th:switch="${user.role}">
+                        <span th:case="${T(com.example.basic.model.Role).ADMIN}" class="text-primary"
+                              th:text="${user.role}"></span>
+                        <span th:case="${T(com.example.basic.model.Role).SALE}" class="text-info"
+                              th:text="${user.role}"></span>
+                        <span th:case="${T(com.example.basic.model.Role).USER}" class="text-success"
+                              th:text="${user.role}"></span>
+                        <span th:case="*">Other Role</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!--Biến trạng thái trong vòng lặp-->
+            <h2 class="mt-4 mb-4 text-center">Biến trạng thái trong vòng lặp</h2>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>index</th>
+                    <th>count</th>
+                    <th>even</th>
+                    <th>odd</th>
+                    <th>first</th>
+                    <th>last</th>
+                    <th>size</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user, state : ${users}">
+                    <th th:text="${state.index}">1</th>
+                    <td th:text="${state.count}">Mark</td>
+                    <td th:text="${state.even}">Otto</td>
+                    <td th:text="${state.odd}">@mdo</td>
+                    <td th:text="${state.first}">@mdo</td>
+                    <td th:text="${state.last}">@mdo</td>
+                    <td th:text="${state.size}">@mdo</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
