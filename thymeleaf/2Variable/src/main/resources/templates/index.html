@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Home Page</title>
+</head>
+<body>
+<h3>Lấy ra giá trị của biến sử dụng ${}</h3>
+<ul>
+  <li th:text="${user.id}"></li>
+  <li th:text="${user.name}"></li>
+  <li th:text="${user.email}"></li>
+  <li th:text="${user.phone}"></li>
+</ul>
+
+<h3>Lấy ra giá trị của biến sử dụng *{}</h3>
+<ul th:object="${otherUser}">
+  <li th:text="*{id}"></li>
+  <li th:text="*{name}"></li>
+  <li th:text="*{email}"></li>
+  <li th:text="*{phone}"></li>
+</ul>
+
+<h3>Lấy ra giá trị của biến tĩnh sử dụng #{}</h3>
+<p th:text="#{greeting}"></p>
+
+<h3>URL Expression @{}</h3>
+<ul>
+  <li><a th:href="@{https://techmaster.vn}">Link1</a></li>
+  <li><a th:href="@{/products(page=${page}, limit=${limit})}">Link2</a></li>
+  <li><a th:href="@{/products/{id}(id=${id})}">Link3</a></li>
+  <li><a th:href="@{/products/{id}(id=${id}, lang=${lang})}">Link4</a></li>
+</ul>
+
+<h3>th:with</h3>
+<ul th:with="userId=${user.id}, userName=${user.name}, userEmail=${user.email}, userPhone=${user.phone}">
+  <li th:text="${userId}"></li>
+  <li th:text="${userName}"></li>
+  <li th:text="${userEmail}"></li>
+  <li th:text="${userPhone}"></li>
+</ul>
+
+<th:block th:with="info=${user.id + ' - ' + user.name + ' - ' + user.email + ' - ' + user.phone}">
+  <p th:text="${info}"></p>
+</th:block>
+
+<ul th:with="user=${users[4], }">
+  <li th:text="${user.id}"></li>
+  <li th:text="${user.name}"></li>
+  <li th:text="${user.email}"></li>
+  <li th:text="${user.phone}"></li>
+</ul>
+</body>
+</html>
