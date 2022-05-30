@@ -26,7 +26,7 @@ public class WebController implements ErrorController {
     public String getHome() {
         return "index";
     }
-    
+
 //    @RequestMapping("/error")
 //    public String handleError() {
 //        return "error/error";
