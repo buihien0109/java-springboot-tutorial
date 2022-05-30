@@ -1,0 +1,30 @@
+.buy-banner {
+    background-image: url(https://images01.nicepage.io/9c/28/9c289ecc-1f3c-40eb-8b27-06e5cb95d2a8.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 400px;
+    margin-top: 20px;
+}
+.buy-wrapper {
+    padding: 40px 0;
+}
+.buy-wrapper h1 {
+    font-size: 36px;
+    line-height: 1.1;
+    color: #f05510;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.buy-wrapper h2 {
+    margin-top: 1.3rem;
+    color: #f05510;
+}
+
+.buy-wrapper h3 {
+    margin-top: 1rem;
+}
+
+.buy-wrapper p {
+    color: #696969;
+}

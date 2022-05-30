@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(
+      ~{:: title},
+      ~{:: #css-resources},
+      ~{:: #main-content})}
+">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop</title>
+
+    <th:block id="css-resources">
+        <link rel="stylesheet" th:href="@{/css/product.css}">
+    </th:block>
+
+</head>
+<body>
+<th:block id="main-content">
+    <div id="product">
+        <div class="container">
+            <div class="banner-wrapper">
+                <img src="./images/bg-discount2.png" alt="banner-discount">
+            </div>
+            <h2 class="title-main">Ưu đãi trong thời gian có hạn</h2>
+            <div class="card-list">
+                <div th:each="product : ${products}" class="card-item">
+                    <div class="card-thumb">
+                        <img th:src="${product.image}" th:alt="${product.name}">
+                    </div>
+                    <div class="card-info">
+                        <h3 th:text="${product.name}" class="card-name"></h3>
+                        <div class="card-price" th:classappend="${product.priceDiscount > 0} ? 'has-discount' : ''">
+                            <p th:text="${#numbers.formatCurrency(product.price)}" class="price-normal">450.000 đ</p>
+                            <p th:text="${#numbers.formatCurrency(product.priceDiscount)}" th:if="${product.priceDiscount > 0}" class="price-discount">450.000 đ</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main(
+        ~{:: title},
+        ~{:: #css-resources},
+        ~{:: #rentar})}
+">
+
+<head>
+    <title>Trang chủ</title>
+
+    <th:block id="css-resources">
+        <link rel="stylesheet" th:href="@{/css/rentar.css}">
+    </th:block>
+
+</head>
+
+<body>
+    <div id="rentar">
+        <div class="container">
+            <h3>Vacation rentals</h3>
+            <div class="rentar">
+                <div th:each="rentar : ${rentars}" class="rentar-item">
+                    <div class="rentar-thumb">
+                        <img th:src="${rentar.image}" th:alt="${rentar.name}">
+                    </div>
+                    <div class="rentar-content">
+                        <p th:text="${rentar.name}" class="rentar-name"></p>
+                        <p th:text="${rentar.location}" class="rentar-location"></p>
+                        <p th:text="|‍🧑🏼 ${rentar.people} / 🛀🏽 ${rentar.bathroom} /  🛌🏿 ${rentar.bedroom}|" class="rentar-description">🧑</p>
+                        <p th:text="|$${rentar.price}|" class="rentar-price"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

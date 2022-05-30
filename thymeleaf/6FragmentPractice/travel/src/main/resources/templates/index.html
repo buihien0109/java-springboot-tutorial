@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main(
+        ~{:: title},
+        ~{:: #css-resources},
+        ~{:: #main-content})}
+">
+<head>
+    <title>Trang chủ</title>
+
+    <th:block id="css-resources">
+        <link rel="stylesheet" th:href="@{/css/tour.css}">
+    </th:block>
+</head>
+<body>
+    <th:block id="main-content">
+        <div id="location">
+            <div class="container">
+                <h3>Where Do You Want to Travel?</h3>
+                <div class="location">
+                    <div class="location-item">
+                        <div class="location-thumb">
+                            <img src="https://shinetheme.com/travelerdata/solotour/wp-content/uploads/2020/05/Rectangle-84-270x360.png" alt="">
+                        </div>
+                        <p class="location-name">Thailand</p>
+                    </div>
+                    <div class="location-item">
+                        <div class="location-thumb">
+                            <img src="https://shinetheme.com/travelerdata/solotour/wp-content/uploads/2018/12/Rectangle-86-270x360.png" alt="">
+                        </div>
+                        <p class="location-name">Bali</p>
+                    </div>
+                    <div class="location-item">
+                        <div class="location-thumb">
+                            <img src="https://shinetheme.com/travelerdata/solotour/wp-content/uploads/2017/06/ammie-ngo-vcu-OZBxxRk-unsplash-scaled-270x360.jpg" alt="">
+                        </div>
+                        <p class="location-name">Vietnam</p>
+                    </div>
+                    <div class="location-item">
+                        <div class="location-thumb">
+                            <img src="https://shinetheme.com/travelerdata/solotour/wp-content/uploads/2015/02/Rectangle-87-270x360.png" alt="">
+                        </div>
+                        <p class="location-name">Cambodia</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tour">
+            <div class="container">
+                <h3 class="text-center">Pick Your Best Experience</h3>
+                <div class="tour">
+                    <div th:each="tour : ${tours}" class="tour-item">
+                        <div class="tour-thumb">
+                            <img th:src="${tour.image}" th:alt="${tour.name}">
+                        </div>
+                        <div class="tour-content">
+                            <p th:text="${tour.name}" class="tour-title"></p>
+                            <p th:text="${tour.description}" class="tour-description"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</body>
+</html>

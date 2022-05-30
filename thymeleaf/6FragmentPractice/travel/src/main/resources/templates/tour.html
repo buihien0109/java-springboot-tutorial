@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main(
+        ~{:: title},
+        ~{:: #css-resources},
+        ~{:: #tour})}
+">
+<head>
+    <title>Trang chủ</title>
+
+    <th:block id="css-resources">
+        <link rel="stylesheet" th:href="@{/css/tour.css}">
+    </th:block>
+</head>
+<body>
+    <div id="tour">
+        <div class="container">
+            <h3>Pick Your Best Experience</h3>
+            <div class="tour">
+                <div th:each="tour : ${tours}" class="tour-item">
+                    <div class="tour-thumb">
+                        <img th:src="${tour.image}" th:alt="${tour.name}">
+                    </div>
+                    <div class="tour-content">
+                        <p th:text="${tour.name}" class="tour-title"></p>
+                        <p th:text="${tour.description}" class="tour-description"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

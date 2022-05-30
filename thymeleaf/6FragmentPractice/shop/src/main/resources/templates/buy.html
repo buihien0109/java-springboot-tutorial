@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(
+      ~{:: title},
+      ~{:: #css-resources},
+      ~{:: #main-content})}
+">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liên hệ</title>
+
+    <th:block id="css-resources">
+        <link rel="stylesheet" th:href="@{/css/buy.css}">
+    </th:block>
+
+</head>
+<body>
+<th:block id="main-content">
+    <div id="buy">
+        <div class="container">
+            <div class="buy-banner"></div>
+
+            <div class="buy-wrapper">
+                <h1>HƯỚNG DẪN MUA HÀNG</h1>
+                <p>Qúy khách vui lòng tham khảo thông tin chi tiết về từng bước đặt hàng như sau:</p>
+
+                <h2>BƯỚC 1: TÌM KIẾM VÀ CHỌN SẢN PHẨM YÊU THÍCH TRÊN WEBSITE</h2>
+                <p>- Quý khách có thể tìm kiếm sản phẩm theo 2 cách:</p>
+                <p>1. Tìm kiếm sản phẩm trong trang chủ với các sản phẩm mới, sản phẩm nổi bật, sản phẩm giảm giá</p>
+                <p>2. Tìm theo danh mục sản phẩm trong danh mục Shop của website</p>
+
+                <p>- Sau khi tìm kiếm được sản phẩm ưng ý, Quý khách vui lòng "Đặt hàng"</p>
+
+                <h2>BƯỚC 2: TIẾN HÀNH ĐẶT HÀNG ONLINE</h2>
+                <p>Ở đây chúng tôi có biểu mẫu, khách hàng cần điển thông tin .</p>
+
+                <h3>I. Địa chỉ người mua</h3>
+                <p>- Quý khách xin vui lòng điền đầy đủ thông tin người mua.</p>
+
+                <h3>II. Phương thức vận chuyển</h3>
+                <p>- Miễn phí giao hàng với tất cả đơn hàng có giá trị từ 499,000 vnđ trở lên tại tất cả tỉnh thành trên toàn quốc.</p>
+                <p>- Đối với những đơn hàng có giá trị dưới 499,000 vnđ, chúng tôi áp dụng biểu phí giao hàng theo từng khu vực</p>
+
+                <h3>III. Phương thức thanh toán</h3>
+                <p>1. Thanh toán khi nhận hàng bằng tiền mặt (COD).</p>
+                <p>2. Thanh toán khi đặt hàng bằng các loại thẻ ATM nội địa, Visa, Master</p>
+            </div>
+        </div>
+
+    </div>
+</th:block>
+</body>
+</html>

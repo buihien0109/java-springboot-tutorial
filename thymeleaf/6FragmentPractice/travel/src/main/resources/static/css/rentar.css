@@ -1,0 +1,50 @@
+#rentar {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.rentar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#rentar h3 {
+    font-size: 36px;
+    font-weight: 600;;
+    margin-bottom: 30px;
+}
+.rentar-item {
+    width: 270px;
+    overflow: hidden;
+    box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.rentar-content {
+    padding: 20px 16px;
+}
+
+.rentar-name {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 26px;
+}
+
+.rentar-location {
+    font-size: 13px;
+    margin-bottom: 10px;
+    color: #5E6D77;
+}
+
+.rentar-description {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #f4f4f4;
+}
+
+.rentar-price {
+    font-size: 16px;
+    color: #1A2B50;
+    font-weight: 900;
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main(
+        ~{:: title},
+        ~{:: #css-resources},
+        ~{:: #hotel})}
+">
+
+<head>
+    <title>Trang chủ</title>
+
+    <th:block id="css-resources">
+        <link rel="stylesheet" th:href="@{/css/hotel.css}">
+    </th:block>
+</head>
+
+<body>
+    <div id="hotel">
+        <div class="container">
+            <h3>Luxury resort hotel</h3>
+            <div class="hotel">
+                <div th:each="hotel : ${hotels}" class="hotel-item">
+                    <div class="hotel-thumb">
+                        <img th:src="${hotel.image}" th:alt="${hotel.name}">
+                    </div>
+                    <div class="hotel-content">
+                        <p th:text="${hotel.name}" class="hotel-name"></p>
+                        <p th:text="${hotel.location}" class="hotel-location"></p>
+                        <p class="hotel-rating">
+                            <th:block th:if="${hotel.rating >= 4}" th:text="|${hotel.rating}/5 Excellent|"></th:block>
+                            <th:block th:if="${hotel.rating >= 3.5 and hotel.rating < 4}" th:text="|${hotel.rating}/5 Very Good|"></th:block>
+                            <th:block th:if="${hotel.rating >= 3 and hotel.rating < 3.5}" th:text="|${hotel.rating}/5 Good|"></th:block>
+                            <th:block th:if="${hotel.rating < 3}" th:text="|${hotel.rating}/5 Bad|"></th:block>
+                        </p>
+                        <p th:text="|$${hotel.price}|" class="hotel-price"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

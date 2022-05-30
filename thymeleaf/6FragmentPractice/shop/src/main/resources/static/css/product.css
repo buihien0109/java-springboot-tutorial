@@ -1,0 +1,61 @@
+.banner-wrapper {
+    margin-top: 20px;
+}
+.title-main {
+    font-size: 36px;
+    line-height: 1.1;
+    color: #f05510;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+.card-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.card-item {
+    width: 262px;
+    margin-bottom: 30px;
+}
+
+.card-thumb {
+    height: 330px;
+    overflow: hidden;
+}
+
+.card-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-info {
+    padding: 30px 20px 30px;
+    background-color: #FEF9F7;
+    text-align: center;
+}
+
+.card-name {
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 1.2;
+}
+
+.card-price {
+    font-weight: 700;
+    margin: 20px auto 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.has-discount .price-normal {
+    text-decoration: line-through;
+    font-size: 14px;
+    color: #656565;
+
+    margin-right: 10px;
+}

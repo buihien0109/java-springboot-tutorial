@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(
+      ~{:: title},
+      ~{:: #css-resources},
+      ~{:: #main-content})}
+">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liên hệ</title>
+
+    <th:block id="css-resources">
+        <link rel="stylesheet" th:href="@{/css/contact.css}">
+    </th:block>
+
+</head>
+<body>
+<th:block id="main-content">
+    <div id="contact">
+        <div class="container">
+            <div class="contact-banner"></div>
+
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <h2>Địa chỉ</h2>
+                        <p th:text="${shopInfo.address}"></p>
+                    </div>
+                    <div class="contact-item">
+                        <h2>Số điện thoại</h2>
+                        <p th:text="'+ ' + ${shopInfo.phone}">+ 0344 005 816</p>
+                    </div>
+                    <div class="contact-item">
+                        <h2>Email</h2>
+                        <p th:text="${shopInfo.email}">hien@techmaster.vn</p>
+                    </div>
+                    <div class="contact-item">
+                        <h2>Mạng xã hội</h2>
+                        <p><b>Facebook</b> : <span th:text="${shopInfo.facebook}"></span></p>
+                        <p><b>Zalo</b> : <span th:text="${shopInfo.zalo}"></span></p>
+                    </div>
+                </div>
+                <div class="contact-map">
+                    <iframe th:src="${shopInfo.map}" width="100%" height="400" frameborder="0" style="border-radius: 4px;
+                            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15)" allowfullscreen=""></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</body>
+</html>

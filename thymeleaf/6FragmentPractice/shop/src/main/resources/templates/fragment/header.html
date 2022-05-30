@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="header" id="header">
+    <div class="container">
+        <div class="header-inner">
+            <div class="logo">
+                <h3>💖BUIHIEN-SHOP💖</h3>
+            </div>
+            <div class="menu">
+                <div class="menu-list">
+                    <a th:href="@{/}" class="menu-item">Trang chủ</a>
+                    <a th:href="@{/shop}" class="menu-item">Shop</a>
+                    <a th:href="@{/buy}" class="menu-item">Hướng dẫn mua hàng</a>
+                    <a th:href="@{/contact}" class="menu-item btn-contact">Liên hệ</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

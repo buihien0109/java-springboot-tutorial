@@ -1,0 +1,33 @@
+.contact-banner {
+    background-image: url(https://images01.nicepage.io/9c/28/9c289ecc-1f3c-40eb-8b27-06e5cb95d2a8.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 400px;
+    margin-top: 20px;
+}
+
+.contact-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.contact-info {
+    padding: 0 40px;
+}
+
+.contact-item h2 {
+    color: #f05510;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.contact-item p {
+    margin-bottom: 15px;
+}
+
+.contact-map {
+    flex: 0 0 46%;
+}
