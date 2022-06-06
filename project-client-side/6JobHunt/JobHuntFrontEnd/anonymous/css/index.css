@@ -1,0 +1,87 @@
+@import url("./base.css");
+@import url("./header.css");
+
+/* Search style */
+.search {
+    background-color: #212529;
+}
+
+.form {
+    height: 45px;
+    display: flex;
+}
+
+.search-box {
+    flex-grow: 1;
+    height: 45px;
+    line-height: 45px;
+    background: white;
+    border: 1px solid #bebebe;
+}
+
+.search-box-inner span {
+    color: #343a40;
+}
+
+.search-box-inner input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+}
+
+.search-box input {
+    height: 100%;
+}
+
+.select-box {
+    height: 100%;
+    flex: 0 0 185px;
+    margin-left: 10px;
+    position: relative;
+    display: flex;
+    border: 1px solid #bebebe;
+    background-color: white;
+    margin-right: 10px;
+}
+
+#city {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.button-box {
+    height: 100%;
+}
+
+.button-box button {
+    width: 135px;
+    font-size: 20px;
+    height: 100%;
+    text-align: center;
+    line-height: 100%;
+    background-color: #ea1e30;
+    color: #fff;
+}
+
+/* Style company */
+.list-company-container {
+    background-color: #e9e9e9;
+}
+
+.company {
+    color: #333;
+    border: 1px solid #d8d8d8;
+}
+
+.company .image {
+    width: 250px;
+    height: 100px;
+}
+
+.company .image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

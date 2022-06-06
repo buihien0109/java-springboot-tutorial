@@ -1,0 +1,41 @@
+@import url("./base.css");
+@import url("./header.css");
+
+.job-detail {
+    background-color: #e9e9e9;
+}
+
+.btn-apply {
+    line-height: 40px;
+    font-size: 19px;
+    background-color: #EA1E30;
+}
+
+.skill-item {
+    font-size: 14px;
+    margin: 0 10px 0 0;
+    padding: 4px 5px;
+    background: transparent;
+    border: 1px solid #009aee;
+    color: #fff;
+    background-color: #009aee;
+}
+
+.job-info-item {
+    font-size: 14px;
+    color: #58595b;
+    margin-bottom: 6px;
+}
+
+.job-info-item span:first-child {
+    display: block;
+    width: 30px;
+}
+
+.job-description, .company .info p {
+    color: #58595b;
+}
+
+.company {
+    color: #333;
+}

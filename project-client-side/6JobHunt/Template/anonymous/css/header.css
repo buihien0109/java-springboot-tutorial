@@ -1,0 +1,20 @@
+/* Header style */
+.header {
+    background-color: #212529;
+    height: 60px;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.logo img {
+    width: 108px;
+    height: 42px;
+    object-fit: cover;
+}
+
+.menu ul li a {
+    color: inherit;
+}
+
+.language span.active {
+    color: #fff;
+}
