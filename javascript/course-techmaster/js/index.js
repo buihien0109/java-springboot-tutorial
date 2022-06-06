@@ -73,6 +73,15 @@ topicItemsEl.forEach(input => {
 const renderCourse = (arr) => {
     courseListEl.innerHTML = "";
 
+    if(arr.length == 0) {
+        courseListEl.innerHTML = `
+            <div class="com-md-12">
+                <h2 class="fs-3 mt-3">Danh sách khóa học trống</h2>
+            </div>
+        `;
+        return;
+    }
+
     for (let i = 0; i < arr.length; i++) {
         const c = arr[i];
         courseListEl.innerHTML += `
