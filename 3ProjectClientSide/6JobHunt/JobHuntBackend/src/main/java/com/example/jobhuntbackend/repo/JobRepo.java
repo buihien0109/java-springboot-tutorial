@@ -6,8 +6,8 @@ import com.example.jobhuntbackend.model.Job;
 import com.github.javafaker.Faker;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Repository
@@ -39,8 +39,6 @@ public class JobRepo {
             job.setId(n);
             job.setTitle(faker.job().title());
             job.setDescription(faker.lorem().sentence(100));
-            job.setAddress(company.getAddress());
-            job.setCity(company.getCity());
             job.setImage(faker.company().logo());
 
             // Danh sách kỹ năng của công việc
@@ -52,15 +50,6 @@ public class JobRepo {
             }
             job.setSkills(skills.toArray(String[]::new));
 
-            // Ngày bắt đầu
-            int month = rd.nextInt(6 - 5 + 1) + 5;
-            int day = rd.nextInt(30 - 1 + 1) + 1;
-            LocalDate startDate = LocalDate.of(2022, month, day);
-            job.setStartDate(startDate);
-
-            // Ngày kết thúc
-            job.setEndDate(startDate.plusMonths(1));
-
             job.setSalary(rd.nextInt(35_000_000 - 15_000_000 + 1) + 15_000_000);
             job.setCompanyId(company.getId());
 
@@ -70,6 +59,11 @@ public class JobRepo {
 
     public List<Job> getAll() {
         return jobs;
+    }
+
+    public List<Job> getByCompanyId(int companyId) {
+        Company company = companyRepo.getById(companyId);
+        return jobs.stream().filter(job -> job.getCompanyId() == company.getId()).collect(Collectors.toList());
     }
 
     public Job getById(int id) {

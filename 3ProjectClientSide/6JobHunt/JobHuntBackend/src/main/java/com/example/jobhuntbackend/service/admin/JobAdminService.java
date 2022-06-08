@@ -9,8 +9,10 @@ import com.example.jobhuntbackend.repo.CompanyRepo;
 import com.example.jobhuntbackend.repo.JobRepo;
 import com.example.jobhuntbackend.request.CreateJobRequest;
 import com.example.jobhuntbackend.request.UpdateJobRequest;
+import com.example.jobhuntbackend.service.FileService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Random;
@@ -21,20 +23,25 @@ import java.util.stream.Collectors;
 public class JobAdminService {
     private final CompanyRepo companyRepo;
     private final JobRepo jobRepo;
+    private final JobMapper jobMapper;
+    private final FileService fileService;
 
-    // Lấy danh sách tất cả các job
+    // Lấy danh sách tất cả các công việc
     public List<JobDto> getAll() {
-        return jobRepo.getAll().stream().map(JobMapper::toJobDto).collect(Collectors.toList());
+        return jobRepo.getAll()
+                .stream()
+                .map(jobMapper::toJobDto)
+                .collect(Collectors.toList());
     }
 
     // Lấy danh sách tất cả công việc theo id của nhà tuyển dụng
     public List<JobDto> getJobById(int companyId) {
         Company company = companyRepo.getById(companyId);
 
-        return jobRepo.getAll().stream()
+        return jobRepo.getAll()
+                .stream()
                 .filter(job -> job.getCompanyId() == company.getId())
-                .sorted((job1, job2) -> job2.getEndDate().compareTo(job1.getStartDate()))
-                .map(JobMapper::toJobDto)
+                .map(jobMapper::toJobDto)
                 .collect(Collectors.toList());
     }
 
@@ -43,7 +50,7 @@ public class JobAdminService {
         // Kiểm tra xem job có thuộc công ty hay không
         Job job = findJob(companyId, jobId);
 
-        return JobMapper.toJobDto(job);
+        return jobMapper.toJobDto(job);
     }
 
     // Tạo job mới
@@ -58,17 +65,13 @@ public class JobAdminService {
         job.setId(rd.nextInt(1000));
         job.setTitle(request.getTitle());
         job.setDescription(request.getDescription());
-        job.setCity(request.getCity());
-        job.setAddress(request.getAddress());
         job.setSkills(request.getSkills());
-        job.setStartDate(request.getStartDate());
-        job.setEndDate(request.getEndDate());
         job.setSalary(request.getSalary());
         job.setCompanyId(company.getId());
 
         jobRepo.save(job);
 
-        return JobMapper.toJobDto(job);
+        return jobMapper.toJobDto(job);
     }
 
     // Cập nhật thông tin job
@@ -78,14 +81,10 @@ public class JobAdminService {
 
         job.setTitle(request.getTitle());
         job.setDescription(request.getDescription());
-        job.setCity(request.getCity());
-        job.setAddress(request.getAddress());
         job.setSkills(request.getSkills());
-        job.setStartDate(request.getStartDate());
-        job.setEndDate(request.getEndDate());
         job.setSalary(request.getSalary());
 
-        return JobMapper.toJobDto(job);
+        return jobMapper.toJobDto(job);
     }
 
     // Xóa job theo id
@@ -95,8 +94,21 @@ public class JobAdminService {
 
         // Xóa job
         jobRepo.delete(job.getId());
+    }
 
-        // TODO : Xóa danh sách những người ứng tuyển của job
+    // Thay đổi ảnh mô tả
+    public String updateImageJob(int companyId, int jobId, MultipartFile file) {
+        // Kiểm tra xem job có thuộc công ty hay không
+        Job job = findJob(companyId, jobId);
+
+        // B1 : Upload file
+        String filePath = fileService.uploadFile(file);
+
+        // B2 : Cập nhật lại image cho job
+        job.setImage(filePath);
+
+        // B3 : Trả về URL Path
+        return filePath;
     }
 
     // HELPER METHOD

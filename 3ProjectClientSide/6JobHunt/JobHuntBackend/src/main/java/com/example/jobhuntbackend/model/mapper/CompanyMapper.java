@@ -1,39 +1,30 @@
 package com.example.jobhuntbackend.model.mapper;
 
 import com.example.jobhuntbackend.model.Company;
-import com.example.jobhuntbackend.model.dto.JobDto;
-import com.example.jobhuntbackend.response.CompanyResponse;
-import com.example.jobhuntbackend.service.anonymous.JobService;
+import com.example.jobhuntbackend.model.Job;
+import com.example.jobhuntbackend.model.dto.CompanyDto;
+import com.example.jobhuntbackend.repo.JobRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Component
 @AllArgsConstructor
 public class CompanyMapper {
 
-    private final JobService jobService;
+    private final JobRepo JobRepo;
 
-    public CompanyResponse toCompanyResponse(Company company) {
-        CompanyResponse companyResponse = new CompanyResponse();
+    public CompanyDto toCompanyDto(Company company) {
+        CompanyDto companyDto = new CompanyDto();
 
-        companyResponse.setId(company.getId());
-        companyResponse.setName(company.getName());
-        companyResponse.setLogoPath(company.getLogoPath());
-        companyResponse.setCity(company.getCity());
+        companyDto.setId(company.getId());
+        companyDto.setName(company.getName());
+        companyDto.setLogoPath(company.getLogoPath());
+        companyDto.setCity(company.getCity());
+        List<Job> jobs = JobRepo.getByCompanyId(company.getId());
+        companyDto.setNumberOfJobs(jobs.size());
 
-        // Lấy số lượng công việc đang trong thời gian ứng tuyển của công ty
-        // job.getEndDate().isAfter(LocalDate.now())
-        List<JobDto> jobs = jobService.getJobs(company.getId());
-        long numberOfJobs = jobs.stream()
-                .map(JobMapper::toJob)
-                .filter(job -> job.getEndDate().isAfter(LocalDate.now()))
-                .count();
-
-        companyResponse.setNumberOfJobs((int) numberOfJobs);
-
-        return companyResponse;
+        return companyDto;
     }
 }

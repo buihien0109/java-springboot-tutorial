@@ -1,9 +1,9 @@
 package com.example.jobhuntbackend.controller.admin;
 
 import com.example.jobhuntbackend.model.Company;
+import com.example.jobhuntbackend.model.dto.CompanyDto;
 import com.example.jobhuntbackend.request.CreateCompanyRequest;
 import com.example.jobhuntbackend.request.UpdateCompanyRequest;
-import com.example.jobhuntbackend.response.CompanyResponse;
 import com.example.jobhuntbackend.service.admin.CompanyAdminService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,7 +19,7 @@ public class CompanyAdminController {
     private final CompanyAdminService companyAdminService;
 
     @GetMapping("/companies")
-    public List<CompanyResponse> getCompanies() {
+    public List<CompanyDto> getCompanies() {
         return companyAdminService.getAll();
     }
 

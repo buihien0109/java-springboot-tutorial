@@ -68,6 +68,22 @@ btnUpdateCompany.addEventListener("click", async function() {
     }
 })
 
+// ***************** Xóa công ty *****************
+const btnDeleteCompany = document.querySelector(".btn-delete-company");
+btnDeleteCompany.addEventListener("click", async function() {
+    try {
+        let isConfirm = confirm("Bạn có muốn xóa không?");
+        if(isConfirm) {
+            await axios.delete(`${API_URL}/companies/${id}`);
+            
+            window.location.href = "./company-list.html";
+        }
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+
 // ***************** Cập nhật logo *****************
 // Đổi avatar
 function uploadFileAPI(file) {
@@ -93,6 +109,44 @@ fileUploadEl.addEventListener("change", async (event) => {
     }
 })
 
+// ***************** API lấy danh sách công việc *****************
+const jobTableEl = document.querySelector(".job-table tbody");
+
+const getJobs = async (companyId) => {
+    try {
+        let res = await axios.get(`${API_URL}/companies/${companyId}/jobs`);
+        console.log(res);
+
+        renderJob(res.data);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const renderJob = arr => {
+    jobTableEl.innerHTML = "";
+    for (let i = 0; i < arr.length; i++) {
+        const j = arr[i];
+        jobTableEl.innerHTML += `
+            <tr>
+                <td>${i+1}</td>
+                <td>
+                    <a href="./job-edit.html?company_id=${id}&job_id=${j.id}">${j.title}</a>
+                </td>
+                <td>
+                    ${j.skills.map(skill => `<span class="me-1 badge bg-warning text-dark">${skill}</span>`).join("")}
+                    
+                </td>
+                <td>${formatMoney(j.salary)}</td>
+                <td>${j.numberOfApplicant ? `${j.numberOfApplicant} ứng viên` : ""}</td>
+            </tr>
+        `
+    }
+}
+
+const formatMoney = number => {
+    return number.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
+}
 
 
 // ***************** API lấy danh sách tỉnh, thành phố *****************
@@ -119,6 +173,7 @@ function renderProvince(arr) {
 async function init() {
     await getProvince();
     await getCompany(id);
+    await getJobs(id);
 }
 
 init()

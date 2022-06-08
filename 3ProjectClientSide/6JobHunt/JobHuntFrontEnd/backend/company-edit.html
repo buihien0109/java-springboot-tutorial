@@ -72,6 +72,13 @@
                 </nav>
             </div>
 
+            <div class="mb-4">
+                <a href="./company-list.html" class="btn-custom btn-refresh">
+                    <span><i class="fa-solid fa-angle-left"></i></span>
+                    Quay lại
+                </a>
+            </div>
+
             <div class="company-list-inner p-2">
                 <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
@@ -86,15 +93,15 @@
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="company" role="tabpanel" aria-labelledby="company-tab">
-                        <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-4">
                             <button class="btn-custom btn-update-company">
                                 <span><i class="fa-solid fa-plus"></i></span>
                                 Cập nhật
                             </button>
-                            <a href="./company-list.html" class="btn-custom btn-refresh">
-                                <span><i class="fa-solid fa-arrow-rotate-right"></i></span>
-                                Quay lại
-                            </a>
+                            <button class="btn-custom btn-delete-company bg-danger">
+                                <span><i class="fa-solid fa-trash-can"></i></span>
+                                Xóa
+                            </button>
                         </div>
                         <div class="row">
                             <div class="col-md-8">
@@ -131,7 +138,7 @@
                                             id="company-logo-preview" class="rounded">
                                     </div>
 
-                                    <label for="company-logo-input" class="btn btn-warning">Đổi avatar</label>
+                                    <label for="company-logo-input" class="btn btn-warning">Đổi logo</label>
                                     <input type="file" id="company-logo-input" class="d-none">
                                 </div>
                             </div>
@@ -143,32 +150,30 @@
                                 <span><i class="fa-solid fa-plus"></i></span>
                                 Tạo công việc
                             </button>
-                            <a href="./company-list.html" class="btn-custom btn-refresh">
-                                <span><i class="fa-solid fa-arrow-rotate-right"></i></span>
-                                Quay lại
-                            </a>
                         </div>
 
-                        <table class="table company-table">
+                        <table class="table job-table">
                             <thead>
                                 <tr>
                                     <th>STT</th>
                                     <th>Tên công việc</th>
-                                    <th>Tỉnh - Thành phố</th>
-                                    <th>Địa chỉ</th>
-                                    <th>Ngày bắt đầu</th>
-                                    <th>Ngày kết thúc</th>
+                                    <th>Kỹ năng</th>
+                                    <th>Mức lương</th>
                                     <th>Số người ứng tuyển</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>1</td>
-                                    <td>Lập trình viên Java</td>
-                                    <td>Hà Nội</td>
-                                    <td>48 Tố Hữu</td>
-                                    <td>01/06/2022</td>
-                                    <td>01/07/2022</td>
+                                    <td>
+                                        <a href="">Lập trình viên Java</a>
+                                    </td>
+                                    <td>
+                                        <span class="me-1 badge bg-warning text-dark">Golang</span>
+                                        <span class="me-1 badge bg-warning text-dark">Java</span>
+                                        <span class="me-1 badge bg-warning text-dark">React</span>
+                                    </td>
+                                    <td>25.000.000 VND</td>
                                     <td>3 ứng viên (<a href="#">Xem danh sách</a>)</td>
                                 </tr>
                             </tbody>

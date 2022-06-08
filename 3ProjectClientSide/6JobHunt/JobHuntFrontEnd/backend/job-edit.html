@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Link google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700;900&display=swap"
+        rel="stylesheet" />
+
+    <!-- Link bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+
+    <!-- Link icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Link tự viết -->
+    <link rel="stylesheet" href="./css/company.css" />
+
+    <title>Chi tiết công việc</title>
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo">
+            <a href="./index.html">
+                <img src="https://itviec.com/assets/logo-itviec-4492a2f2577a15a0a1d55444c21c0fa55810822b3b189fc689b450fb62ce0b5b.png"
+                    alt="logo" />
+            </a>
+        </div>
+
+        <div class="sidebar ms-5">
+            <div class="menu">
+                <ul>
+                    <li class="menu-item">
+                        Quản lý công ty <span><i class="fa-solid fa-caret-down"></i></span>
+
+                        <ul class="sub-menu">
+                            <li class="sub-menu-item">Danh sách công ty</li>
+                            <li class="sub-menu-item">Tạo công ty</li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        Quản lý công việc <span><i class="fa-solid fa-caret-down"></i></span>
+
+                        <ul class="sub-menu">
+                            <li class="sub-menu-item">Danh sách công việc</li>
+                            <li class="sub-menu-item">Tạo công việc</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="job-list mt-4 mb-4">
+        <div class="container">
+            <div>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Trang quản trị</a></li>
+                        <li class="breadcrumb-item"><a href="./company-list.html">Danh sách công ty</a></li>
+                        <li class="breadcrumb-item"><a href="./company-list.html">Techmaster Việt Nam</a></li>
+                        <li class="breadcrumb-item"><a href="./company-list.html">Danh sách công việc</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Lập trình viên</li>
+                    </ol>
+                </nav>
+            </div>
+
+            <div class="mb-4">
+                <a href="./company-list.html" class="btn-custom btn-refresh">
+                    <span><i class="fa-solid fa-angle-left"></i></span>
+                    Quay lại
+                </a>
+            </div>
+
+            <div class="job-list-inner p-2">
+                <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active fw-bold" id="job-tab" data-bs-toggle="tab" data-bs-target="#job"
+                            type="button" role="tab" aria-controls="job" aria-selected="true">Chi tiết công
+                            việc</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link fw-bold" id="applicant-tab" data-bs-toggle="tab" data-bs-target="#applicant" type="button"
+                            role="tab" aria-controls="applicant" aria-selected="false">Danh sách ứng viên</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="job" role="tabpanel" aria-labelledby="job-tab">
+                        <div class="d-flex justify-content-between mb-4">
+                            <button class="btn-custom btn-update-job">
+                                <span><i class="fa-solid fa-plus"></i></span>
+                                Cập nhật
+                            </button>
+                            <button class="btn-custom btn-delete-job bg-danger">
+                                <span><i class="fa-solid fa-trash-can"></i></span>
+                                Xóa
+                            </button>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="mb-3">
+                                    <label for="job-name" class="form-label">Tên công việc</label>
+                                    <input type="text" class="form-control" id="job-name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="job-skill" class="form-label">Kỹ năng</label>
+                                    <select class="form-control" id="job-skill"></select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="job-salary" class="form-label">Mức lương</label>
+                                    <input type="text" class="form-control" id="job-salary">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="job-description" class="form-label">Mô tả ngắn</label>
+                                    <textarea class="form-control" id="job-description" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Ảnh minh họa</label>
+                                    <div class="job-logo-preview mb-3 rounded">
+                                        <img src="https://via.placeholder.com/200" alt="avatar"
+                                            id="job-logo-preview" class="rounded">
+                                    </div>
+
+                                    <label for="job-logo-input" class="btn btn-warning">Đổi ảnh</label>
+                                    <input type="file" id="job-logo-input" class="d-none">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="applicant" role="tabpanel" aria-labelledby="applicant-tab">
+
+                        <table class="table applicant-table">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên ứng viên</th>
+                                    <th>Mô tả ngắn</th>
+                                    <th>Link CV</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Bùi Văn Hiên</td>
+                                    <td class="w-50">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veniam sunt quam quasi nostrum libero distinctio, consequuntur incidunt vero odit temporibus.</td>
+                                    <td><a href="#">Xem chi tiết</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- <script src="./js/company-edit.js"></script> -->
+</body>
+
+</html>

@@ -1,11 +1,11 @@
 package com.example.jobhuntbackend.service.admin;
 
 import com.example.jobhuntbackend.model.Company;
+import com.example.jobhuntbackend.model.dto.CompanyDto;
 import com.example.jobhuntbackend.model.mapper.CompanyMapper;
 import com.example.jobhuntbackend.repo.CompanyRepo;
 import com.example.jobhuntbackend.request.CreateCompanyRequest;
 import com.example.jobhuntbackend.request.UpdateCompanyRequest;
-import com.example.jobhuntbackend.response.CompanyResponse;
 import com.example.jobhuntbackend.service.FileService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,11 +23,13 @@ public class CompanyAdminService {
     private final FileService fileService;
     private final CompanyMapper companyMapper;
 
-    public List<CompanyResponse> getAll() {
+    // Lấy danh sách tất cả nhà tuyển dụng
+    // Sắp xếp theo số lượng công việc giảm dần
+    public List<CompanyDto> getAll() {
         return companyRepo.getAll()
                 .stream()
-                .map(companyMapper::toCompanyResponse)
-                .sorted(Comparator.comparing(CompanyResponse::getNumberOfJobs).reversed())
+                .map(companyMapper::toCompanyDto)
+                .sorted(Comparator.comparing(CompanyDto::getNumberOfJobs).reversed())
                 .collect(Collectors.toList());
     }
 
@@ -70,11 +72,8 @@ public class CompanyAdminService {
 
     // Xóa nhà tuyển dụng
     public void deleteCompany(int id) {
-        companyRepo.delete(id);
-
-        // TODO : Xóa danh sách job của nhà tuyển dụng
-
-        // TODO : Xóa danh sách những người ứng tuyển của job
+        Company company = companyRepo.getById(id);
+        companyRepo.delete(company.getId());
     }
 
     // Thay đổi logo nhà tuyển dụng
