@@ -61,6 +61,7 @@ public class CompanyAdminService {
         company.setName(request.getName());
         company.setWebsite(request.getWebsite());
         company.setEmail(request.getEmail());
+        company.setCity(request.getCity());
         company.setAddress(request.getAddress());
         company.setDescription(request.getDescription());
 

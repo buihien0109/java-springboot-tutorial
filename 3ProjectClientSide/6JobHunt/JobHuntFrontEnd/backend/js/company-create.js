@@ -14,7 +14,6 @@ const descriptionEl = document.getElementById("company-description");
 // API tạo công ty mới
 btnCreateCompany.addEventListener("click", async function () {
     try {
-        console.log("abc");
         let res = await axios.post(`${API_URL}/companies`, {
             name: nameEl.value,
             website: websiteEl.value,
@@ -23,8 +22,6 @@ btnCreateCompany.addEventListener("click", async function () {
             address: addressEl.value,
             description : descriptionEl.value,
         });
-
-        console.log(res);
 
         if (res.data) {
             window.location.href = "./company-list.html";

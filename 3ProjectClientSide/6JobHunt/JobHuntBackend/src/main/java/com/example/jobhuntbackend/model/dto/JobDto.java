@@ -21,4 +21,5 @@ public class JobDto {
     private String endDate; // ngày kết thúc tuyển dụng
     private int salary; // Mức lương
     private int companyId; // id của công ty đang tuyển dụng
+    private int numberOfApplicant; // Số lượng ứng viên
 }

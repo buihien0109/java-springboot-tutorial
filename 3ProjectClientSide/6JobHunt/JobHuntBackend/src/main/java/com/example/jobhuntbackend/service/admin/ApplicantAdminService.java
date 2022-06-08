@@ -23,10 +23,10 @@ public class ApplicantAdminService {
     }
 
     public List<Applicant> getApplicantsByJobId(int jobId) {
-        return null;
+        return applicantRepo.getByJobId(jobId);
     }
 
     public void deleteApplicant(int id) {
-
+        applicantRepo.delete(id);
     }
 }

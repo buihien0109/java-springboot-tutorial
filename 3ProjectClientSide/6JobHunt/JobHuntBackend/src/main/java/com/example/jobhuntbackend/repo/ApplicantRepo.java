@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Repository
@@ -58,8 +59,8 @@ public class ApplicantRepo {
         throw new NotFoundException("Không tìm thấy ứng viên có id = " + id);
     }
 
-    public void save(Applicant applicant) {
-        applicants.add(applicant);
+    public List<Applicant> getByJobId(int jobId) {
+        return applicants.stream().filter(applicant -> applicant.getJobId() == jobId).collect(Collectors.toList());
     }
 
     public void delete(int id) {

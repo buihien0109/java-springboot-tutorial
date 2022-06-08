@@ -5,9 +5,7 @@ import com.example.jobhuntbackend.model.Company;
 import com.github.javafaker.Faker;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.IntStream;
 
 @Repository
@@ -19,9 +17,13 @@ public class CompanyRepo {
     }
 
     public void initCompany() {
+        Random rd = new Random();
         Faker faker = new Faker();
         companies = new ArrayList<>();
-        IntStream.range(1, 11).forEach(n -> {
+
+        List<String> cites = Arrays.asList("Thành phố Hà Nội", "Thành phố Đà Nẵng", "Thành phố Hồ Chí Minh");
+
+        IntStream.range(1, 7).forEach(n -> {
             Company company = new Company();
             company.setId(n);
             company.setName(faker.company().name());
@@ -29,7 +31,7 @@ public class CompanyRepo {
             company.setWebsite(faker.company().url());
             company.setEmail(faker.internet().emailAddress());
             company.setAddress(faker.address().streetAddress());
-            company.setCity(faker.address().city());
+            company.setCity(cites.get(rd.nextInt(cites.size())));
             company.setDescription(faker.lorem().sentence(30));
 
             companies.add(company);
@@ -49,15 +51,6 @@ public class CompanyRepo {
         throw new NotFoundException("Không tìm thấy công ty có id = " + id);
     }
 
-    public Company getByName(String name) {
-        Optional<Company> optionalCompany = findByName(name);
-        if (optionalCompany.isPresent()) {
-            return optionalCompany.get();
-        }
-
-        throw new NotFoundException("Không tìm thấy công ty có tên = " + name);
-    }
-
     public void save(Company company) {
         companies.add(company);
     }
@@ -73,9 +66,5 @@ public class CompanyRepo {
 
     public Optional<Company> findById(int id) {
         return companies.stream().filter(job -> job.getId() == id).findFirst();
-    }
-
-    public Optional<Company> findByName(String name) {
-        return companies.stream().filter(company -> company.getName().equals(name)).findFirst();
     }
 }

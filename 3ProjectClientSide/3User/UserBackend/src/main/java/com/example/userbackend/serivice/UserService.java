@@ -11,6 +11,7 @@ import com.example.userbackend.model.request.UpdatePasswordRequest;
 import com.example.userbackend.model.request.UpdateUserRequest;
 import com.example.userbackend.utils.Utils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,14 +21,22 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService {
+    // Tạo danh sách user để quản lý
     private List<User> users;
+
+    // Inject bean để gửi email
     private final EmailService emailService;
 
-    public UserService(EmailService emailService) {
+    // Inject bean để gửi upload file
+    private final FileService fileService;
+
+    public UserService(EmailService emailService, FileService fileService) {
         this.emailService = emailService;
+        this.fileService = fileService;
         init();
     }
 
+    // Tạo 1 số user
     public void init() {
         users = new ArrayList<>();
         users.add(new User(1, "Bùi Hiên", "buihien01091997@gmail.com", "0344005816", "Tỉnh Thái Bình", null, "111"));
@@ -35,6 +44,7 @@ public class UserService {
         users.add(new User(3, "Bùi Phương Loan", "hien@techmaster.vn", "0123456789", "Tỉnh Hưng Yên", null, "333"));
     }
 
+    // Lấy danh sách user ở dạng DTO
     public List<UserDto> getUsers() {
         return users
                 .stream()
@@ -42,6 +52,7 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    // Tìm kiếm user theo tên
     public List<UserDto> searchUser(String name) {
         return users
                 .stream()
@@ -50,6 +61,7 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    // Lấy thông tin của user theo id
     public UserDto getUserById(int id) {
         Optional<User> userOptional = findById(id);
 
@@ -61,6 +73,7 @@ public class UserService {
         throw new NotFoundException("user with id = " + id + " not found");
     }
 
+    // Xóa user
     public void deleteUser(int id) {
         Optional<User> userOptional = findById(id);
 
@@ -71,6 +84,7 @@ public class UserService {
         users.removeIf(user -> user.getId() == id);
     }
 
+    // Tạo user mới
     public UserDto createUser(CreateUserRequest request) {
         if (findByEmail(request.getEmail()).isPresent()) {
             throw new BadRequestException("email = " + request.getEmail() + " is existed");
@@ -90,6 +104,7 @@ public class UserService {
         return UserMapper.toUserDto(user);
     }
 
+    // Cập nhật thông tin của user
     public UserDto updateUser(int id, UpdateUserRequest request) {
         Optional<User> userOptional = findById(id);
 
@@ -105,6 +120,7 @@ public class UserService {
         return UserMapper.toUserDto(user);
     }
 
+    // Cập nhật password mới
     public void updatePassword(int id, UpdatePasswordRequest request) {
         // Kiểm tra có tồn tại hay không
         Optional<User> userOptional = findById(id);
@@ -127,6 +143,7 @@ public class UserService {
         user.setPassword(request.getNewPassword());
     }
 
+    // Quên mật khẩu
     public String forgotPassword(int id) {
         // Kiểm tra user có tồn tại hay không
         if (findById(id).isEmpty()) {
@@ -146,14 +163,17 @@ public class UserService {
         return newPassword;
     }
 
+    // HELPER METHOD : Tìm kiếm user theo id --> return Optional
     public Optional<User> findById(int id) {
         return users.stream().filter(user -> user.getId() == id).findFirst();
     }
 
+    // HELPER METHOD : Tìm kiếm user theo email --> return Optional
     public Optional<User> findByEmail(String email) {
         return users.stream().filter(user -> user.getEmail().equals(email)).findFirst();
     }
 
+    // Cập nhật avatar cho user
     public void updateAvatar(int id, UpdateAvatarRequest request) {
         // Kiểm tra có tồn tại hay không
         Optional<User> userOptional = findById(id);
@@ -165,5 +185,26 @@ public class UserService {
 
         // Update lại avatar
         user.setAvatar(request.getAvatar());
+    }
+
+    // Upload file
+    public String uploadFile(int id, MultipartFile file) {
+        // Kiểm tra có tồn tại hay không
+        Optional<User> userOptional = findById(id);
+        if (userOptional.isEmpty()) {
+            throw new NotFoundException("user with id = " + id + " not found");
+        }
+
+        User user = userOptional.get();
+
+        String filePath = fileService.uploadFile(id, file);
+        user.setAvatar(filePath);
+
+        return filePath;
+    }
+
+    // Xem file
+    public byte[] readFile(int id, String fileName) {
+        return fileService.readFile(id, fileName);
     }
 }

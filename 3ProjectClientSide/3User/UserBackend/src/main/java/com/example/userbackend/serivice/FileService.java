@@ -28,10 +28,8 @@ import java.util.UUID;
 public class FileService {
     private final int IMAGE_OF_PAGE = 12;
     private final Path rootDir = Paths.get("uploads");
-    private final UserService userService;
 
-    public FileService(UserService userService) {
-        this.userService = userService;
+    public FileService() {
         createFolder(rootDir.toString());
     }
 
@@ -43,12 +41,6 @@ public class FileService {
     }
 
     public String uploadFile(int id, MultipartFile file) {
-        // Kiểm tra user id
-        Optional<User> userOptional = userService.findById(id);
-        if (userOptional.isEmpty()) {
-            throw new NotFoundException("user with id = " + id + " not found");
-        }
-
         // Tạo folder tương ứng với user id
         Path userDir = Paths.get("uploads").resolve(String.valueOf(id));
         createFolder(userDir.toString());
@@ -68,17 +60,7 @@ public class FileService {
             stream.write(file.getBytes());
             stream.close();
 
-            // Tính tổng số page
-            // int totalPage = getTotalPage(userDir);
-
-            // Tạo filePath -> fileUpload
-            String filePath = "/api/v1/users/" + id + "/files/" + genarateFileName;
-
-            // Set avatar cho user
-            userOptional.get().setAvatar(filePath);
-
-            return filePath;
-            // return new UploadFileResponse(filePath, totalPage);
+            return "/api/v1/users/" + id + "/files/" + genarateFileName;
         } catch (Exception e) {
             throw new RuntimeException("Lỗi khi upload file");
         }

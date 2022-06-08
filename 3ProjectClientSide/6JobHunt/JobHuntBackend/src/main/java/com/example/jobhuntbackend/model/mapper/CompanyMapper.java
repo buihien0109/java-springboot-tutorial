@@ -32,8 +32,6 @@ public class CompanyMapper {
                 .filter(job -> job.getEndDate().isAfter(LocalDate.now()))
                 .count();
 
-        System.out.println(numberOfJobs);
-
         companyResponse.setNumberOfJobs((int) numberOfJobs);
 
         return companyResponse;
