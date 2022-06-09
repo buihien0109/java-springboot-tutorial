@@ -157,34 +157,10 @@ public class UserService {
         user.setPassword(newPassword);
 
         // Send Mail
-        emailService.sendMail(user.getEmail(), "Đổi mật khẩu", "Mật khẩu mới của bạn là : " + newPassword);
+        // emailService.sendMail(user.getEmail(), "Đổi mật khẩu", "Mật khẩu mới của bạn là : " + newPassword);
 
         // Trả về thông tin password mới
         return newPassword;
-    }
-
-    // HELPER METHOD : Tìm kiếm user theo id --> return Optional
-    public Optional<User> findById(int id) {
-        return users.stream().filter(user -> user.getId() == id).findFirst();
-    }
-
-    // HELPER METHOD : Tìm kiếm user theo email --> return Optional
-    public Optional<User> findByEmail(String email) {
-        return users.stream().filter(user -> user.getEmail().equals(email)).findFirst();
-    }
-
-    // Cập nhật avatar cho user
-    public void updateAvatar(int id, UpdateAvatarRequest request) {
-        // Kiểm tra có tồn tại hay không
-        Optional<User> userOptional = findById(id);
-        if (userOptional.isEmpty()) {
-            throw new NotFoundException("user with id = " + id + " not found");
-        }
-
-        User user = userOptional.get();
-
-        // Update lại avatar
-        user.setAvatar(request.getAvatar());
     }
 
     // Upload file
@@ -204,7 +180,17 @@ public class UserService {
     }
 
     // Xem file
-    public byte[] readFile(int id, String fileName) {
-        return fileService.readFile(id, fileName);
+    public byte[] readFile(int id, String fileId) {
+        return fileService.readFile(id, fileId);
+    }
+
+    // HELPER METHOD : Tìm kiếm user theo id --> return Optional
+    public Optional<User> findById(int id) {
+        return users.stream().filter(user -> user.getId() == id).findFirst();
+    }
+
+    // HELPER METHOD : Tìm kiếm user theo email --> return Optional
+    public Optional<User> findByEmail(String email) {
+        return users.stream().filter(user -> user.getEmail().equals(email)).findFirst();
     }
 }

@@ -33,7 +33,7 @@ const renderUser = (user) => {
     addressEl.value = user.address;
 
     // Nếu user không có avatar thì lấy avatar mặc định
-    if(user.avatar) {
+    if (user.avatar) {
         avatarEl.src = "http://localhost:8080" + user.avatar;
     } else {
         avatarEl.src = "https://via.placeholder.com/200"
@@ -66,7 +66,7 @@ btnSave.addEventListener("click", async function () {
         });
 
         if (res.data) {
-            window.location.href = "/";
+            alert("Cập nhật thông tin thành công")
         }
     } catch (error) {
         alert(error.response.data.message);
@@ -89,13 +89,10 @@ btnChangePassword.addEventListener("click", async function () {
         let oldPasswordValue = oldPasswordEl.value;
         let newPasswordValue = newPasswordEl.value;
 
-        await axios.put(
-            `${API_URL}/${id}/update-password`,
-            {
-                oldPassword: oldPasswordValue,
-                newPassword: newPasswordValue,
-            }
-        );
+        await axios.put(`${API_URL}/${id}/update-password`, {
+            oldPassword: oldPasswordValue,
+            newPassword: newPasswordValue,
+        });
 
         modalChangePasswordConfig.hide();
         oldPasswordEl.value = "";
@@ -106,7 +103,7 @@ btnChangePassword.addEventListener("click", async function () {
 });
 
 // Quên mật khẩu
-btnForgotPassword.addEventListener("click", async function() {
+btnForgotPassword.addEventListener("click", async function () {
     try {
         let res = await axios.post(`${API_URL}/${id}/forgot-password`)
         alert(res.data);
@@ -142,10 +139,9 @@ function uploadFileAPI(file) {
     formData.append("file", file);
 
     return axios({
-        method : "POST",
-        url : `${API_URL}/${id}/upload-file`,
-        data : formData,
-        // headers: {'Content-Type': 'multipart/form-data' }
+        method: "POST",
+        url: `${API_URL}/${id}/upload-file`,
+        data: formData,
     })
 }
 
@@ -154,7 +150,7 @@ fileUploadEl.addEventListener("change", async (event) => {
     try {
         const file = event.target.files[0];
         let res = await uploadFileAPI(file);
-        
+
         avatarEl.src = "http://localhost:8080" + res.data
     } catch (error) {
         console.log(error);

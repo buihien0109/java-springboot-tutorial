@@ -19,7 +19,7 @@ async function getUsers(term = "") {
         users = res.data;
         renderUsers(users);
     } catch (error) {
-        alert(error.response.data.message);
+        console.log(error.response);
     }
 }
 

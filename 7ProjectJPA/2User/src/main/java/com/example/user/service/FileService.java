@@ -1,8 +1,11 @@
 package com.example.user.service;
 
+import com.example.user.entity.Image;
 import com.example.user.exception.BadRequestException;
 import com.example.user.model.response.FileReturn;
+import com.example.user.repository.ImageRepository;
 import com.example.user.utils.Utils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -26,6 +29,9 @@ public class FileService {
     private final int IMAGE_OF_PAGE = 12;
     private final Path rootDir = Paths.get("uploads");
 
+    @Autowired
+    private ImageRepository imageRepository;
+
     public FileService() {
         createFolder(rootDir.toString());
     }
@@ -45,9 +51,12 @@ public class FileService {
         // Validate file
         validateFile(file);
 
-        // Tạo path tương ứng với file Upload lên
-        String genarateFileName = Instant.now().getEpochSecond() + "-" + UUID.randomUUID()
-                + "." + Utils.getFileExtension(file.getOriginalFilename());
+        // Lưu thông tin file vào database
+        Image image = new Image();
+        image.setUrl();
+        image.setUserId(id);
+        imageRepository.save(image);
+
         File serverFile = new File(userDir + "/" + genarateFileName);
 
         try {

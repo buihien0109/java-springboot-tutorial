@@ -26,7 +26,6 @@ import java.util.UUID;
 
 @Service
 public class FileService {
-    private final int IMAGE_OF_PAGE = 12;
     private final Path rootDir = Paths.get("uploads");
 
     public FileService() {
@@ -49,9 +48,8 @@ public class FileService {
         validateFile(file);
 
         // Tạo path tương ứng với file Upload lên
-        String genarateFileName = Instant.now().getEpochSecond() + "-" + UUID.randomUUID()
-                + "." + Utils.getFileExtension(file.getOriginalFilename());
-        File serverFile = new File(userDir + "/" + genarateFileName);
+        String genarateFileId = UUID.randomUUID().toString();
+        File serverFile = new File(userDir + "/" + genarateFileId);
 
         try {
             // Sử dụng Buffer để lưu dữ liệu từ file
@@ -60,7 +58,7 @@ public class FileService {
             stream.write(file.getBytes());
             stream.close();
 
-            return "/api/v1/users/" + id + "/files/" + genarateFileName;
+            return "/api/v1/users/" + id + "/files/" + genarateFileId;
         } catch (Exception e) {
             throw new RuntimeException("Lỗi khi upload file");
         }
@@ -88,92 +86,27 @@ public class FileService {
         }
     }
 
-    public byte[] readFile(int id, String fileName) {
+    public byte[] readFile(int id, String fileId) {
         // Lấy đường dẫn file tương ứng với user_id
         Path userPath = rootDir.resolve(String.valueOf(id));
 
         // Kiểm tra đường dẫn file có tồn tại hay không
         if (!Files.exists(userPath)) {
-            throw new RuntimeException("Không thể đọc file : " + fileName);
+            throw new RuntimeException("Không thể đọc file : " + fileId);
         }
 
         try {
             // Lấy đường dẫn file tương ứng với user_id và file_name
-            Path file = userPath.resolve(fileName);
+            Path file = userPath.resolve(fileId);
             Resource resource = new UrlResource(file.toUri());
 
             if (resource.exists() || resource.isReadable()) {
                 return StreamUtils.copyToByteArray(resource.getInputStream());
             } else {
-                throw new RuntimeException("Không thể đọc file: " + fileName);
+                throw new RuntimeException("Không thể đọc file: " + fileId);
             }
         } catch (Exception e) {
-            throw new RuntimeException("Không thể đọc file : " + fileName);
+            throw new RuntimeException("Không thể đọc file : " + fileId);
         }
-    }
-
-    public FileReturn getFiles(int id, int page) {
-        // Lấy đường dẫn file tương ứng với user_id
-        Path userPath = rootDir.resolve(String.valueOf(id));
-
-        // Kiểm tra đường dẫn file có tồn tại hay không
-        if (!Files.exists(userPath)) {
-            throw new RuntimeException("Lỗi khi lấy danh sách file");
-        }
-
-        // Lấy danh sách tất cả file theo userId
-        Optional<File[]> optionalFiles = Optional.ofNullable(userPath.toFile().listFiles());
-        List<File> files = new ArrayList<>();
-        if (optionalFiles.isPresent()) {
-            files = List.of(optionalFiles.get());
-        }
-
-        // Danh sách file path
-        List<String> filesPath = files
-                .stream()
-                .skip((long) (page - 1) * IMAGE_OF_PAGE)
-                .limit(IMAGE_OF_PAGE)
-                .map(File::getName)
-                .sorted((a, b) -> b.compareTo(a))
-                .map(file -> "/api/v1/users/" + id + "/files/" + file)
-                .toList();
-
-        // Tính tổng số page
-        int totalPage = (int) Math.ceil((double) files.size() / IMAGE_OF_PAGE);
-
-        return new FileReturn(filesPath, totalPage);
-    }
-
-    public int deleteFile(int id, String fileName) {
-        // Lấy đường dẫn file tương ứng với user_id
-        Path userPath = rootDir.resolve(String.valueOf(id));
-
-        // Kiểm tra đường dẫn file có tồn tại hay không
-        if (!Files.exists(userPath)) {
-            throw new RuntimeException("File " + fileName + " không tồn tại");
-        }
-
-        File serverFile = new File(userPath + "/" + fileName);
-
-        // Kiểm tra xem file có tồn tại hay không
-        if (!serverFile.exists()) {
-            throw new RuntimeException("File " + fileName + " không tồn tại");
-        }
-
-        // Tiến hành xóa file
-        serverFile.delete();
-
-        return getTotalPage(userPath);
-    }
-
-    public int getTotalPage(Path path) {
-        Optional<File[]> optionalFiles = Optional.ofNullable(path.toFile().listFiles());
-        List<File> files = new ArrayList<>();
-        if (optionalFiles.isPresent()) {
-            files = List.of(optionalFiles.get());
-        }
-
-        int totalPage = (int) Math.ceil((double) files.size() / IMAGE_OF_PAGE);
-        return totalPage;
     }
 }
