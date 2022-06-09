@@ -1,13 +1,11 @@
 package com.example.user.service;
 
-import com.example.user.entity.Image;
+import com.example.user.entity.User;
 import com.example.user.exception.BadRequestException;
 import com.example.user.exception.NotFoundException;
-import com.example.user.entity.User;
 import com.example.user.model.dto.UserDto;
 import com.example.user.model.mapper.UserMapper;
 import com.example.user.model.request.CreateUserRequest;
-import com.example.user.model.request.UpdateAvatarRequest;
 import com.example.user.model.request.UpdatePasswordRequest;
 import com.example.user.model.request.UpdateUserRequest;
 import com.example.user.repository.ImageRepository;
@@ -17,10 +15,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -73,7 +69,7 @@ public class UserService {
 
     // Tạo user mới
     public UserDto createUser(CreateUserRequest request) {
-        if (userRepository.findUserByEmail(request.getEmail()).isEmpty()) {
+        if (userRepository.findUserByEmail(request.getEmail()).isPresent()) {
             throw new BadRequestException("email = " + request.getEmail() + " is existed");
         }
 
@@ -133,6 +129,7 @@ public class UserService {
     }
 
     // Quên mật khẩu
+    // TODO : Sử dụng Transaction + RollBack nếu có lỗi
     public String forgotPassword(int id) {
         // Kiểm tra user có tồn tại hay không
         Optional<User> userOptional = userRepository.findById(id);
@@ -149,23 +146,10 @@ public class UserService {
         userRepository.save(user);
 
         // Send Mail
-        emailService.sendMail(user.getEmail(), "Đổi mật khẩu", "Mật khẩu mới của bạn là : " + newPassword);
+        // emailService.sendMail(user.getEmail(), "Đổi mật khẩu", "Mật khẩu mới của bạn là : " + newPassword);
 
         // Trả về thông tin password mới
         return newPassword;
-    }
-
-    // Cập nhật avatar cho user
-    public void updateAvatar(int id, UpdateAvatarRequest request) {
-        // Kiểm tra có tồn tại hay không
-        Optional<User> userOptional = userRepository.findById(id);
-        if (userOptional.isEmpty()) {
-            throw new NotFoundException("user with id = " + id + " not found");
-        }
-
-        User user = userOptional.get();
-        user.setAvatar(request.getAvatar());
-        userRepository.save(user);
     }
 
     // Upload file
@@ -188,7 +172,7 @@ public class UserService {
     }
 
     // Xem file
-    public byte[] readFile(int id, String fileName) {
-        return fileService.readFile(id, fileName);
+    public byte[] readFile(int id, String fileId) {
+        return fileService.readFile(id, fileId);
     }
 }

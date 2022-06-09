@@ -2,16 +2,13 @@ package com.example.user.controller;
 
 import com.example.user.model.dto.UserDto;
 import com.example.user.model.request.CreateUserRequest;
-import com.example.user.model.request.UpdateAvatarRequest;
 import com.example.user.model.request.UpdatePasswordRequest;
 import com.example.user.model.request.UpdateUserRequest;
-import com.example.user.model.response.FileReturn;
 import com.example.user.service.FileService;
 import com.example.user.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,99 +23,69 @@ public class UserController {
 
     // Lấy danh sách user
     @GetMapping("/users")
-    public ResponseEntity<?> getUsers() {
-        List<UserDto> userDtos = userService.getUsers();
-        return ResponseEntity.ok(userDtos);
+    public List<UserDto> getUsers() {
+        return userService.getUsers();
     }
 
     // Tìm kiếm user theo tên
     @GetMapping("/users/search")
-    public ResponseEntity<?> searchUser(@RequestParam String name) {
-        List<UserDto> userDtos = userService.searchUser(name);
-        return ResponseEntity.ok(userDtos);
+    public List<UserDto> searchUser(@RequestParam String name) {
+        return userService.searchUser(name);
     }
 
     // Lấy chi tiết user theo id
     @GetMapping("/users/{id}")
-    public ResponseEntity<?> getUserById(@PathVariable int id) {
-        UserDto userDto = userService.getUserById(id);
-        return ResponseEntity.ok(userDto);
+    public UserDto getUserById(@PathVariable int id) {
+        return userService.getUserById(id);
     }
 
     // Tạo user mới
     @PostMapping("/users")
-    public ResponseEntity<?> createUser(@RequestBody CreateUserRequest request) {
-        UserDto userDto = userService.createUser(request);
-        return ResponseEntity.ok(userDto);
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserDto createUser(@RequestBody CreateUserRequest request) {
+        return userService.createUser(request);
     }
 
     // Xóa user
     @DeleteMapping("/users/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable int id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUser(@PathVariable int id) {
         userService.deleteUser(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     // Cập nhật thông tin user
     @PutMapping("/users/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable int id,
-                                        @RequestBody UpdateUserRequest request) {
-        UserDto userDto = userService.updateUser(id, request);
-        return ResponseEntity.ok(userDto);
+    public UserDto updateUser(@PathVariable int id,
+                              @RequestBody UpdateUserRequest request) {
+        return userService.updateUser(id, request);
     }
 
     // Cập nhật mật khẩu mới
     @PutMapping("/users/{id}/update-password")
-    public ResponseEntity<?> updatePassword(@PathVariable int id,
-                                            @RequestBody UpdatePasswordRequest request) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updatePassword(@PathVariable int id,
+                               @RequestBody UpdatePasswordRequest request) {
         userService.updatePassword(id, request);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     // Quên mật khẩu
     @PostMapping("/users/{id}/forgot-password")
-    public ResponseEntity<?> updatePassword(@PathVariable int id) {
-        String password = userService.forgotPassword(id);
-        return ResponseEntity.ok(password);
+    public String updatePassword(@PathVariable int id) {
+        return userService.forgotPassword(id);
     }
 
     // Upload file
     @PostMapping("/users/{id}/upload-file")
-    public ResponseEntity<?> uploadFile(@PathVariable int id,
-                                        @ModelAttribute("file") MultipartFile file) {
-        String filePath = userService.uploadFile(id, file);
-        return ResponseEntity.ok(filePath);
+    public String uploadFile(@PathVariable int id,
+                             @ModelAttribute("file") MultipartFile file) {
+        return userService.uploadFile(id, file);
     }
+
 
     // Xem thông tin file
-    @GetMapping("users/{id}/files/{fileName}")
-    public ResponseEntity<?> readFile(@PathVariable int id, @PathVariable String fileName) {
-        byte[] bytes = userService.readFile(id, fileName);
-        return ResponseEntity
-                .ok()
-                .contentType(MediaType.IMAGE_JPEG)
-                .body(bytes);
-    }
-
-    // Lấy danh sách file của user
-    @GetMapping("users/{id}/files")
-    public ResponseEntity<?> getFiles(@PathVariable int id, @RequestParam int page) {
-        FileReturn files = fileService.getFiles(id, page);
-        return ResponseEntity.ok(files);
-    }
-
-    // Cập nhật avatar
-    @PutMapping("users/{id}/update-avatar")
-    public ResponseEntity<?> updateAvatar(@PathVariable int id, @RequestBody UpdateAvatarRequest request) {
-        userService.updateAvatar(id, request);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    // Xóa file
-    @DeleteMapping("users/{id}/files/{fileName}")
-    public ResponseEntity<?> deleteFile(@PathVariable int id, @PathVariable String fileName) {
-        int totalPage = fileService.deleteFile(id, fileName);
-        return ResponseEntity.ok(totalPage);
+    @GetMapping(value = "users/{id}/files/{fileId}", produces = {MediaType.IMAGE_JPEG_VALUE})
+    public byte[] readFile(@PathVariable int id, @PathVariable String fileId) {
+        return userService.readFile(id, fileId);
     }
 }
 
