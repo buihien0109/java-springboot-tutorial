@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+
+    <!-- Link icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="./css/style.css" />
+</head>
+
+<body>
+    <div class="header d-flex align-items-center">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-start align-items-center">
+                <div class="logo">
+                    <a href="./index.html">
+                        <img src="https://techmaster.vn/resources/image/logo-techmaster/white/white_200x74.png"
+                            alt="logo" />
+                    </a>
+                </div>
+                <div class="side-bar d-flex justify-content-between align-items-center flex-grow-1">
+                    <div class="menu">
+                        <a class="text-white text-uppercase ms-5" href="./index.html?type=onlab">Phòng lab</a>
+                        <a class="text-white text-uppercase ms-3" href="./index.html?type=online">Trực tuyến</a>
+                    </div>
+
+                    <div class="d-flex align-items-center">
+                        <div class="cart">
+                            <a href="./shopping-cart.html" class="text-white position-relative">
+                                <span class="fs-5"><i class="fa-solid fa-cart-shopping"></i></span>
+                                <span class="cart-count bg-info px-1 rounded-2 position-absolute">2</span>
+                            </a>
+                        </div>
+                        <div class="user ms-4">
+                            <button type="button" class="bg-transparent border-0 text-white" data-bs-toggle="modal"
+                                data-bs-target="#modal-login">
+                                <span class="fs-5"><i class="fa-solid fa-user"></i></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal-login" tabindex="-1" aria-labelledby="login-modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header justify-content-center">
+                    <h5>Đăng nhập</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="user-email" placeholder="Nhập Email ..." />
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" class="form-control" id="user-password"
+                            placeholder="Nhập Password ..." />
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-primary" id="btn-login">
+                            Đăng nhập
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="shopping-cart-container mt-5">
+        <div class="container">
+            <div class="mb-4">
+                <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="./index.html">Khóa học</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            Giỏ hàng
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="course-list">
+                        <div class="course-item d-flex border mb-4">
+                            <div class="image">
+                                <img src="https://media.techmaster.vn/api/static/36/bu7v9ks51co41h2qcttg" alt="" />
+                            </div>
+                            <div class="info d-flex flex-column justify-content-between px-4 py-3 flex-grow-1">
+                                <div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h2 class="text-dark fs-5 fw-normal">
+                                            Lớp học Spring Boot - Web Back
+                                            End
+                                        </h2>
+                                        <h2 class="text-danger fs-5 fw-normal">
+                                            9.000.000 VND
+                                        </h2>
+                                    </div>
+                                    <p class="text-black-50">
+                                        Hình thức học :
+                                        <span class="fw-bold">onlab</span>
+                                    </p>
+                                </div>
+                                <div>
+                                    <button class="text-primary border-0 bg-transparent fw-light">
+                                        <span><i class="fa-solid fa-trash-can"></i></span>
+                                        Xóa
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-item d-flex border mb-4">
+                            <div class="image">
+                                <img src="https://media.techmaster.vn/api/static/36/bu7v9ks51co41h2qcttg" alt="" />
+                            </div>
+                            <div class="info d-flex flex-column justify-content-between px-4 py-3 flex-grow-1">
+                                <div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h2 class="text-dark fs-5 fw-normal">
+                                            Lớp học Spring Boot - Web Back
+                                            End
+                                        </h2>
+                                        <h2 class="text-danger fs-5 fw-normal">
+                                            9.000.000 VND
+                                        </h2>
+                                    </div>
+                                    <p class="text-black-50">
+                                        Hình thức học :
+                                        <span class="fw-bold">onlab</span>
+                                    </p>
+                                </div>
+                                <div>
+                                    <button class="text-primary border-0 bg-transparent fw-light">
+                                        <span><i class="fa-solid fa-trash-can"></i></span>
+                                        Xóa
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-item d-flex border mb-4">
+                            <div class="image">
+                                <img src="https://media.techmaster.vn/api/static/36/bu7v9ks51co41h2qcttg" alt="" />
+                            </div>
+                            <div class="info d-flex flex-column justify-content-between px-4 py-3 flex-grow-1">
+                                <div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h2 class="text-dark fs-5 fw-normal">
+                                            Lớp học Spring Boot - Web Back
+                                            End
+                                        </h2>
+                                        <h2 class="text-danger fs-5 fw-normal">
+                                            9.000.000 VND
+                                        </h2>
+                                    </div>
+                                    <p class="text-black-50">
+                                        Hình thức học :
+                                        <span class="fw-bold">onlab</span>
+                                    </p>
+                                </div>
+                                <div>
+                                    <button class="text-primary border-0 bg-transparent fw-light">
+                                        <span><i class="fa-solid fa-trash-can"></i></span>
+                                        Xóa
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="bill">
+                        <div class="border mb-2 p-3 fs-5 fw-normal d-flex justify-content-between align-items-center">
+                            <span class="text-black-50">Tạm tính:</span>
+                            <span class="text-primary" id="total-money">9.000.000 VND</span>
+                        </div>
+                        <a href="./checkout.html" class="btn btn-primary d-block w-100">Tiến hành thanh toán</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="./js/data.js"></script>
+    <script src="./js/authentication.js"></script>
+    <script src="./js/cart.js"></script>
+    <script src="./js/shopping-cart.js"></script>
+</body>
+
+</html>

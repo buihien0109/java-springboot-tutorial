@@ -35,6 +35,18 @@ ul {
     width: 120px;
 }
 
+.cart-count {
+    top: -15px;
+    left: 15px;
+    font-size: 14px;
+}
+
+.user img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
 /* Trang danh sách */
 .course-item-image {
     height: 190px;
@@ -54,5 +66,12 @@ ul {
 .supporter-image img {
     width: 120px;
     height: 120px;
+    object-fit: cover;
+}
+
+/* Giỏ hàng */
+.course-item .image img {
+    width: 200px;
+    height: 150px;
     object-fit: cover;
 }
