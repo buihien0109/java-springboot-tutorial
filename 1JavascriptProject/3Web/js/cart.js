@@ -13,12 +13,19 @@ const addItemToCart = item => {
             ]
         } else {
             let cartOfUser = cartUser.find(c => c.userId == user.id);
-            let isExist = cartOfUser.items.some(i => i.id == item.id);
-            if(isExist) {
-                alert("Sản phẩm đã ở trong giỏ hàng");
-                return false;
+            if(!cartOfUser) {
+                cartUser.push({
+                    userId : user.id,
+                    items : [item]
+                })
+            } else {
+                let isExist = cartOfUser.items.some(i => i.id == item.id);
+                if(isExist) {
+                    alert("Sản phẩm đã ở trong giỏ hàng");
+                    return false;
+                }
+                cartOfUser.items.push(item);
             }
-            cartOfUser.items.push(item);
         }
         addToLocalStorage("cartUser", cartUser)
     } else {
@@ -88,8 +95,9 @@ const getItemsOfCart = () => {
 
 // Cập nhật số lượng sản phẩm trong giỏ hàng
 const updateTotalCart = () => {
-    let items = getItemsOfCart();
+    let items = getItemsOfCart() || [];
     document.querySelector(".cart-count").innerText = items.length;
 }
+
 
 updateTotalCart();

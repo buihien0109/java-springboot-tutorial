@@ -31,7 +31,7 @@ const displayItem = () => {
                 <p class="text-black-50">
                     ${item.title}
                 </p>
-                <p class="fw-bold">${formatMoney(item.price)}</p>
+                <p class="fw-bold ms-2">${formatMoney(item.price)}</p>
             </div>
         `
     }
@@ -51,9 +51,16 @@ const updateTotalMoney = (arr) => {
 
 // Gửi đăng ký
 btnSubmit.addEventListener("click", function() {
-    removeAllItem();
-    alert("Gửi đăng ký thành công");
+    if(nameEl.value == "" || emailEl.value == "" || phoneEl.value == "") {
+        alert("Thông tin không được để trống");
+        return;
+    }
 
+    // Xóa tất cả sản phẩm trong giỏ hàng
+    removeAllItem();
+
+    // Thông báo kết quả --> chuyển trang
+    alert("Gửi đăng ký thành công");
     setTimeout(function() {
         window.location.href = "/";
     }, 1500);

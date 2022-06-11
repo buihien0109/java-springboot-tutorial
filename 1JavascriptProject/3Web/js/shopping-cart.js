@@ -6,7 +6,7 @@ const totalMoneyEl = document.getElementById("total-money");
 // Hiển thị thông tin item trong cart
 const renderItem = () => {
     // Lấy danh sách item trong cart
-    let items = getItemsOfCart();
+    let items = getItemsOfCart() || [];
 
     // Update số lượng cart
     updateTotalCart();
