@@ -212,5 +212,3 @@ let users = [
     }
 ]
 
-// Danh sách user
-

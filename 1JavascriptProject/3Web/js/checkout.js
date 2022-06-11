@@ -1,3 +1,4 @@
+// Truy cập vào các thành phần
 const nameEl = document.getElementById("name");
 const emailEl = document.getElementById("email");
 const phoneEl = document.getElementById("phone");
@@ -6,6 +7,7 @@ const orderItemsEl = document.querySelector(".order-items");
 const totalMoneyEl = document.getElementById("total-money");
 const btnSubmit = document.getElementById("btn-submit");
 
+// Hiển thị thông tin của user nếu user đó đã đăng nhập
 const displayInfoUser = () => {
     let user = getFromLocalStorage("userLogin");
     if(user) {
@@ -16,6 +18,7 @@ const displayInfoUser = () => {
     }
 }
 
+// Hiển thị danh sách item + giá
 const displayItem = () => {
     let items = getItemsOfCart();
     

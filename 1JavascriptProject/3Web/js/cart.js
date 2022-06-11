@@ -1,4 +1,4 @@
-// Thêm id vào cart
+// Thêm sản phẩm vào trong giỏ hàng
 const addItemToCart = item => {
     // Kiểm tra xem user đã đăng nhập hay chưa
     let user = getFromLocalStorage("userLogin");
@@ -39,6 +39,7 @@ const addItemToCart = item => {
     return true;
 }
 
+// Xóa sản phẩm trong giỏ hàng
 const removeItemFromCart = itemId => {
     // Kiểm tra xem user đã đăng nhập hay chưa
     let user = getFromLocalStorage("userLogin");
@@ -55,6 +56,7 @@ const removeItemFromCart = itemId => {
     updateTotalCart();
 }
 
+// Xóa tất cả sản phẩm trong giỏ hàng
 const removeAllItem = () => {
     // Kiểm tra xem user đã đăng nhập hay chưa
     let user = getFromLocalStorage("userLogin");
@@ -71,6 +73,7 @@ const removeAllItem = () => {
     updateTotalCart();
 }
 
+// Lấy tất cả sản phẩm trong giỏ hàng
 const getItemsOfCart = () => {
     // Kiểm tra xem user đã đăng nhập hay chưa
     let user = getFromLocalStorage("userLogin");
@@ -83,6 +86,7 @@ const getItemsOfCart = () => {
     return getFromLocalStorage("cartAnonymous");
 }
 
+// Cập nhật số lượng sản phẩm trong giỏ hàng
 const updateTotalCart = () => {
     let items = getItemsOfCart();
     document.querySelector(".cart-count").innerText = items.length;

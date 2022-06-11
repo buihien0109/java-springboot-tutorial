@@ -11,12 +11,10 @@ if(id) {
     // Tìm kiếm khóa học
     course = courses.find(c => c.id == id);
 
-    // Nếu không tìm thấy khóa học theo id -> lỗi
     if(!course) {
         window.location.href = "./404.html";
     }
 
-    // Hiển thị tiêu đề khóa học
     document.title = course.title;
 
     // Tìm kiếm supporter theo khóa học
@@ -68,7 +66,8 @@ const displaySupporter = supporter => {
         </div>
     `
 }
-// Thêm item vào cart
+
+// Thêm item vào trong giỏ hàng
 btnAddToCart.addEventListener("click", function() {
     let item = courses.find(c => c.id == id);
     let isAddSuccess = addItemToCart(item);
