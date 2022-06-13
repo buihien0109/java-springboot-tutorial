@@ -48,9 +48,8 @@ public class FileService {
         validateFile(file);
 
         // Tạo path tương ứng với file Upload lên
-        String genarateFileName = Instant.now().getEpochSecond() + "-" + UUID.randomUUID()
-                + "." + Utils.getFileExtension(file.getOriginalFilename());
-        File serverFile = new File(userDir + "/" + genarateFileName);
+        String genarateFileId = String.valueOf(Instant.now().getEpochSecond());
+        File serverFile = new File(userDir + "/" + genarateFileId);
 
         try {
             // Sử dụng Buffer để lưu dữ liệu từ file
@@ -59,7 +58,7 @@ public class FileService {
             stream.write(file.getBytes());
             stream.close();
 
-            return "/api/v1/users/" + id + "/files/" + genarateFileName;
+            return "/api/v1/users/" + id + "/files/" + genarateFileId;
         } catch (Exception e) {
             throw new RuntimeException("Lỗi khi upload file");
         }
@@ -88,27 +87,27 @@ public class FileService {
     }
 
     // Xử lý phần read file
-    public byte[] readFile(int id, String fileName) {
+    public byte[] readFile(int id, String fileId) {
         // Lấy đường dẫn file tương ứng với user_id
         Path userPath = rootDir.resolve(String.valueOf(id));
 
         // Kiểm tra đường dẫn file có tồn tại hay không
         if (!Files.exists(userPath)) {
-            throw new RuntimeException("Không thể đọc file : " + fileName);
+            throw new RuntimeException("Không thể đọc file : " + fileId);
         }
 
         try {
             // Lấy đường dẫn file tương ứng với user_id và file_name
-            Path file = userPath.resolve(fileName);
+            Path file = userPath.resolve(fileId);
             Resource resource = new UrlResource(file.toUri());
 
             if (resource.exists() || resource.isReadable()) {
                 return StreamUtils.copyToByteArray(resource.getInputStream());
             } else {
-                throw new RuntimeException("Không thể đọc file: " + fileName);
+                throw new RuntimeException("Không thể đọc file: " + fileId);
             }
         } catch (Exception e) {
-            throw new RuntimeException("Không thể đọc file : " + fileName);
+            throw new RuntimeException("Không thể đọc file : " + fileId);
         }
     }
 
@@ -141,20 +140,20 @@ public class FileService {
     }
 
     // Xử lý phần xóa file
-    public void deleteFile(int id, String fileName) {
+    public void deleteFile(int id, String fileId) {
         // Lấy đường dẫn file tương ứng với user_id
         Path userPath = rootDir.resolve(String.valueOf(id));
 
         // Kiểm tra đường dẫn file có tồn tại hay không
         if (!Files.exists(userPath)) {
-            throw new RuntimeException("File " + fileName + " không tồn tại");
+            throw new RuntimeException("File " + fileId + " không tồn tại");
         }
 
-        File serverFile = new File(userPath + "/" + fileName);
+        File serverFile = new File(userPath + "/" + fileId);
 
         // Kiểm tra xem file có tồn tại hay không
         if (!serverFile.exists()) {
-            throw new RuntimeException("File " + fileName + " không tồn tại");
+            throw new RuntimeException("File " + fileId + " không tồn tại");
         }
 
         // Tiến hành xóa file

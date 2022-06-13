@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/fragments/layout :: main-fragment(~{:: title}, ~{}, ~{:: #main-content}, ~{:: #jsResources})}">
+
+<head>
+    <title>Trang admin</title>
+</head>
+
+<body>
+
+<th:block id="main-content">
+    <div id="content">
+        <div class="container">
+            <h2 id="message" th:text="${message}" class="text-primary"></h2>
+            <button class="btn btn-success btn-get-message">Get message</button>
+        </div>
+    </div>
+</th:block>
+
+<th:block id="jsResources">
+    <script th:src="@{/js/admin.js}"></script>
+</th:block>
+
+</body>
+
+</html>
