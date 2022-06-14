@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Link icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/detail.css">
+</head>
+
+<body>
+    <div class="header d-flex align-items-center">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="logo">
+                    <a href="./index.html">
+                        <img src="https://techmaster.vn/resources/image/logo-techmaster/white/white_200x74.png"
+                            alt="logo" />
+                    </a>
+                </div>
+                <div class="cart">
+                    <a href="./shopping-cart.html" class="text-white position-relative">
+                        <span class="fs-5"><i class="fa-solid fa-cart-shopping"></i></span>
+                        <span class="cart-count bg-info px-1 rounded-2 position-absolute">2</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="product-container mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="mb-4">
+                        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="./index.html">Sản phẩm</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Adidas YEEZY BOOST 380 - Stone
+                                    Salt</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="carousel">
+                        <div id="mainCarousel" class="carousel">
+                            <div class="carousel__slide" data-src="https://lipsum.app/id/1/900x600"
+                                data-fancybox="gallery">
+                                <img src="https://lipsum.app/id/1/600x400" />
+                            </div>
+                            <div class="carousel__slide" data-src="https://lipsum.app/id/2/900x600"
+                                data-fancybox="gallery">
+                                <img src="https://lipsum.app/id/2/600x400" />
+                            </div>
+                            <div class="carousel__slide" data-src="https://lipsum.app/id/3/900x600"
+                                data-fancybox="gallery">
+                                <img src="https://lipsum.app/id/3/600x400" />
+                            </div>
+                            <div class="carousel__slide" data-src="https://lipsum.app/id/4/900x600"
+                                data-fancybox="gallery">
+                                <img src="https://lipsum.app/id/4/600x400" />
+                            </div>
+                            <div class="carousel__slide" data-src="https://lipsum.app/id/5/900x600"
+                                data-fancybox="gallery">
+                                <img src="https://lipsum.app/id/5/600x400" />
+                            </div>
+                        </div>
+
+                        <div id="thumbCarousel" class="carousel max-w-xl mx-auto">
+                            <div class="carousel__slide">
+                                <img class="panzoom__content" src="https://lipsum.app/id/1/100x100" />
+                            </div>
+                            <div class="carousel__slide">
+                                <img class="panzoom__content" src="https://lipsum.app/id/2/100x100" />
+                            </div>
+                            <div class="carousel__slide">
+                                <img class="panzoom__content" src="https://lipsum.app/id/3/100x100" />
+                            </div>
+                            <div class="carousel__slide">
+                                <img class="panzoom__content" src="https://lipsum.app/id/4/100x100" />
+                            </div>
+                            <div class="carousel__slide">
+                                <img class="panzoom__content" src="https://lipsum.app/id/5/100x100" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div id="detail">
+                        <h2 class="fs-3">Adidas YEEZY BOOST 380 - Stone Salt</h2>
+                        <p class="text-danger fs-4 fw-bold mb-4">5,200,000đ</p>
+
+                        <div class="sizes mb-4">
+                            <span class="border py-2 px-3 border-dark me-2">M</span>
+                            <span class="border py-2 px-3 border-dark me-2">S</span>
+                            <span class="border py-2 px-3 border-dark me-2">L</span>
+                            <span class="border py-2 px-3 border-dark me-2">XL</span>
+                        </div>
+
+                        <div class="d-flex align-items-center mb-4">
+                            <span class="border d-inline-block me-3">
+                                <span class="py-2 px-3 d-inline-block fw-bold bg-light">-</span>
+                                <span class="py-2 px-3 d-inline-block fw-bold">0</span>
+                                <span class="py-2 px-3 d-inline-block fw-bold bg-light">+</span>
+                            </span>
+
+                            <button class="btn btn-dark py-2 rounded-0">Thêm vào giỏ hàng</button>
+                        </div>
+
+                        <div class="product-info">
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem sint impedit
+                                reiciendis ducimus, ipsa quo quibusdam dolorum quisquam magnam dolore eius cum. Sed
+                                nihil itaque dolorum impedit nostrum vel a distinctio? Molestias voluptate soluta
+                                repellat ullam? Magni, laudantium! Excepturi corrupti eaque, dolorum voluptatem nostrum
+                                nemo. Quo nam itaque officia dolores.</p>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus, dignissimos?
+                                Exercitationem iure architecto temporibus aliquam, numquam, culpa aperiam placeat
+                                voluptatem tempora nemo alias? Similique, rerum eius. Et provident voluptatem tenetur.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    <script src="./js/data.js"></script>
+    <script src="./js/detail.js"></script>
+</body>
+
+</html>
