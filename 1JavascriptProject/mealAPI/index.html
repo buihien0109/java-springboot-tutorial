@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Meal Finder</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Meal Finder</h1>
+        <div class="flex">
+            <div class="flex">
+                <!-- Input tìm kiếm món ăn -->
+                <input type="text" id="search" placeholder="Search for meals or keywords" autocomplete="off" />
+
+                <!-- Button tìm kiếm món ăn -->
+                <button id="btn-search"><i class="fas fa-search"></i></button>
+            </div>
+
+            <!-- Button random món ăn -->
+            <button id="btn-random"><i class="fas fa-random"></i></button>
+        </div>
+
+        <!-- Nơi hiển thị kết quả tìm kiếm -->
+        <div id="result-heading">
+            <h2>Kết quả tìm kiếm cho từ khóa 'fish':</h2>
+        </div>
+
+        <!-- Nơi hiển thị danh sách món ăn -->
+        <div id="meals" class="meals">
+
+            <!-- Cấu trúc hiển thị 1 món ăn -->
+            <div class="meal">
+                <img src="https://www.themealdb.com/images/media/meals/ysxwuq1487323065.jpg" alt="Fish pie">
+                <div class="meal-info">
+                    <h3>Fish pie</h3>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Nơi hiển thị chi tiết món ăn -->
+        <div id="single-meal">
+            <div class="single-meal">
+
+                <!-- Tên món ăn (Meal) -->
+                <h1>Fish pie</h1>
+
+                <!-- Ảnh món ăn (MealThumb)-->
+                <img src="https://www.themealdb.com/images/media/meals/ysxwuq1487323065.jpg" alt="Fish pie">
+                <div class="single-meal-info">
+                    <!-- Danh mục (Category) -->
+                    <p>Seafood</p>
+                    <!-- Khu vực (Area) -->
+                    <p>British</p>
+                </div>
+                <div class="main">
+                    <!-- Hướng dẫn (Instructions)-->
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt optio sapiente eos
+                        voluptatibus debitis et, officia deserunt soluta non in.</p>
+
+                    <!-- Danh sách thành phần (Ingredient) và số lượng (Measure) -->
+                    <h2>Ingredients</h2>
+                    <ul>
+                        <li>Floury Potatoes - 900g</li>
+                        <li>Olive Oil - 2 tbsp</li>
+                        <li>Semi-skimmed Milk - 600ml</li>
+                        <li>White Fish Fillets - 800g</li>
+                        <li>Plain flour - 1 tbsp</li>
+                        <li>Nutmeg - Grating</li>
+                        <li>Double Cream - 3 tbsp</li>
+                        <li>Jerusalem Artichokes - 200g</li>
+                        <li>Leek - 1 finely sliced</li>
+                        <li>Prawns - 200g peeled raw</li>
+                        <li>Parsley - Large handful</li>
+                        <li>Dill - Handful</li>
+                        <li>Lemon - Grated zest of 1</li>
+                        <li>Gruyère - 25g grated</li>
+                        <li>Lemon - Juice of 1</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./main.js"></script>
+</body>
+
+</html>
