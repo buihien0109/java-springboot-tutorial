@@ -43,16 +43,9 @@ public class StudentService {
 
     // Tìm kiếm học viên theo id
     public Student getStudentById(int id) {
-        Optional<Student> studentOptional = students
-                .stream()
-                .filter(student -> student.getId() == id)
-                .findFirst();
-
-        if(studentOptional.isEmpty()) {
+        return findStudent(id).orElseThrow(() -> {
             throw new NotFoundException("Student with id = " + id + " not exist");
-        }
-
-        return studentOptional.get();
+        });
     }
 
     // Tạo học viên mới
@@ -67,32 +60,28 @@ public class StudentService {
 
     // Cập nhật thông tin của học viên
     public Student updateStudent(int id, UpdateStudentRequest request) {
-        Optional<Student> studentOptional = students
-                .stream()
-                .filter(student -> student.getId() == id)
-                .findFirst();
-
-        if(studentOptional.isEmpty()) {
+        Student student = findStudent(id).orElseThrow(() -> {
             throw new NotFoundException("Student with id = " + id + " not exist");
-        }
+        });
 
-        Student student =  studentOptional.get();
         student.setName(request.getName());
-
         return student;
     }
 
     // Xóa học viên theo id
     public void deleteStudent(int id) {
-        Optional<Student> studentOptional = students
+        Student student = findStudent(id).orElseThrow(() -> {
+            throw new NotFoundException("Student with id = " + id + " not exist");
+        });
+
+        students.removeIf(s -> s.getId() == student.getId());
+    }
+
+    // HELPER Method : Tìm kiếm học viên theo id
+    public Optional<Student> findStudent(int id) {
+        return students
                 .stream()
                 .filter(student -> student.getId() == id)
                 .findFirst();
-
-        if(studentOptional.isEmpty()) {
-            throw new NotFoundException("Student with id = " + id + " not exist");
-        }
-
-        students.removeIf(student -> student.getId() == id);
     }
 }
