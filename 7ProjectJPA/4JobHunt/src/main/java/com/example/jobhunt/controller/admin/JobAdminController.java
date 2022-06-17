@@ -1,9 +1,9 @@
 package com.example.jobhunt.controller.admin;
 
-import com.example.jobhuntbackend.model.dto.JobDto;
-import com.example.jobhuntbackend.request.CreateJobRequest;
-import com.example.jobhuntbackend.request.UpdateJobRequest;
-import com.example.jobhuntbackend.service.admin.JobAdminService;
+import com.example.jobhunt.model.dto.JobDto;
+import com.example.jobhunt.request.CreateJobRequest;
+import com.example.jobhunt.request.UpdateJobRequest;
+import com.example.jobhunt.service.admin.JobAdminService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

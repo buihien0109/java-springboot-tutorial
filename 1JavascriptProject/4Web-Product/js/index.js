@@ -6,7 +6,7 @@ const seachFormBtnEl = document.querySelector(".seach-form-button");
 // Tìm kiếm sản phẩn
 const seachProduct = (term) => {
     // Lọc sản phẩn theo title
-    let productFilter = products.filter((c) => c.title.toLowerCase().includes(term.toLowerCase()));
+    let productFilter = products.filter((c) => c.name.toLowerCase().includes(term.toLowerCase()));
     renderProduct(productFilter);
 };
 

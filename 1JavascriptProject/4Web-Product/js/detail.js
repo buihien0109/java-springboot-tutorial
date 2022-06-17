@@ -1,7 +1,15 @@
 // Truy cập vào các thành phần
 const breadcrumbItemActiveEl = document.querySelector(".breadcrumb-item.active");
 const carouselEl = document.getElementById("carousel");
-const detailEl = document.getElementById("detail");
+const productNameEl = document.querySelector(".product-name");
+const productPriceEl = document.querySelector(".product-price");
+const productSizeEl = document.querySelector(".product-size");
+const productDescriptionEl = document.querySelector(".product-description");
+
+const btnPlusCount = document.querySelector(".btn-plus-count");
+const btnMinusCount = document.querySelector(".btn-minus-count");
+const btnAddToCart = document.querySelector(".btn-add-to-cart");
+const countEl = document.querySelector(".count");
 
 // Lấy thông tin id trên URL
 let params = new URLSearchParams(window.location.search);
@@ -9,6 +17,7 @@ let id = params.get("id");
 
 // Tạo biến để lưu thông tin của product
 let product;
+let count = 1;
 
 // Kiểm tra xem có tồn tại id trên url hay không?
 if(id) {
@@ -26,29 +35,13 @@ if(id) {
 
 // Hiển thị thông tin sản phẩm
 const renderProduct = product => {
-    detailEl.innerHTML = `
-        <h2 class="fs-3">${product.name}</h2>
-        <p class="text-danger fs-4 fw-bold mb-4">${formatMoney(product.price)}</p>
-
-        <div class="sizes mb-4">
-            ${product.sizes.map(size => {
-                return `<span class="border py-2 px-3 border-dark me-2">${size}</span>`
-            }).join("")}
-        </div>
-
-        <div class="d-flex align-items-center mb-4">
-            <span class="border d-inline-block me-3">
-                <span class="py-2 px-3 d-inline-block fw-bold bg-light">-</span>
-                <span class="py-2 px-3 d-inline-block fw-bold">1</span>
-                <span class="py-2 px-3 d-inline-block fw-bold bg-light">+</span>
-            </span>
-
-            <button class="btn btn-dark py-2 rounded-0">Thêm vào giỏ hàng</button>
-        </div>
-
-        <div class="product-info">${product.description}</div>
-    `
-
+    productNameEl.innerText = product.name;
+    productPriceEl.innerText = formatMoney(product.price);
+    productSizeEl.innerHTML = product.sizes.map(size => {
+        return `<span class="border py-2 px-3 border-dark me-2" onclick="choseSize(this)">${size}</span>`
+    }).join("");
+    productDescriptionEl.innerText = product.description;
+    
     renderImageProduct(product.images);
 }
 
@@ -82,8 +75,50 @@ const formatMoney = number => {
     return number.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
 }
 
-renderProduct(product)
+// Chọn size
+const choseSize = (btn) => {
+    let sizeEls = productSizeEl.querySelectorAll("span");
+    Array.from(sizeEls).map(el => el.classList.remove("selected", "bg-dark", "text-white"));
 
+    btn.classList.add("selected", "bg-dark", "text-white");
+}
+
+// Tăng số lượng
+btnPlusCount.addEventListener("click", () => {
+    count++;
+    countEl.innerText = count;
+})
+
+// Giảm số lượng
+btnMinusCount.addEventListener("click", () => {
+    count--;
+    if(count == 0) {
+        count = 1;
+    }
+    countEl.innerText = count;
+})
+
+// Thêm vào giỏ hàng
+btnAddToCart.addEventListener("click", function() {
+    let sizeSelectedEl = document.querySelector(".selected");
+    if(!sizeSelectedEl) {
+        alert("Vùi lòng chọn size trước khi thêm vào giỏ hàng");
+        return;
+    }
+    let item = {
+        id : product.id,
+        name : product.name,
+        price : product.price,
+        image : product.images[0],
+        size : sizeSelectedEl.innerText,
+        count : count
+    }
+
+    addItemToCart(item);
+    alert("Thêm vào giỏ hàng thành công");
+})
+
+renderProduct(product);
 
 // Initialise Carousel ********************************
 const mainCarousel = new Carousel(document.querySelector("#mainCarousel"), {

@@ -1,9 +1,12 @@
 package com.example.jobhunt.service.admin;
 
 import com.example.jobhunt.entity.Applicant;
+import com.example.jobhunt.entity.Company;
 import com.example.jobhunt.entity.Job;
+import com.example.jobhunt.exception.NotFoundException;
 import com.example.jobhunt.repo.ApplicantRepo;
-import com.example.jobhuntbackend.exception.NotFoundException;
+import com.example.jobhunt.repo.CompanyRepo;
+import com.example.jobhunt.repo.JobRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,32 +15,35 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class ApplicantAdminService {
+    private final CompanyRepo companyRepo;
+    private final JobRepo jobRepo;
     private final ApplicantRepo applicantRepo;
 
     public List<Applicant> getApplicants(int companyId, int jobId) {
-        Job job = jobAdminService.findJob(companyId, jobId);
-        return applicantRepo.getByJobId(jobId);
+        Company company = companyRepo.findById(companyId).orElseThrow(() -> {
+            throw new NotFoundException("Không tìm thấy công ty có id = " + companyId);
+        });
+
+        Job job = jobRepo.findByIdAndCompanyId(jobId, companyId).orElseThrow(() -> {
+            throw new NotFoundException("Không tìm thấy công việc có id = " + jobId);
+        });
+
+        return applicantRepo.getApplicantsByJobId(jobId);
     }
 
     public void deleteApplicant(int companyId, int jobId, int id) {
-        Applicant applicant = findApplicant(companyId, jobId, id);
-        applicantRepo.delete(id);
-    }
+        Company company = companyRepo.findById(companyId).orElseThrow(() -> {
+            throw new NotFoundException("Không tìm thấy công ty có id = " + companyId);
+        });
 
-    // HELPER METHOD
-    // Tìm kiếm job theo companyId và jobId
-    public Applicant findApplicant(int companyId, int jobId, int applicantId) {
-        // Lấy thông tin của job
-        Job job = jobAdminService.findJob(companyId, jobId);
+        Job job = jobRepo.findByIdAndCompanyId(jobId, companyId).orElseThrow(() -> {
+            throw new NotFoundException("Không tìm thấy công việc có id = " + jobId);
+        });
 
-        // Lấy thông tin của ứng viên
-        Applicant applicant = applicantRepo.getById(applicantId);
+        Applicant applicant = applicantRepo.findByIdAndJobId(id, jobId).orElseThrow(() -> {
+            throw new NotFoundException("Không tìm thấy công việc có id = " + jobId);
+        });
 
-        // Kiểm tra job có thuộc company hay không
-        if (job.getId() != applicant.getJobId()) {
-            throw new NotFoundException("Ứng viên có id = " + applicantId + " không thuộc công việc có id = " + jobId);
-        }
-
-        return applicant;
+        applicantRepo.delete(applicant);
     }
 }

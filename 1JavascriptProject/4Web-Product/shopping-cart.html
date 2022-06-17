@@ -5,7 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Giỏ hàng</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="./image/favicon.ico">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
@@ -14,10 +17,7 @@
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
     <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="./css/shopping-cart.css">
 </head>
 
 <body>
@@ -26,21 +26,21 @@
             <div class="d-flex justify-content-between align-items-center">
                 <div class="logo">
                     <a href="./index.html">
-                        <img src="https://techmaster.vn/resources/image/logo-techmaster/white/white_200x74.png"
+                        <img src="https://cdn.shopify.com/s/files/1/0506/6919/1345/files/logo.png?v=1603860300"
                             alt="logo" />
                     </a>
                 </div>
                 <div class="cart">
-                    <a href="./shopping-cart.html" class="text-white position-relative">
-                        <span class="fs-5"><i class="fa-solid fa-cart-shopping"></i></span>
-                        <span class="cart-count bg-info px-1 rounded-2 position-absolute">2</span>
+                    <a href="./shopping-cart.html" class="text-dark position-relative">
+                        <span class="fs-4"><i class="fa-solid fa-cart-shopping"></i></span>
+                        <span class="cart-count bg-white px-1 rounded-2 position-absolute border">2</span>
                     </a>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="product-container mt-5">
+    <div class="shopping-cart-container mt-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -55,7 +55,8 @@
                 </div>
             </div>
 
-            <div class="row">
+            <p class="fst-italic message">Không có sản phẩm trong giỏ hàng</p>
+            <div class="row shopping-cart">
                 <div class="col-md-8">
                     <div class="product-list">
                         <div class="product-item d-flex border mb-4">
@@ -66,8 +67,7 @@
                                 <div>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <h2 class="text-dark fs-5 fw-normal">
-                                            Lớp học Spring Boot - Web Back
-                                            End
+                                            Lớp học Spring Boot - Web Back End (M)
                                         </h2>
                                         <h2 class="text-danger fs-5 fw-normal">
                                             9.000.000 VND
@@ -95,11 +95,21 @@
                     <div class="bill">
                         <div class="border mb-2 p-3 fs-5 fw-normal d-flex justify-content-between align-items-center">
                             <span class="text-black-50">Tạm tính:</span>
+                            <span class="text-primary" id="sub-total-money">9.000.000 VND</span>
+                        </div>
+                        <div class="border mb-2 p-3 fs-5 fw-normal d-flex justify-content-between align-items-center d-none discount-box">
+                            <span class="text-black-50">Giảm giá:</span>
+                            <span class="text-primary" id="discount-money">9.000.000 VND</span>
+                        </div>
+                        <div class="border mb-2 p-3 fs-5 fw-normal d-flex justify-content-between align-items-center">
+                            <span class="text-black-50">Thành tiền:</span>
                             <span class="text-primary" id="total-money">9.000.000 VND</span>
                         </div>
                         <div class="discount-form d-flex align-items-center border mb-4 pe-0">
-                            <input type="text" placeholder="Mã giảm giá" class="form-control border-0 w-75" id="discount-form-input">
-                            <button class="text-white bg-dark d-block w-25 text-center border-0 h-100 d-inline-block" id="btn-apply">Áp dụng</button>
+                            <input type="text" placeholder="Mã giảm giá" class="form-control border-0 w-75"
+                                id="discount-form-input">
+                            <button class="text-white bg-dark d-block w-25 text-center border-0 h-100 d-inline-block"
+                                id="btn-apply">Áp dụng</button>
                         </div>
                     </div>
                 </div>
@@ -107,13 +117,9 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
-
-    <!-- <script src="./js/data.js"></script> -->
-    <script src="./js/detail.js"></script>
+    <script src="./js/data.js"></script>
+    <script src="./js/cart.js"></script>
+    <script src="./js/shopping-cart.js"></script>
 </body>
 
 </html>

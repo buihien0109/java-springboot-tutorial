@@ -35,7 +35,7 @@ let products = [
             "https://images.unsplash.com/photo-1544441893-675973e31985?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Y2xvdGhpbmd8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
         ],
         rating : 4.3,
-        price : 5500000,
+        price : 550000,
         sizes : ["S", "M", "L"]
     },
     {

@@ -1,11 +1,16 @@
 package com.example.jobhunt.entity;
 
+import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 @Getter
 @Setter
@@ -13,6 +18,10 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "job")
+@TypeDef(
+        name = "json",
+        typeClass = JsonStringType.class
+)
 public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +33,9 @@ public class Job {
 
     private String image; // Ảnh đại diện của công việc
 
-    private List[] skills; // Các kỹ năng cần có
+    @Type(type = "json")
+    @Column(name = "skills", columnDefinition = "json")
+    private ArrayList<String> skills; // Các kỹ năng cần có
 
     private int salary; // Mức lương
 

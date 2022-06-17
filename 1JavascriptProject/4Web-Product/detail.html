@@ -5,7 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Trang chi tiết</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="./image/favicon.ico">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
@@ -17,7 +20,6 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
     <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="./css/detail.css">
 </head>
 
 <body>
@@ -26,14 +28,14 @@
             <div class="d-flex justify-content-between align-items-center">
                 <div class="logo">
                     <a href="./index.html">
-                        <img src="https://techmaster.vn/resources/image/logo-techmaster/white/white_200x74.png"
+                        <img src="https://cdn.shopify.com/s/files/1/0506/6919/1345/files/logo.png?v=1603860300"
                             alt="logo" />
                     </a>
                 </div>
                 <div class="cart">
-                    <a href="./shopping-cart.html" class="text-white position-relative">
-                        <span class="fs-5"><i class="fa-solid fa-cart-shopping"></i></span>
-                        <span class="cart-count bg-info px-1 rounded-2 position-absolute">2</span>
+                    <a href="./shopping-cart.html" class="text-dark position-relative">
+                        <span class="fs-4"><i class="fa-solid fa-cart-shopping"></i></span>
+                        <span class="cart-count bg-white px-1 rounded-2 position-absolute border">2</span>
                     </a>
                 </div>
             </div>
@@ -104,10 +106,10 @@
 
                 <div class="col-md-6">
                     <div id="detail">
-                        <h2 class="fs-3">Adidas YEEZY BOOST 380 - Stone Salt</h2>
-                        <p class="text-danger fs-4 fw-bold mb-4">5,200,000đ</p>
+                        <h2 class="product-name fs-3">Adidas YEEZY BOOST 380 - Stone Salt</h2>
+                        <p class="product-price text-danger fs-4 fw-bold mb-4">5,200,000đ</p>
 
-                        <div class="sizes mb-4">
+                        <div class="product-size mb-4">
                             <span class="border py-2 px-3 border-dark me-2">M</span>
                             <span class="border py-2 px-3 border-dark me-2">S</span>
                             <span class="border py-2 px-3 border-dark me-2">L</span>
@@ -116,15 +118,15 @@
 
                         <div class="d-flex align-items-center mb-4">
                             <span class="border d-inline-block me-3">
-                                <span class="py-2 px-3 d-inline-block fw-bold bg-light">-</span>
-                                <span class="py-2 px-3 d-inline-block fw-bold">0</span>
-                                <span class="py-2 px-3 d-inline-block fw-bold bg-light">+</span>
+                                <span class="py-2 px-3 d-inline-block fw-bold btn-minus-count">-</span>
+                                <span class="py-2 px-3 d-inline-block fw-bold count">1</span>
+                                <span class="py-2 px-3 d-inline-block fw-bold btn-plus-count">+</span>
                             </span>
 
-                            <button class="btn btn-dark py-2 rounded-0">Thêm vào giỏ hàng</button>
+                            <button class="btn btn-dark py-2 rounded-0 btn-add-to-cart">Thêm vào giỏ hàng</button>
                         </div>
 
-                        <div class="product-info">
+                        <div class="product-description">
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem sint impedit
                                 reiciendis ducimus, ipsa quo quibusdam dolorum quisquam magnam dolore eius cum. Sed
                                 nihil itaque dolorum impedit nostrum vel a distinctio? Molestias voluptate soluta
@@ -141,12 +143,10 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
 
     <script src="./js/data.js"></script>
+    <script src="./js/cart.js"></script>
     <script src="./js/detail.js"></script>
 </body>
 

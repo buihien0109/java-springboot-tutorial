@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 @Getter
 @Setter
@@ -14,10 +15,7 @@ import java.time.LocalDate;
 public class UpdateJobRequest {
     private String title; // Tiêu đề của công việc
     private String description; // Mô tả cho công việc
-    private String city; // Địa điểm làm việc (thành phố)
-    private String address; // Địa điểm làm việc cụ thể
-    private String[] skills; // Các kỹ năng cần có
-    private LocalDate startDate; // ngày bắt đầu tuyển dụng
-    private LocalDate endDate; // ngày kết thúc tuyển dụng
+    private ArrayList<String> skills; // Các kỹ năng cần có
     private int salary; // Mức lương
+    private int companyId; // id của công ty đang tuyển dụng
 }

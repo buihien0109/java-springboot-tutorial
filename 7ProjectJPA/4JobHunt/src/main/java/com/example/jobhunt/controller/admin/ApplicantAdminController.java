@@ -1,7 +1,7 @@
 package com.example.jobhunt.controller.admin;
 
 import com.example.jobhunt.entity.Applicant;
-import com.example.jobhuntbackend.service.admin.ApplicantAdminService;
+import com.example.jobhunt.service.admin.ApplicantAdminService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.DeleteMapping;

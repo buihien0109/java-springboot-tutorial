@@ -52,6 +52,12 @@
             <artifactId>commons-lang3</artifactId>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.vladmihalcea</groupId>
+            <artifactId>hibernate-types-52</artifactId>
+            <version>2.16.2</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
