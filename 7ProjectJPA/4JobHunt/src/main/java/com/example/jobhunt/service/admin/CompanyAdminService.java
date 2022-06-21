@@ -88,13 +88,17 @@ public class CompanyAdminService {
         });
 
         // B1 : Upload file
-        String filePath = fileService.uploadFile(file);
+        String filePath = fileService.uploadFile(id, file);
 
         // B2 : Cập nhật lại logoPath cho nhà tuyển dụng
-        company.setLogoPath(filePath);
-        companyRepo.save(company);
+//        company.setLogoPath(filePath);
+//        companyRepo.save(company);
 
         // B3 : Trả về URL Path
         return filePath;
+    }
+
+    public byte[] readFile(int id, String fileId) {
+        return fileService.readFile(id, fileId);
     }
 }

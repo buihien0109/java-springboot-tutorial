@@ -18,5 +18,4 @@ public class CreateJobRequest {
     private String description; // Mô tả cho công việc
     private ArrayList<String> skills; // Các kỹ năng cần có
     private int salary; // Mức lương
-    private int companyId; // id của công ty đang tuyển dụng
 }

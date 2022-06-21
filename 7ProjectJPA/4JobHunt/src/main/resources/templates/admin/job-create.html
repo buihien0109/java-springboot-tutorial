@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout-admin :: main-fragment(~{:: title}, ~{:: #css}, ~{:: .job-container}, ~{:: #js})}">
+
+<head>
+    <title>Tạo công việc</title>
+
+    <th:block id="css">
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    </th:block>
+</head>
+
+<body>
+<div class="job-container mt-4 mb-4">
+    <div class="container">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/admin}">Trang quản trị</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/admin/companies}">Danh sách công ty</a></li>
+                    <li class="breadcrumb-item"><a
+                            th:href="@{/admin/companies/{id}/{slug} (id = ${company.id}, slug = ${T(com.example.jobhunt.utils.Utils).generateSlug(company.name)})}"
+                            th:text="${company.name}">Danh sách công ty</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Tạo công việc</li>
+                </ol>
+            </nav>
+        </div>
+
+
+        <div class="mb-4">
+            <button class="btn-custom btn-create-job">
+                <span><i class="fa-solid fa-plus"></i></span>
+                Tạo
+            </button>
+            <a th:href="@{/admin/companies}" class="btn-custom btn-refresh">
+                <span><i class="fa-solid fa-angle-left"></i></span>
+                Quay lại
+            </a>
+        </div>
+
+        <div class="company-list-inner p-2">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="mb-3">
+                        <label for="job-title" class="form-label">Tên công việc</label>
+                        <input type="text" class="form-control" id="job-title">
+                    </div>
+                    <div class="mb-3">
+                        <label for="job-description" class="form-label">Mô tả ngắn</label>
+                        <textarea class="form-control" id="job-description" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="job-skill" class="form-label">Kỹ năng</label>
+                        <select id="job-skill" class="form-control" multiple="multiple">
+                            <option value="Java">Java</option>
+                            <option value="Golang">Golang</option>
+                            <option value="PHP">PHP</option>
+                            <option value="Javascript">Javascript</option>
+                            <option value="React">React</option>
+                            <option value="SQL">SQL</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="job-salary" class="form-label">Mức lương</label>
+                        <input type="text" class="form-control" id="job-salary">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block id="js">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script th:inline="javascript">
+        let company = [[${company}]];
+    </script>
+
+    <script th:src="@{/js/job-create.js}"></script>
+</th:block>
+</body>
+
+</html>

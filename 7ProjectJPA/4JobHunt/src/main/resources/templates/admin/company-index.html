@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout-admin :: main-fragment(~{:: title}, ~{}, ~{:: .company-list}, ~{})}">
+
+<head>
+    <title>Danh sách công ty</title>
+</head>
+
+<body>
+<div class="company-list mt-4 mb-4">
+    <div class="container">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/admin}">Trang quản trị</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Danh sách công ty</li>
+                </ol>
+            </nav>
+        </div>
+
+
+        <div class="mb-4">
+            <a th:href="@{/admin/companies/create}" class="btn-custom btn-create-company">
+                <span><i class="fa-solid fa-plus"></i></span>
+                Tạo công ty
+            </a>
+            <a th:href="@{/admin/companies}" class="btn-custom btn-refresh">
+                <span><i class="fa-solid fa-arrow-rotate-right"></i></span>
+                Refresh
+            </a>
+        </div>
+
+        <div class="company-list-inner p-2">
+            <table class="table company-table">
+                <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Logo</th>
+                    <th>Tên công ty</th>
+                    <th>Địa chỉ (Thành phố)</th>
+                    <th>Số công việc đang tuyển</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="company, state : ${companies}">
+                    <td th:text="${state.index + 1}">1</td>
+                    <td>
+                        <img th:src="${#strings.isEmpty(company.logoPath) ? 'https://via.placeholder.com/200' : company.logoPath}"
+                             th:alt="${company.name}">
+                    </td>
+                    <td>
+                        <a th:href="@{/admin/companies/{id}/{slug} (id = ${company.id}, slug = ${T(com.example.jobhunt.utils.Utils).generateSlug(company.name)})}"
+                           th:text="${company.name}">Công ty Techmaster Việt Nam</a>
+                    </td>
+                    <th th:text="${company.city}">Hà Nội</th>
+                    <td th:text="${company.numberOfJobs}">4</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

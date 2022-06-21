@@ -1,0 +1,166 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    background-color: rgb(236, 240, 245);
+}
+
+a {
+    text-decoration: none;
+}
+
+button {
+    border: none;
+    outline: none;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+    margin: auto;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.table>:not(:last-child)>:last-child>* {
+    border: 1px solid #f0f0f0;
+}
+
+table, tr, th, td {
+    border: 1px solid #f0f0f0;
+}
+
+.btn-custom {
+    display: inline-block;
+    padding: 6px 12px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    color: rgb(255, 255, 255);
+}
+
+/*Style header*/
+.header {
+    background-color: rgb(22, 36, 61);
+    padding: 0 15px;
+    height: 60px;
+    color: rgba(255, 255, 255, 0.55);
+    box-shadow: 0px 10px 60px 0px rgb(0 0 0 / 5%);
+
+    display: flex;
+    align-items: center;
+}
+
+.sidebar {
+    display: flex;
+    align-items: center;
+}
+
+/* style menu */
+.menu > ul {
+    display: flex;
+}
+
+.menu-item {
+    color: #fff;
+    font-size: 15px;
+    margin: 0 10px;
+
+    position: relative;
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+.menu-item span {
+    margin-left: 5px;
+}
+
+/* style sub-menu */
+.sub-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+
+    width: 200px;
+    box-shadow: 0 0 10px rgb(0 0 0 / 15%);
+    background-color: #fff;
+    border-radius: 4px;
+    color: #212529;
+
+    display: none;
+}
+
+.menu-item:hover .sub-menu {
+    display: block;
+}
+
+.sub-menu-item {
+    padding: 11px 16px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.sub-menu-item:hover {
+    background-color: #c4c4c4;
+    color: #fff;
+}
+
+/* Company list */
+.company-list-inner,
+.job-list-inner{
+    background-color: #fff;
+    border: 1px solid rgb(60, 141, 188);
+    font-size: 16px;
+    border-radius: 3px;
+}
+
+.btn-create-company,
+.btn-update-company,
+.btn-create-job,
+.btn-update-job {
+    background-color: rgb(60, 141, 188);
+    border-color: rgb(54, 127, 169);
+}
+
+.btn-refresh {
+    background-color: rgb(0, 192, 239);
+    border-color: rgb(0, 172, 214);
+}
+
+.company-table img {
+    width: 100px;
+    height: 50px;
+    object-fit: cover;
+}
+
+/* Company detail */
+.company-logo-preview,
+.job-logo-preview {
+    width: 200px;
+    height: 200px;
+    border: 2px solid #ddd;
+}
+
+#company-logo,
+.company-logo-preview img,
+#job-logo,
+.job-logo-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

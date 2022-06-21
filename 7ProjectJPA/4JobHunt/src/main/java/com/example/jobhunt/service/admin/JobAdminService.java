@@ -34,7 +34,7 @@ public class JobAdminService {
     }
 
     // Lấy danh sách tất cả công việc theo id của nhà tuyển dụng
-    public List<JobDto> getJobById(int companyId) {
+    public List<JobDto> getJobsById(int companyId) {
         Company company = companyRepo.findById(companyId).orElseThrow(() -> {
             throw new NotFoundException("Không tìm thấy công ty có id = " + companyId);
         });
@@ -94,6 +94,8 @@ public class JobAdminService {
         job.setSkills(request.getSkills());
         job.setSalary(request.getSalary());
 
+        jobRepo.save(job);
+
         return jobMapper.toJobDto(job);
     }
 
@@ -122,7 +124,7 @@ public class JobAdminService {
         });
 
         // B1 : Upload file
-        String filePath = fileService.uploadFile(file);
+        String filePath = fileService.uploadFile(companyId, file);
 
         // B2 : Cập nhật lại image cho job
         job.setImage(filePath);

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout-admin :: main-fragment(~{:: title}, ~{}, ~{:: .company-list}, ~{:: #js})}">
+
+<head>
+    <title>Tạo công ty</title>
+</head>
+
+<body>
+<div class="company-list mt-4 mb-4">
+    <div class="container">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/admin}">Trang quản trị</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/admin/companies}">Danh sách công ty</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Tạo công ty</li>
+                </ol>
+            </nav>
+        </div>
+
+
+        <div class="mb-4">
+            <button class="btn-custom btn-create-company">
+                <span><i class="fa-solid fa-plus"></i></span>
+                Tạo
+            </button>
+            <a th:href="@{/admin/companies}" class="btn-custom btn-refresh">
+                <span><i class="fa-solid fa-angle-left"></i></span>
+                Quay lại
+            </a>
+        </div>
+
+        <div class="company-list-inner p-2">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="mb-3">
+                        <label for="company-name" class="form-label">Tên công ty</label>
+                        <input type="text" class="form-control" id="company-name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="company-website" class="form-label">Website</label>
+                        <input type="text" class="form-control" id="company-website">
+                    </div>
+                    <div class="mb-3">
+                        <label for="company-email" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="company-email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="company-description" class="form-label">Mô tả ngắn</label>
+                        <textarea class="form-control" id="company-description" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="company-city" class="form-label">Thành phố</label>
+                        <select class="form-control" id="company-city"></select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="company-address" class="form-label">Địa chỉ cụ thể</label>
+                        <input type="text" class="form-control" id="company-address">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block id="js">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script th:src="@{/js/company-create.js}"></script>
+</th:block>
+</body>
+
+</html>

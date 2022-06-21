@@ -37,11 +37,14 @@ if(id) {
 const renderProduct = product => {
     productNameEl.innerText = product.name;
     productPriceEl.innerText = formatMoney(product.price);
+    productDescriptionEl.innerText = product.description;
+
+    // Hiển thị size
     productSizeEl.innerHTML = product.sizes.map(size => {
         return `<span class="border py-2 px-3 border-dark me-2" onclick="choseSize(this)">${size}</span>`
     }).join("");
-    productDescriptionEl.innerText = product.description;
     
+    // Hiển thị hình ảnh
     renderImageProduct(product.images);
 }
 
@@ -70,17 +73,12 @@ const renderImageProduct = arr => {
     `
 }
 
-// Format tiền
-const formatMoney = number => {
-    return number.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
-}
-
 // Chọn size
-const choseSize = (btn) => {
+const choseSize = (ele) => {
     let sizeEls = productSizeEl.querySelectorAll("span");
     Array.from(sizeEls).map(el => el.classList.remove("selected", "bg-dark", "text-white"));
 
-    btn.classList.add("selected", "bg-dark", "text-white");
+    ele.classList.add("selected", "bg-dark", "text-white");
 }
 
 // Tăng số lượng
@@ -92,7 +90,7 @@ btnPlusCount.addEventListener("click", () => {
 // Giảm số lượng
 btnMinusCount.addEventListener("click", () => {
     count--;
-    if(count == 0) {
+    if(count < 1) {
         count = 1;
     }
     countEl.innerText = count;
@@ -100,11 +98,14 @@ btnMinusCount.addEventListener("click", () => {
 
 // Thêm vào giỏ hàng
 btnAddToCart.addEventListener("click", function() {
+    // Kiểm tra xem đã chọn size hay chưa
     let sizeSelectedEl = document.querySelector(".selected");
     if(!sizeSelectedEl) {
         alert("Vùi lòng chọn size trước khi thêm vào giỏ hàng");
         return;
     }
+
+    // Tạo thông tin item để thêm vào giỏ hàng
     let item = {
         id : product.id,
         name : product.name,
@@ -114,6 +115,7 @@ btnAddToCart.addEventListener("click", function() {
         count : count
     }
 
+    // Thêm vào giỏ hàng
     addItemToCart(item);
     alert("Thêm vào giỏ hàng thành công");
 })

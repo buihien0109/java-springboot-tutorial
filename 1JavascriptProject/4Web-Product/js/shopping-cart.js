@@ -13,7 +13,7 @@ const shoppingCartEl = document.querySelector(".shopping-cart");
 const messageEl = document.querySelector(".message");
 
 // Khai báo biến
-let items = getFromLocalStorage("cart") || [];
+let items = getFromLocalStorage("cart");
 
 let discountCode = {
     A : 0.1,
@@ -86,7 +86,7 @@ const plusCount = (id, size) => {
     renderProducts(items);
 
     // Lưu lại vào localStorage
-    addToLocalStorage("cart", items);
+    addToLocalStorage(items);
 }
 
 // Giảm số lượng
@@ -102,7 +102,7 @@ const minusCount = (id, size) => {
     renderProducts(items);
 
     // Lưu lại vào localStorage
-    addToLocalStorage("cart", items);
+    addToLocalStorage(items);
 }
 
 // Xóa sản phẩm
@@ -116,7 +116,7 @@ const removeProduct = (id, size) => {
         renderProducts(items);
 
         // Lưu lại vào localStorage
-        addToLocalStorage("cart", items);
+        addToLocalStorage(items);
     }
 }
 
@@ -143,6 +143,7 @@ const updateTotalMoney = (arr, code) => {
 
     let total = subTotal - discount;
 
+    // Cập nhật giá tiền từng loại
     subTotalMoneyEl.innerText = formatMoney(subTotal)
     discountMoneyEl.innerText = formatMoney(discount);
     totalMoneyEl.innerText = formatMoney(total);
@@ -150,8 +151,12 @@ const updateTotalMoney = (arr, code) => {
 
 }
 
+// Xử lý phần áp dụng mã giảm giá
 btnApply.addEventListener("click", function() {
+    // Lấy mã code người dùng nhập vào ô input
     let value = discountInputEl.value;
+
+    // Nếu không tồn tại mã code -> error
     if(!value) {
         alert("Mã giảm giá không được để trống");
         code = null;
@@ -159,11 +164,13 @@ btnApply.addEventListener("click", function() {
         return;
     }
 
+    // Nếu mã code = mã code đã áp dụng
     if(value == code) {
         alert("Mã giảm giá đã được áp dụng");
         return
     }
 
+    // Nếu mã code không hợp lệ
     if(!discountCode[value]) {
         alert("Mã giảm giá không hợp lệ");
         code = null;
@@ -174,11 +181,6 @@ btnApply.addEventListener("click", function() {
     code = value;
     updateTotalMoney(items, code);
 })
-
-// Format tiền
-const formatMoney = number => {
-    return number.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
-}
 
 renderProducts(items);
 

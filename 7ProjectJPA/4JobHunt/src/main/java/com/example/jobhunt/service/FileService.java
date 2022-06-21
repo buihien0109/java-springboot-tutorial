@@ -15,12 +15,13 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,7 +39,7 @@ public class FileService {
     // Tạo folder
     public void createFolder(String path) {
         File folder = new File(path);
-        if(!folder.exists()) {
+        if (!folder.exists()) {
             folder.mkdirs();
         }
     }
@@ -63,7 +64,13 @@ public class FileService {
             stream.write(file.getBytes());
             stream.close();
 
-            return "/api/v1/users/" + id + "/files/" + generateFileId;
+            String filePath =  "/api/companies/" + id + "/files/" + generateFileId;
+
+            // Lưu image vào database
+            Image image = new Image(generateFileId, filePath, LocalDateTime.now(), id);
+            imageRepo.save(image);
+
+            return filePath;
         } catch (Exception e) {
             throw new RuntimeException("Lỗi khi upload file");
         }
@@ -72,18 +79,18 @@ public class FileService {
     public void validate(MultipartFile file) {
         // Kiểm tra tên file
         String fileName = file.getOriginalFilename();
-        if(fileName == null || fileName.equals("")) {
+        if (fileName == null || fileName.equals("")) {
             throw new BadRequestException("Tên file không hợp lệ");
         }
 
         // Kiểm tra đuôi file
         String fileExtension = Utils.getFileExtension(fileName);
-        if(!Utils.checkFileExtension(fileExtension)) {
+        if (!Utils.checkFileExtension(fileExtension)) {
             throw new BadRequestException("File không hợp lệ");
         }
 
         // Kiểm tra size (upload dưới 2MB)
-        if((double) file.getSize() / 1_000_000L > 2) {
+        if ((double) file.getSize() / 1_000_000L > 2) {
             throw new BadRequestException("File không được vượt quá 2MB");
         }
     }
@@ -94,7 +101,7 @@ public class FileService {
         Path userPath = rootPath.resolve(String.valueOf(id));
 
         // Kiểm tra userPath có tồn tại hay không
-        if(!Files.exists(userPath)) {
+        if (!Files.exists(userPath)) {
             throw new RuntimeException("Lỗi khi đọc file " + fileId);
         }
 
@@ -102,8 +109,11 @@ public class FileService {
             Path file = userPath.resolve(fileId);
             Resource resource = new UrlResource(file.toUri());
 
-            if(resource.exists() || resource.isReadable()) {
-                return StreamUtils.copyToByteArray(resource.getInputStream());
+            if (resource.exists() || resource.isReadable()) {
+                InputStream stream = resource.getInputStream();
+                byte[] bytes = StreamUtils.copyToByteArray(stream);
+                stream.close();
+                return bytes;
             } else {
                 throw new RuntimeException("Lỗi khi đọc file " + fileId);
             }
@@ -119,13 +129,13 @@ public class FileService {
         Path userPath = rootPath.resolve(String.valueOf(id));
 
         // Kiểm tra userPath có tồn tại hay không
-        if(!Files.exists(userPath)) {
+        if (!Files.exists(userPath)) {
             throw new RuntimeException("Lỗi khi đọc file " + fileId);
         }
 
         // Tạo đường dẫn đến file
         File file = userPath.resolve(fileId).toFile();
-        if(!file.exists()) {
+        if (!file.exists()) {
             throw new RuntimeException("file " + fileId + " không tồn tại");
         }
 

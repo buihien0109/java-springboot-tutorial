@@ -1,7 +1,7 @@
 // Lưu dữ liệu vào LocalStorage
-const addToLocalStorage = (key, value) => {
-    localStorage.setItem(key, JSON.stringify(value));
-    displayTotalProductInCart();
+const addToLocalStorage = arr => {
+    localStorage.setItem("cart", JSON.stringify(arr));
+    updateTotalProduct();
 }
 
 // Lấy dữ liệu từ LocalStorage và hiển thị
@@ -10,12 +10,7 @@ const getFromLocalStorage = (key) => {
     if (valueLocalStorage) {
         return JSON.parse(valueLocalStorage);
     }
-    return null;
-}
-
-// Xóa dữ liệu từ LocalStorage
-const removeFromLocalStorage = (key) => {
-    localStorage.removeItem(key);
+    return [];
 }
 
 // Cấu trúc của item trong cart
@@ -34,8 +29,8 @@ const removeFromLocalStorage = (key) => {
 const addItemToCart = item => {
     // Lấy dữ liệu từ localStorage
     let cart = getFromLocalStorage("cart");
-    if (!cart) {
-        cart = [item];
+    if (cart.length == 0) {
+        cart.push(item)
     } else {
         // Tìm xem sản phẩm đã có trong cart hay chưa
         // Nếu chưa có -> thêm vào giỏ hàng
@@ -48,14 +43,18 @@ const addItemToCart = item => {
     }
 
     // Lưu dữ liệu vào localStorage
-    addToLocalStorage("cart", cart);
+    addToLocalStorage(cart);
 }
 
 // Hiển thị số lượng sản phẩm trong giỏ hàng
-const displayTotalProductInCart = () => {
-    let items = getFromLocalStorage("cart") || [];
+const updateTotalProduct = () => {
+    let items = getFromLocalStorage("cart");
     document.querySelector(".cart-count").innerText = items.length;
 }
 
+// Format tiền
+const formatMoney = number => {
+    return number.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
+}
 
-displayTotalProductInCart();
+updateTotalProduct();

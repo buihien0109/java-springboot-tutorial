@@ -2,7 +2,7 @@ package com.example.jobhunt.model.mapper;
 
 import com.example.jobhunt.entity.Job;
 import com.example.jobhunt.model.dto.JobDto;
-import com.example.jobhuntbackend.repo.ApplicantRepo;
+import com.example.jobhunt.repo.ApplicantRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +22,7 @@ public class JobMapper {
         jobDto.setSkills(job.getSkills());
         jobDto.setSalary(job.getSalary());
         jobDto.setCompanyId(job.getCompanyId());
-        jobDto.setNumberOfApplicant(applicantRepo.getByJobId(job.getId()).size());
+        jobDto.setNumberOfApplicant(applicantRepo.getApplicantsByJobId(job.getId()).size());
 
         return jobDto;
     }

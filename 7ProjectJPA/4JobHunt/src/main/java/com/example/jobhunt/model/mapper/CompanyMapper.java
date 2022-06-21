@@ -1,19 +1,16 @@
 package com.example.jobhunt.model.mapper;
 
 import com.example.jobhunt.entity.Company;
-import com.example.jobhunt.entity.Job;
 import com.example.jobhunt.model.dto.CompanyDto;
-import com.example.jobhuntbackend.repo.JobRepo;
+import com.example.jobhunt.repo.JobRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 @AllArgsConstructor
 public class CompanyMapper {
 
-    private final JobRepo JobRepo;
+    private final JobRepo jobRepo;
 
     public CompanyDto toCompanyDto(Company company) {
         CompanyDto companyDto = new CompanyDto();
@@ -22,8 +19,8 @@ public class CompanyMapper {
         companyDto.setName(company.getName());
         companyDto.setLogoPath(company.getLogoPath());
         companyDto.setCity(company.getCity());
-        List<Job> jobs = JobRepo.getByCompanyId(company.getId());
-        companyDto.setNumberOfJobs(jobs.size());
+
+        companyDto.setNumberOfJobs(jobRepo.getJobsByCompanyId(company.getId()).size());
 
         return companyDto;
     }

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout-admin :: main-fragment(~{:: title}, ~{:: #css}, ~{:: .job-container}, ~{:: #js})}">
+
+<head>
+    <title th:text="${job.title}">Chi tiết công việc</title>
+
+    <th:block id="css">
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    </th:block>
+</head>
+
+<body>
+<div class="job-container mt-4 mb-4">
+    <div class="container">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/admin}">Trang quản trị</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/admin/companies}">Danh sách công ty</a></li>
+                    <li class="breadcrumb-item"><a href="./company-list.html">Techmaster Việt Nam</a></li>
+                    <li class="breadcrumb-item"><a href="./company-list.html">Danh sách công việc</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Lập trình viên</li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="mb-4">
+            <a th:href="@{/admin/companies}" class="btn-custom btn-refresh">
+                <span><i class="fa-solid fa-angle-left"></i></span>
+                Quay lại
+            </a>
+        </div>
+
+        <div class="job-list-inner p-2">
+            <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active fw-bold" id="job-tab" data-bs-toggle="tab" data-bs-target="#job"
+                            type="button" role="tab" aria-controls="job" aria-selected="true">Chi tiết công
+                        việc
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link fw-bold" id="applicant-tab" data-bs-toggle="tab" data-bs-target="#applicant"
+                            type="button"
+                            role="tab" aria-controls="applicant" aria-selected="false">Danh sách ứng viên
+                    </button>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="job" role="tabpanel" aria-labelledby="job-tab">
+                    <div class="d-flex justify-content-between mb-4">
+                        <button class="btn-custom btn-update-job">
+                            <span><i class="fa-solid fa-plus"></i></span>
+                            Cập nhật
+                        </button>
+                        <button class="btn-custom btn-delete-job bg-danger">
+                            <span><i class="fa-solid fa-trash-can"></i></span>
+                            Xóa
+                        </button>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="mb-3">
+                                <label for="job-title" class="form-label">Tên công việc</label>
+                                <input type="text" class="form-control" id="job-title" th:value="${job.title}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="job-skill" class="form-label">Kỹ năng</label>
+                                <select id="job-skill" class="form-control" multiple="multiple">
+                                    <option value="Java">Java</option>
+                                    <option value="Golang">Golang</option>
+                                    <option value="PHP">PHP</option>
+                                    <option value="Javascript">Javascript</option>
+                                    <option value="React">React</option>
+                                    <option value="SQL">SQL</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="job-salary" class="form-label">Mức lương</label>
+                                <input type="text" class="form-control" id="job-salary" th:value="${job.salary}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="job-description" class="form-label">Mô tả ngắn</label>
+                                <textarea class="form-control" id="job-description" rows="3"
+                                          th:text="${job.description}"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label">Ảnh minh họa</label>
+                                <div class="job-logo-preview mb-3 rounded">
+                                    <img th:src="${#strings.isEmpty(job.image) ? 'https://via.placeholder.com/200' : job.image}"
+                                         th:alt="${job.title}"
+                                         id="job-logo-preview" class="rounded">
+                                </div>
+
+                                <label for="job-logo-input" class="btn btn-warning">Đổi ảnh</label>
+                                <input type="file" id="job-logo-input" class="d-none">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="applicant" role="tabpanel" aria-labelledby="applicant-tab">
+
+                    <table class="table applicant-table">
+                        <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên ứng viên</th>
+                            <th>Mô tả ngắn</th>
+                            <th>Link CV</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="applicant, state : ${applicants}">
+                            <td th:text="${state.index + 1}">1</td>
+                            <td th:text="${applicant.name}">Bùi Văn Hiên</td>
+                            <td class="w-50" th:text="${applicant.description}">Lorem ipsum dolor sit amet consectetur,
+                                adipisicing elit. Veniam sunt quam
+                                quasi nostrum libero distinctio, consequuntur incidunt vero odit temporibus.
+                            </td>
+                            <td><a th:href="${applicant.cvPath}" target="_blank">Xem chi tiết</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block id="js">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script th:inline="javascript">
+        let company = [[${company}]];
+        let job = [[${job}]];
+        let applicants = [[${applicants}]];
+        console.log(applicants)
+    </script>
+
+    <script th:src="@{/js/job-detail.js}"></script>
+</th:block>
+</body>
+
+</html>
