@@ -11,22 +11,22 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity()
-@Table(name = "blog")
-public class Blog {
+@Entity
+@Table(name = "person")
+public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "title")
+    @Column(nullable = false)
     private String name;
 
-    @Column(name = "description")
-    private String description;
+    @Column(nullable = false, unique = true)
+    private String email;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "author_id")
-    private Author author;
+    @Column(length = 10)
+    private String phone;
 
+    private int age;
 }
