@@ -18,6 +18,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -117,5 +120,34 @@ public class FileService {
         } catch (Exception e) {
             throw new RuntimeException("Không thể đọc file : " + fileId);
         }
+    }
+
+    // Lấy danh sách file upload của userI
+    public List<String> getFiles(int id) {
+        // Lấy trong database
+//        List<String> filesPath = imageRepository.getImagesByUserId(id);
+
+        return null;
+    }
+
+    // Xử lý phần xóa file
+    public void deleteFile(int id, String fileId) {
+        // Lấy đường dẫn file tương ứng với user_id
+        Path userPath = rootDir.resolve(String.valueOf(id));
+
+        // Kiểm tra đường dẫn file có tồn tại hay không
+        if (!Files.exists(userPath)) {
+            throw new RuntimeException("File " + fileId + " không tồn tại");
+        }
+
+        File serverFile = new File(userPath + "/" + fileId);
+
+        // Kiểm tra xem file có tồn tại hay không
+        if (!serverFile.exists()) {
+            throw new RuntimeException("File " + fileId + " không tồn tại");
+        }
+
+        // Tiến hành xóa file
+        serverFile.delete();
     }
 }

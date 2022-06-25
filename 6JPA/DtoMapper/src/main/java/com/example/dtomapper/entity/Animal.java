@@ -1,9 +1,10 @@
-package com.example.dtomapper.model;
+package com.example.dtomapper.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.persistence.*;
 
@@ -12,21 +13,19 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "person")
-public class Person {
+@Table(name = "animal")
+public class Animal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(name = "name")
     private String name;
 
-    @Column(nullable = false, unique = true)
-    private String email;
+    @Column(name = "color")
+    private String color;
 
-    @Column(length = 10)
-    private String phone;
-
-    private int age;
+    @Column(name = "legs")
+    private Integer legs;
 }
