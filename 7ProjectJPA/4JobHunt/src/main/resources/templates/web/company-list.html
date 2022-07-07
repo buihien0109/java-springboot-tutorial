@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(~{:: title}, ~{}, ~{:: .list-company}, ~{})}">
+
+<head>
+    <title>Danh sách nhà tuyển dụng</title>
+</head>
+
+<body>
+    <div class="list-company pt-5 pb-5">
+        <div class="container">
+            <h2 class="mb-5 fw-normal">Danh Sách Nhà Tuyển Dụng</h2>
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-12" th:each="company : ${companies}">
+                    <a th:href="@{/nha-tuyen-dung/{id} (id = ${company.id})}">
+                        <div class="company bg-white">
+                            <div class="image">
+                                <img th:src="${company.logoPath}" th:alt="${company.name}"/>
+                            </div>
+                            <div class="info p-4">
+                                <h2 class="fs-5 my-3 text-center" th:text="${company.name}">
+                                    Koh Young Technology Inc
+                                </h2>
+                                <p class="text-center">
+                                    <span class="text-danger" th:text="|${company.numberJob} công việc|">4 việc làm</span>
+                                    -
+                                    <span th:text="${company.city}">Hà Nội</span>
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

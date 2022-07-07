@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="icon" type="image/png" sizes="16x16" href="./image/favicon-16x16.png">
+
+    <!-- Link google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700;900&display=swap"
+        rel="stylesheet" />
+
+    <!-- Link bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+
+    <!-- Link icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Link tự viết -->
+    <link rel="stylesheet" href="./css/style.css" />
+
+    <title>Trang chủ</title>
+</head>
+
+<body>
+    <div class="header d-flex align-items-center">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="d-flex">
+                        <div class="logo">
+                            <a href="./index.html">
+                                <img src="https://layerdrops.com/insur/main-html/assets/images/resources/logo-2.png"
+                                    alt="logo" />
+                            </a>
+                        </div>
+                        <div class="menu d-flex align-items-center">
+                            <ul class="d-flex mb-0 ps-0">
+                                <li class="mx-4">
+                                    <a href="./job-list.html">Việc làm IT</a>
+                                </li>
+                                <li>
+                                    <a href="./company-list.html">Top Công ty IT</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="language d-flex justify-content-end">
+                        <span>EN</span>
+                        <span class="mx-2">|</span>
+                        <span class="active">VN</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="apply-job-container pt-5 pb-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="job-apply-form p-5 bg-white">
+                        <h3 class="fw-normal mb-3">FullStack Dev (Java, React/ AngularJS) tại Tyme</h3>
+                        <div class="mb-3 row">
+                            <label for="input-name" class="col-md-1 col-form-label">Tên : </label>
+                            <div class="col-md-11">
+                                <input type="text" class="form-control" id="input-name">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="input-cv" class="col-md-1 col-form-label">CV : </label>
+                            <div class="col-md-11">
+                                <input type="file" class="form-control" id="input-cv">
+                            </div>
+                        </div>
+                        <p>Những kỹ năng, dự án hay thành tựu nào chứng tỏ bạn là một ứng viên tiềm năng cho vị trí ứng
+                            tuyển này?</p>
+                        <textarea id="input-description" class="form-control" rows="4"></textarea>
+                        <button id="btn-apply" class="d-block text-center p-3 btn-danger rounded mt-3">Gửi CV Cho Chúng
+                            Tôi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</body>
+
+</html>

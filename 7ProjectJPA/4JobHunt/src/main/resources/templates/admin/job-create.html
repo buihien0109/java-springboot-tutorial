@@ -13,19 +13,6 @@
 <body>
 <div class="job-container mt-4 mb-4">
     <div class="container">
-        <div>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a th:href="@{/admin}">Trang quản trị</a></li>
-                    <li class="breadcrumb-item"><a th:href="@{/admin/companies}">Danh sách công ty</a></li>
-                    <li class="breadcrumb-item"><a
-                            th:href="@{/admin/companies/{id}/{slug} (id = ${company.id}, slug = ${T(com.example.jobhunt.utils.Utils).generateSlug(company.name)})}"
-                            th:text="${company.name}">Danh sách công ty</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Tạo công việc</li>
-                </ol>
-            </nav>
-        </div>
-
 
         <div class="mb-4">
             <button class="btn-custom btn-create-job">
@@ -47,7 +34,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="job-description" class="form-label">Mô tả ngắn</label>
-                        <textarea class="form-control" id="job-description" rows="3"></textarea>
+                        <textarea class="form-control" id="job-description" rows="10"></textarea>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -60,6 +47,13 @@
                             <option value="Javascript">Javascript</option>
                             <option value="React">React</option>
                             <option value="SQL">SQL</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="job-company" class="form-label">Công ty</label>
+                        <select id="job-company" class="form-control">
+                            <option hidden>-- Chọn công ty --</option>
+                            <option th:each="company : ${companies}" th:value="${company.id}" th:text="${company.name}">Techmaster</option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -77,10 +71,6 @@
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-    <script th:inline="javascript">
-        let company = [[${company}]];
-    </script>
 
     <script th:src="@{/js/job-create.js}"></script>
 </th:block>

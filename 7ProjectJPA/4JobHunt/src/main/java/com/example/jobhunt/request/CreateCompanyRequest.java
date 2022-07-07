@@ -14,6 +14,5 @@ public class CreateCompanyRequest {
     private String website; // địa chỉ website
     private String email; // email của công ty
     private String city; // Trụ sở công ty (thành phố)
-    private String address; // Địa điểm công ty cụ thể
     private String description; // Mô tả ngắn về công ty
 }

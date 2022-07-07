@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="header" th:fragment="header">
+    <div class="logo">
+        <a th:href="@{/admin/companies}">
+            <img src="https://layerdrops.com/insur/main-html/assets/images/resources/logo-2.png"
+                 alt="logo"/>
+        </a>
+    </div>
+
+    <div class="sidebar ms-5">
+        <div class="menu">
+            <ul>
+                <li class="menu-item">
+                    Quản lý công ty <span><i class="fa-solid fa-caret-down"></i></span>
+
+                    <ul class="sub-menu">
+                        <li class="sub-menu-item">
+                            <a th:href="@{/admin/companies}">Danh sách công ty</a>
+                        </li>
+                        <li class="sub-menu-item">
+                            <a th:href="@{/admin/companies/create}">Tạo công ty</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    Quản lý công việc <span><i class="fa-solid fa-caret-down"></i></span>
+
+                    <ul class="sub-menu">
+                        <li class="sub-menu-item">
+                            <a th:href="@{/admin/jobs}">Danh sách công việc</a>
+                        </li>
+                        <li class="sub-menu-item">
+                            <a th:href="@{/admin/jobs/create}">Tạo công việc</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

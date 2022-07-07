@@ -3,7 +3,6 @@ const nameEl = document.getElementById("company-name");
 const websiteEl = document.getElementById("company-website");
 const emailEl = document.getElementById("company-email");
 const cityEl = document.getElementById("company-city");
-const addressEl = document.getElementById("company-address");
 const descriptionEl = document.getElementById("company-description");
 const logoInputEl = document.getElementById("company-logo-input");
 const logoEl = document.getElementById("company-logo-preview");
@@ -20,7 +19,6 @@ btnUpdateCompany.addEventListener("click", async () => {
             website: websiteEl.value,
             email: emailEl.value,
             city: cityEl.value,
-            address: addressEl.value,
             description: descriptionEl.value,
         });
 

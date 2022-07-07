@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" th:fragment="main-fragment(title, css, main, js)">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet">
+
+    <title th:replace="${title}">Title</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!--    CSS-->
+    <th:block th:replace="${css} ?: ~{}"></th:block>
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" th:href="@{/assets/css/fontawesome.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/templatemo-stand-blog.css}">
+</head>
+<body>
+<!--    HEADER-->
+    <th:block th:replace="~{/fragments/header :: header}"></th:block>
+
+<!--    Main content-->
+    <th:block th:replace="${main} ?: ~{}"></th:block>
+
+<!--    FOOTER-->
+    <th:block th:replace="~{/fragments/footer :: footer}"></th:block>
+
+    <!-- Bootstrap core JavaScript -->
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/assets/js/custom.js}"></script>
+
+
+<!--    JS-->
+    <th:block th:replace="${js} ?: ~{}"></th:block>
+</body>
+</html>

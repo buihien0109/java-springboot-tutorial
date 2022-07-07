@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(
+        ~{:: title},
+        ~{:: #css},
+        ~{:: #main},
+        ~{:: #js}
+      )}
+">
+
+  <head>
+    <title>Trang chủ</title>
+
+    <th:block id="css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.5/pagination.css" integrity="sha512-QmxybGIvkSI8+CGxkt5JAcGOKIzHDqBMs/hdemwisj4EeGLMXxCm9h8YgoCwIvndnuN1NdZxT4pdsesLXSaKaA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    </th:block>
+  </head>
+
+  <body>
+    <th:block id="main">
+      <div class="heading-page header-text">
+        <section class="page-heading">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="text-content">
+                  <h4>Recent Posts</h4>
+                  <h2>Our Recent Blog Entries</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section class="blog-posts grid-system">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8">
+              <div class="all-blog-posts">
+                <div class="row">
+
+                  <div th:each="blog : ${pageInfo.data}" class="col-lg-6">
+                    <div class="blog-post">
+                      <div class="blog-thumb">
+                        <img th:src="${blog.thumbnail}" th:alt="${blog.title}">
+                      </div>
+                      <div class="down-content">
+                        <a th:href="@{/blogs/{id}/{slug} (id = ${blog.id}, slug = ${blog.slug})}"><h4 th:text="|${#strings.substring(blog.title,0,40) + ' ...'}|">Donec tincidunt leo</h4></a>
+                        <ul class="post-info">
+                          <li><a href="#" th:text="${blog.authorInfo.name}">Admin</a></li>
+                          <li><a href="#" th:text="${blog.pulishedAt}">31/05/2020</a></li>
+                          <li><a href="#" th:text="|${blog.countComment + ' Comments'}|">12 Comments</a></li>
+                        </ul>
+                        <p th:text="|${#strings.substring(blog.description,0,100) + ' ...'}|">Nullam nibh mi, tincidunt sed sapien ut, rutrum hendrerit velit. Integer auctor a mauris sit amet eleifend.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12">
+                    <div class="pagination-container d-flex justify-content-center">
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="sidebar">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="sidebar-item search">
+                      <div id="search_form">
+                        <input type="text" class="searchText" placeholder="type to search..." autocomplete="on">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="sidebar-item recent-posts">
+                      <div class="sidebar-heading">
+                        <h2>Recent Posts</h2>
+                      </div>
+                      <div class="content">
+                        <ul>
+                          <li>
+                            <a th:each="blog : ${blogsPopular}" th:href="@{/blogs/{id}/{slug}(id = ${blog.id}, slug = ${blog.slug})}">
+                              <h5 th:text="${blog.title}">Vestibulum id turpis porttitor sapien facilisis scelerisque</h5>
+                              <span th:text="${blog.pulishedAt}">31/05/2020</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="sidebar-item categories">
+                      <div class="sidebar-heading">
+                        <h2>Categories</h2>
+                      </div>
+                      <div class="content">
+                        <ul th:each="category : ${categories}">
+                          <li><a href="#" th:text="|${'- ' + category.name}|">- Nature Lifestyle</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </th:block>
+
+    <th:block id="js">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.5/pagination.min.js" integrity="sha512-1zzZ0ynR2KXnFskJ1C2s+7TIEewmkB2y+5o/+ahF7mwNj9n3PnzARpqalvtjSbUETwx6yuxP5AJXZCpnjEJkQw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+      <script th:inline="javascript">
+        let pageInfo = [[${pageInfo}]];
+
+        const paginationContainer = $('.pagination-container')
+        paginationContainer.pagination({
+          dataSource: function(done){
+            let result = [];
+            for (let i = 1; i <= pageInfo.totalItems; i++) {
+              result.push(i);
+            }
+            done(result);
+          },
+          pageSize: 6,
+          pageNumber : pageInfo.currentPage,
+          className : "custom-paginationjs",
+          ulClassName : "page-numbers"
+        })
+
+        paginationContainer.addHook('afterPageOnClick', function(event, page) {
+          window.location.href = `?page=${page}`;
+        });
+      </script>
+    </th:block>
+  </body>
+</html>

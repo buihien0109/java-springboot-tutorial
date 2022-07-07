@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout-admin :: main-fragment(~{:: title}, ~{:: #css}, ~{:: .job-list}, ~{:: #js})}">
+
+<head>
+    <title>Danh sách công việc</title>
+
+    <th:block id="css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.5/pagination.css"
+              integrity="sha512-QmxybGIvkSI8+CGxkt5JAcGOKIzHDqBMs/hdemwisj4EeGLMXxCm9h8YgoCwIvndnuN1NdZxT4pdsesLXSaKaA=="
+              crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    </th:block>
+</head>
+
+<body>
+<div class="job-list mt-4 mb-4">
+    <div class="container">
+        <div class="mb-4">
+            <a th:href="@{/admin/jobs/create}" class="btn-custom btn-create-job">
+                <span><i class="fa-solid fa-plus"></i></span>
+                Tạo công việc
+            </a>
+            <a th:href="@{/admin/jobs}" class="btn-custom btn-refresh">
+                <span><i class="fa-solid fa-arrow-rotate-right"></i></span>
+                Refresh
+            </a>
+        </div>
+
+        <div class="job-list-inner p-2">
+            <table class="table job-table">
+                <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tên công việc</th>
+                    <td>Kỹ năng</td>
+                    <th>Mức lương</th>
+                    <th>Công ty</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="job, state: ${jobs}">
+                    <td th:text="${state.index + 1}">1</td>
+                    <td>
+                        <a th:href="@{/admin/jobs/{id} (id = ${job.id})}"
+                           th:text="${job.title}">Lập trình viên Java</a>
+                    </td>
+                    <td>
+                                <span th:each="skill : ${job.skills}" th:text="${skill}"
+                                      class="me-1 badge bg-warning text-dark">Golang</span>
+                    </td>
+                    <td th:text="${T(com.example.jobhunt.utils.Utils).formatSalary(job.salary)}">25.000.000
+                        VND
+                    </td>
+                    <td>
+                        <a th:href="@{/admin/companies/{id} (id = ${job.companyDto.id})}"
+                           th:text="${job.companyDto.name}"></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div id="pagination-container"></div>
+        </div>
+    </div>
+</div>
+
+<th:block id="js">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+            integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.5/pagination.min.js"
+            integrity="sha512-1zzZ0ynR2KXnFskJ1C2s+7TIEewmkB2y+5o/+ahF7mwNj9n3PnzARpqalvtjSbUETwx6yuxP5AJXZCpnjEJkQw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script th:inline="javascript">
+        let jobs = [[${jobs}]];
+
+        $('#pagination-container').pagination({
+            dataSource: jobs,
+            pageSize: 6
+        })
+    </script>
+</th:block>
+
+</body>
+
+</html>

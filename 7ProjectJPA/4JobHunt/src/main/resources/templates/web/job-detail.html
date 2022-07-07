@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(~{:: title}, ~{}, ~{:: .job-detail}, ~{})}">
+
+<head>
+    <title th:text="${job.title}"></title>
+</head>
+
+<body>
+    <div class="job-detail pt-5 pb-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="bg-white p-5">
+                        <h2 class="fw-normal" th:text="${job.title}">Technical Leader - Audio Framework Team</h2>
+                        <a th:href="@{/viec-lam/{id}/ung-tuyen (id = ${job.id})}" class="btn-apply btn d-block text-white w-100 mt-5 mb-5">Ứng Tuyển</a>
+
+                        <hr>
+
+                        <div class="mt-4 mb-4">
+                            <div class="skill-list">
+                                <span class="skill-item" th:each="skill : ${job.skills}" th:text="${skill}">C++</span>
+                            </div>
+
+                            <div class="job-info mt-4">
+                                <div class="job-info-item d-flex">
+                                    <span><i class="fa-solid fa-location-dot"></i></span>
+                                    <span class="d-block" th:text="${job.companyDto.city}">Hà Nội</span>
+                                </div>
+                                <div class="job-info-item d-flex">
+                                    <span class="d-block"><i class="fa-solid fa-sack-dollar"></i></span>
+                                    <span th:text="${T(com.example.jobhunt.utils.Utils).formatSalary(job.salary)}">2000$</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="mt-5 mb-5">
+                            <h3 class="fw-normal">Mô Tả Công Việc</h3>
+                            <p th:text="${job.description}">LG Electronics CTO Division focuses on webOS development for smart TVs and signages. With
+                                webOS in more than 129 million smart TVs in homes worldwide, LGE is revolutionizing the
+                                living room with the best user experience in the TV industry. Also, LGE is providing
+                                other TV manufacturers with its webOS platform for smart TVs.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="bg-white p-3">
+                        <a th:href="@{/nha-tuyen-dung/{id} (id = ${job.companyDto.id})}">
+                            <div class="company bg-white p-3 mb-3">
+                                <div class="image mt-5 mb-5">
+                                    <img th:src="${job.companyDto.logoPath}" th:alt="${job.companyDto.name}" />
+                                </div>
+                                <div class="info">
+                                    <h2 class="fs-5 mb-2 text-center" th:text="${job.companyDto.name}">
+                                        LG Vehicle Component Solutions Development Center Vietnam (LG VS DCV)
+                                    </h2>
+                                    <p th:text="${job.companyDto.description}">LG Vehicle Component Solutions Development Center Vietnam</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

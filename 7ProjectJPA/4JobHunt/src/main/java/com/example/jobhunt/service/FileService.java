@@ -1,13 +1,9 @@
 package com.example.jobhunt.service;
 
-import com.example.jobhunt.entity.Image;
 import com.example.jobhunt.exception.BadRequestException;
-import com.example.jobhunt.repo.ImageRepo;
 import com.example.jobhunt.utils.Utils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,28 +11,22 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
+import java.time.Instant;
+import java.util.*;
 
 @Service
 public class FileService {
     // Path folder để upload file
-    private final Path rootPath = Paths.get("uploads");
-
-    @Autowired
-    private ImageRepo imageRepo;
+    private final Path rootDir = Paths.get("uploads");
 
     public FileService() {
-        createFolder(rootPath.toString());
+        createFolder(rootDir.toString());
     }
 
-    // Tạo folder
+    // Tạo folder (trường hợp folder chưa tồn tại)
     public void createFolder(String path) {
         File folder = new File(path);
         if (!folder.exists()) {
@@ -44,110 +34,125 @@ public class FileService {
         }
     }
 
-    // Upload file
+    // Xử lý phần upload file
     public String uploadFile(int id, MultipartFile file) {
-        // B1 : Tạo folder tương ứng userId
+        // Tạo folder tương ứng với user id
         Path userDir = Paths.get("uploads").resolve(String.valueOf(id));
         createFolder(userDir.toString());
 
-        // B2 : Validate file
-        validate(file);
+        // Validate file
+        validateFile(file);
 
-        // B3 : Tạo path tương ứng với fileUpload
-        String generateFileId = UUID.randomUUID().toString();
-        File fileServer = new File(userDir + "/" + generateFileId);
+        // Tạo path tương ứng với file Upload lên
+        String genarateFileId = String.valueOf(Instant.now().getEpochSecond());
+        File serverFile = new File(userDir + "/" + genarateFileId);
 
         try {
-            // Sử dụng Buffer để lưu dữ liệu
-            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(fileServer));
+            // Sử dụng Buffer để lưu dữ liệu từ file
+            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 
             stream.write(file.getBytes());
             stream.close();
 
-            String filePath =  "/api/companies/" + id + "/files/" + generateFileId;
-
-            // Lưu image vào database
-            Image image = new Image(generateFileId, filePath, LocalDateTime.now(), id);
-            imageRepo.save(image);
-
-            return filePath;
+            return "/api/companies/" + id + "/files/" + genarateFileId;
         } catch (Exception e) {
             throw new RuntimeException("Lỗi khi upload file");
         }
     }
 
-    public void validate(MultipartFile file) {
-        // Kiểm tra tên file
+    // Một số validate với file
+    public void validateFile(MultipartFile file) {
+        // Kiểm tra file
         String fileName = file.getOriginalFilename();
         if (fileName == null || fileName.equals("")) {
             throw new BadRequestException("Tên file không hợp lệ");
         }
 
-        // Kiểm tra đuôi file
+        // Lấy extension file
         String fileExtension = Utils.getFileExtension(fileName);
+
+        // Kiểm tra extension file có hợp lệ hay không
         if (!Utils.checkFileExtension(fileExtension)) {
             throw new BadRequestException("File không hợp lệ");
         }
 
-        // Kiểm tra size (upload dưới 2MB)
+        // Check size file
         if ((double) file.getSize() / 1_000_000L > 2) {
             throw new BadRequestException("File không được vượt quá 2MB");
         }
     }
 
-    // Xem file
+    // Xử lý phần read file
     public byte[] readFile(int id, String fileId) {
         // Lấy đường dẫn file tương ứng với user_id
-        Path userPath = rootPath.resolve(String.valueOf(id));
+        Path userPath = rootDir.resolve(String.valueOf(id));
 
-        // Kiểm tra userPath có tồn tại hay không
+        // Kiểm tra đường dẫn file có tồn tại hay không
         if (!Files.exists(userPath)) {
-            throw new RuntimeException("Lỗi khi đọc file " + fileId);
+            throw new RuntimeException("Không thể đọc file : " + fileId);
         }
 
         try {
+            // Lấy đường dẫn file tương ứng với user_id và file_name
             Path file = userPath.resolve(fileId);
             Resource resource = new UrlResource(file.toUri());
 
             if (resource.exists() || resource.isReadable()) {
-                InputStream stream = resource.getInputStream();
-                byte[] bytes = StreamUtils.copyToByteArray(stream);
-                stream.close();
-                return bytes;
+                return StreamUtils.copyToByteArray(resource.getInputStream());
             } else {
-                throw new RuntimeException("Lỗi khi đọc file " + fileId);
+                throw new RuntimeException("Không thể đọc file: " + fileId);
             }
-
         } catch (Exception e) {
-            throw new RuntimeException("Lỗi khi đọc file " + fileId);
+            throw new RuntimeException("Không thể đọc file : " + fileId);
         }
     }
 
-    // Xóa file
-    public boolean deleteFile(int id, String fileId) {
-        // Lấy đường dẫn file tương ứng với user_id
-        Path userPath = rootPath.resolve(String.valueOf(id));
-
-        // Kiểm tra userPath có tồn tại hay không
-        if (!Files.exists(userPath)) {
-            throw new RuntimeException("Lỗi khi đọc file " + fileId);
-        }
-
-        // Tạo đường dẫn đến file
-        File file = userPath.resolve(fileId).toFile();
-        if (!file.exists()) {
-            throw new RuntimeException("file " + fileId + " không tồn tại");
-        }
-
-        return file.delete();
-    }
-
-    // Lấy danh sách file
+    // Lấy danh sách file upload của userI
     public List<String> getFiles(int id) {
-        List<Image> images = imageRepo.getByUserIdOrderByUploadedAtDesc(id, Sort.by(Sort.Direction.DESC));
+        // Lấy đường dẫn file tương ứng với user_id
+        Path userPath = rootDir.resolve(String.valueOf(id));
 
-        return images.stream()
-                .map(file -> "/api/v1/users" + id + "/files/" + file)
-                .collect(Collectors.toList());
+        // Kiểm tra đường dẫn file có tồn tại hay không
+        if (!Files.exists(userPath)) {
+            throw new RuntimeException("Lỗi khi lấy danh sách file");
+        }
+
+        // Lấy danh sách tất cả file theo userId
+        Optional<File[]> optionalFiles = Optional.ofNullable(userPath.toFile().listFiles());
+        List<File> files = new ArrayList<>();
+        if (optionalFiles.isPresent()) {
+            files = List.of(optionalFiles.get());
+        }
+
+        // Danh sách file path
+        List<String> filesPath = files
+                .stream()
+                .map(File::getName)
+                .sorted(Comparator.reverseOrder())
+                .map(file -> "/api/companies/" + id + "/files/" + file)
+                .toList();
+
+        return filesPath;
+    }
+
+    // Xử lý phần xóa file
+    public void deleteFile(int id, String fileId) {
+        // Lấy đường dẫn file tương ứng với user_id
+        Path userPath = rootDir.resolve(String.valueOf(id));
+
+        // Kiểm tra đường dẫn file có tồn tại hay không
+        if (!Files.exists(userPath)) {
+            throw new RuntimeException("File " + fileId + " không tồn tại");
+        }
+
+        File serverFile = new File(userPath + "/" + fileId);
+
+        // Kiểm tra xem file có tồn tại hay không
+        if (!serverFile.exists()) {
+            throw new RuntimeException("File " + fileId + " không tồn tại");
+        }
+
+        // Tiến hành xóa file
+        serverFile.delete();
     }
 }

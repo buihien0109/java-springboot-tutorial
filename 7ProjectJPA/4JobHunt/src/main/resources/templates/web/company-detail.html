@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(~{:: title}, ~{}, ~{:: #main}, ~{})}">
+
+<head>
+    <title th:text="${company.name}">Trang chủ</title>
+</head>
+
+<body>
+<th:block id="main">
+    <div class="company-detail-container">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="bg-white d-flex align-items-center p-4">
+                        <div class="company-logo">
+                            <img th:src="${company.logoPath}" th:alt="${company.name}">
+                        </div>
+                        <div class="company-detail ps-4">
+                            <h2 class="fw-normal" th:text="${company.name}">LG Vehicle Component Solutions Development Center Vietnam (LG VS DCV)
+                            </h2>
+
+                            <div class="company-info mt-4">
+                                <div class="company-info-item d-flex">
+                                    <span><i class="fa-solid fa-location-dot"></i></span>
+                                    <span class="d-block" th:text="${company.city}">Hà Nội</span>
+                                </div>
+                                <div class="company-info-item d-flex">
+                                    <span><i class="fa-solid fa-chalkboard-user"></i></span>
+                                    <span><a th:href="${company.website}" th:text="${company.website}">http://techmaster.vn</a></span>
+                                </div>
+                                <div class="company-info-item d-flex">
+                                    <span><i class="fa-solid fa-envelope"></i></span>
+                                    <span><a th:href="|mailto:${company.email}|" th:text="${company.email}">admin@techmaster.vn</a></span>
+                                </div>
+                                <div class="company-info-item d-flex">
+                                    <span class="d-block" th:text="${company.description}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquam, consequatur corporis deserunt dolorum ducimus eligendi esse facilis iusto molestias mollitia natus odio officia omnis optio porro quos sint voluptatum?<</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="list-job-container pt-5 pb-5">
+        <div class="container">
+            <h2 class="mb-5 fw-normal">Danh Sách Công Việc</h2>
+            <div class="row list-job">
+                <div class="col-md-6" th:each="job : ${jobs}">
+                    <a th:href="@{/viec-lam/{id} (id = ${job.id})}">
+                        <div class="job bg-white p-4 mb-4">
+                            <h2 class="fs-4 mb-4" th:text="${job.title}">
+                                10 Software Dev (C# WPF C++, .NET)~$2300
+                            </h2>
+                            <div class="job-info">
+                                <p>
+                                    <span class="me-1"><i class="fa-solid fa-sack-dollar"></i></span>
+                                    <span th:text="${T(com.example.jobhunt.utils.Utils).formatSalary(job.salary)}"></span>
+                                </p>
+                                <p>
+                                    <span class="me-1"><i class="fa-solid fa-location-dot"></i></span>
+                                    <span th:text="${company.city}"></span>
+                                </p>
+                                <p>
+                                    <span th:each="skill : ${job.skills}" th:text="${skill}" class="badge bg-warning text-dark me-1">Angular</span>
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</body>
+
+</html>

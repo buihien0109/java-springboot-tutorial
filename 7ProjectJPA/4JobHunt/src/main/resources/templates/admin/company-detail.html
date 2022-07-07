@@ -9,16 +9,6 @@
 <body>
 <div class="company-list mt-4 mb-4">
     <div class="container">
-        <div>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a th:href="@{/admin}">Trang quản trị</a></li>
-                    <li class="breadcrumb-item"><a th:href="@{/admin/companies}">Danh sách công ty</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Tạo công ty</li>
-                </ol>
-            </nav>
-        </div>
-
         <div class="mb-4">
             <a th:href="@{/admin/companies}" class="btn-custom btn-refresh">
                 <span><i class="fa-solid fa-angle-left"></i></span>
@@ -81,11 +71,6 @@
                                 <select class="form-control" id="company-city"></select>
                             </div>
                             <div class="mb-3">
-                                <label for="company-address" class="form-label">Địa chỉ cụ thể</label>
-                                <input type="text" class="form-control" id="company-address"
-                                       th:value="${company.address}">
-                            </div>
-                            <div class="mb-3">
                                 <label class="form-label">Logo</label>
                                 <div class="company-logo-preview mb-3 rounded">
                                     <img th:src="${#strings.isEmpty(company.logoPath) ? 'https://via.placeholder.com/200' : company.logoPath}"
@@ -101,7 +86,7 @@
                 </div>
                 <div class="tab-pane fade" id="job" role="tabpanel" aria-labelledby="job-tab">
                     <div class="mb-4">
-                        <a th:href="@{/admin/companies/{id}/jobs/create (id = ${company.id})}"
+                        <a th:href="@{/admin/jobs/create}"
                            class="btn-custom btn-create-company">
                             <span><i class="fa-solid fa-plus"></i></span>
                             Tạo công việc
@@ -115,14 +100,13 @@
                             <th>Tên công việc</th>
                             <th>Kỹ năng</th>
                             <th>Mức lương</th>
-                            <th>Số người ứng tuyển</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="job, state: ${jobs}">
                             <td th:text="${state.index + 1}">1</td>
                             <td>
-                                <a th:href="@{/admin/companies/{companyId}/jobs/{id}/{slug} (companyId = ${job.companyId}, id = ${job.id}, slug = ${T(com.example.jobhunt.utils.Utils).generateSlug(job.title)})}"
+                                <a th:href="@{/admin/jobs/{id} (id = ${job.id})}"
                                    th:text="${job.title}">Lập trình viên Java</a>
                             </td>
                             <td>
@@ -132,7 +116,6 @@
                             <td th:text="${T(com.example.jobhunt.utils.Utils).formatSalary(job.salary)}">25.000.000
                                 VND
                             </td>
-                            <td th:text="|${job.numberOfApplicant + ' ứng viên'}|">3 ứng viên</td>
                         </tr>
                         </tbody>
                     </table>

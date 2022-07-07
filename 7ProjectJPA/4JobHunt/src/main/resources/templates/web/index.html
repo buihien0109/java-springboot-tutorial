@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(~{:: title}, ~{}, ~{:: #main}, ~{:: #js})}">
+
+<head>
+    <title>Trang chủ</title>
+</head>
+
+<body>
+<th:block id="main">
+    <div class="search pt-5 pb-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="form d-flex align-items-center mt-5">
+                        <div class="search-box rounded">
+                            <div class="search-box-inner px-2 d-flex align-items-center h-100 position-relative">
+                                <span><i class="fa-solid fa-magnifying-glass"></i></span>
+                                <input class="px-2" type="text" placeholder="Tìm kiếm theo kỹ năng" id="job-skill"/>
+
+                                <div id="skill-suggest" class="position-absolute shadow-sm border d-none">
+                                    <p>React</p>
+                                    <p>Java</p>
+                                    <p>Golang</p>
+                                    <p>PHP</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="select-box rounded">
+                            <div class="select-box-inner px-2 d-flex align-items-center justify-content-between w-100">
+                                <span><i class="fa-solid fa-location-dot"></i></span>
+                                <select id="job-city" class="ms-2 h-100 border-0">
+                                    <option hidden selected value="">-- Địa điểm --</option>
+                                    <option value="Thành phố Hà Nội">Hà Nội</option>
+                                    <option value="Thành phố Hồ Chí Minh">Hồ Chí Minh</option>
+                                    <option value="Thành phố Đà Nẵng">Đà Nẵng</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="button-box">
+                            <button class="btn rounded" id="btn-search">Tìm kiếm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="list-company pt-5 pb-5">
+        <div class="container">
+            <h2 class="mb-5 fw-normal">Nhà Tuyển Dụng Hàng Đầu</h2>
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-12" th:each="company : ${companies}">
+                    <a th:href="@{/nha-tuyen-dung/{id} (id = ${company.id})}">
+                        <div class="company bg-white">
+                            <div class="image">
+                                <img th:src="${company.logoPath}" th:alt="${company.name}"/>
+                            </div>
+                            <div class="info p-4">
+                                <h2 class="fs-5 my-3 text-center" th:text="${company.name}">
+                                    Koh Young Technology Inc
+                                </h2>
+                                <p class="text-center">
+                                    <span class="text-danger" th:text="|${company.numberJob} công việc|">4 việc làm</span>
+                                    -
+                                    <span th:text="${company.city}">Hà Nội</span>
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</body>
+
+<th:block id="js">
+    <script th:inline="javascript">
+        // Khai báo biến
+        let skills = ["Javascript", "Java", "Golang", "PHP", "React", "AWS", "Devops", ".Net", "Vue", "Angular"];
+        let option = {
+            "skill" : "",
+            "city" : ""
+        }
+
+        // Truy cập vào các thành phần
+        const jobSkillEl = document.getElementById("job-skill");
+        const jobCityEl = document.getElementById("job-city");
+        const skillSuggestEl = document.getElementById("skill-suggest");
+        const btnSearch = document.getElementById("btn-search");
+
+        // Tìm kiếm skill khi đang gõ phím
+        jobSkillEl.addEventListener("keyup", (e) => {
+            let value = e.target.value;
+
+            let skillsSuggest = [];
+            if(value) {
+                skillsSuggest = skills.filter(skill => skill.toLowerCase().includes(value.toLowerCase()));
+            }
+
+            renderSkillsSuggest(skillsSuggest);
+        })
+
+        // Hiển thị gợi ý skill ra ngoài giao diện
+        const renderSkillsSuggest = (arr) => {
+            skillSuggestEl.innerHTML = "";
+
+            if(arr.length === 0) {
+                skillSuggestEl.classList.add("d-none");
+                return;
+            }
+
+            skillSuggestEl.classList.remove("d-none");
+
+            let html = "";
+            arr.forEach(e => {
+                html += `<p onclick="choseSkill('${e}')">${e}</p>`
+            })
+            skillSuggestEl.innerHTML = html;
+        }
+
+        // Xử lý khi chọn 1 skill
+        const choseSkill = skill => {
+            jobSkillEl.value = skill;
+            skillSuggestEl.classList.add("d-none");
+        }
+
+        // Xử lý khi bấm vào nút "Tìm kiếm"
+        btnSearch.addEventListener("click", () => {
+            option.skill = jobSkillEl.value;
+            option.city = jobCityEl.value;
+
+            if(!option.skill && !option.city) {
+                window.location.href = `/viec-lam`
+                return;
+            }
+
+            let query = [];
+            for (const key in option) {
+                if(option[key]) {
+                    query.push(`${key}=${option[key]}`)
+                }
+            }
+
+            window.location.href = `/viec-lam?${query.join("&")}`
+        })
+    </script>
+</th:block>
+
+</html>

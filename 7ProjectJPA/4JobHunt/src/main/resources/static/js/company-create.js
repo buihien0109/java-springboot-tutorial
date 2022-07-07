@@ -3,7 +3,6 @@ const nameEl = document.getElementById("company-name");
 const websiteEl = document.getElementById("company-website");
 const emailEl = document.getElementById("company-email");
 const cityEl = document.getElementById("company-city");
-const addressEl = document.getElementById("company-address");
 const descriptionEl = document.getElementById("company-description");
 
 const btnCreateCompany = document.querySelector(".btn-create-company");
@@ -16,7 +15,6 @@ btnCreateCompany.addEventListener("click", async function () {
             website: websiteEl.value,
             email: emailEl.value,
             city: cityEl.value,
-            address: addressEl.value,
             description : descriptionEl.value,
         });
 
@@ -24,12 +22,9 @@ btnCreateCompany.addEventListener("click", async function () {
             alert("Tạo công ty thành công");
         }
 
-        // Clear dữ liệu để nhập công ty mới
-        nameEl.value= "";
-        websiteEl.value = "";
-        emailEl.value = "";
-        addressEl.value = "";
-        descriptionEl.value = "";
+        setTimeout(() => {
+            window.location.href = "/admin/companies"
+        },1500)
     } catch (error) {
         alert(error.response.data.message);
     }

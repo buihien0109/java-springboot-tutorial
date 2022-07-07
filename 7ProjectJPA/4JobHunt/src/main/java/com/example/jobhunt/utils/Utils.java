@@ -15,18 +15,6 @@ public class Utils {
         return formatter.format(number) + " VNĐ";
     }
 
-    // Tạo slug
-    public static String generateSlug(String name) {
-        Slugify slugify = new Slugify();
-        return slugify.slugify(name);
-    }
-
-    // Method tạo ngẫu nhiên password với độ dài chỉ định
-    // Không có ký tự chữ cái, chỉ có số
-    public static String generatePassword(int count) {
-        return RandomStringUtils.random(count, false, true);
-    }
-
     // Lấy đuôi của file
     public static String getFileExtension(String fileName) {
         int lastIndexOf = fileName.lastIndexOf(".");

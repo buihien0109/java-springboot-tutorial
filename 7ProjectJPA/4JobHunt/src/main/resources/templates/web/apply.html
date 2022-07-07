@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(~{:: title}, ~{}, ~{:: .apply-job-container}, ~{:: #js})}">
+
+<head>
+    <title>Ứng tuyển việc làm</title>
+</head>
+
+<body>
+    <div class="apply-job-container pt-5 pb-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="job-apply-form p-5 bg-white">
+                        <h3 class="fw-normal mb-3" th:text="${job.title}">FullStack Dev (Java, React/ AngularJS) tại Tyme</h3>
+                        <div class="mb-3 row">
+                            <label for="input-name" class="col-md-1 col-form-label">Tên : </label>
+                            <div class="col-md-11">
+                                <input type="text" class="form-control" id="input-name">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="input-cv" class="col-md-1 col-form-label">CV : </label>
+                            <div class="col-md-11">
+                                <input type="file" class="form-control" id="input-cv">
+                            </div>
+                        </div>
+                        <p>Những kỹ năng, dự án hay thành tựu nào chứng tỏ bạn là một ứng viên tiềm năng cho vị trí ứng
+                            tuyển này?</p>
+                        <textarea id="input-description" class="form-control" rows="4"></textarea>
+                        <button id="btn-apply" class="d-block text-center p-3 btn-danger rounded mt-3">Gửi CV Cho Chúng
+                            Tôi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<th:block id="js">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script th:inline="javascript">
+        let job = [[${job}]];
+    </script>
+    <script th:src="@{/js/apply.js}"></script>
+</th:block>
+
+</html>

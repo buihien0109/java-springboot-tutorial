@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(~{:: title}, ~{:: #css}, ~{:: .list-job-container}, ~{:: #js})}">
+
+<head>
+    <title>Danh sách việc làm</title>
+
+    <th:block id="css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.5/pagination.css"
+              integrity="sha512-QmxybGIvkSI8+CGxkt5JAcGOKIzHDqBMs/hdemwisj4EeGLMXxCm9h8YgoCwIvndnuN1NdZxT4pdsesLXSaKaA=="
+              crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    </th:block>
+</head>
+
+<body>
+<div class="list-job-container pt-5 pb-5">
+    <div class="container">
+        <h2 class="mb-5 fw-normal">Danh Sách Việc Làm</h2>
+        <div class="row list-job">
+            <div class="col-md-6" th:each="job : ${jobs}">
+                <a th:href="@{/viec-lam/{id} (id = ${job.id})}">
+                    <div class="job bg-white p-4 mb-4">
+                        <h2 class="fs-4 mb-4" th:text="${job.title}">
+                            10 Software Dev (C# WPF C++, .NET)~$2300
+                        </h2>
+                        <div class="job-info">
+                            <p>
+                                <span class="me-1"><i class="fa-solid fa-sack-dollar"></i></span>
+                                <span th:text="${T(com.example.jobhunt.utils.Utils).formatSalary(job.salary)}"></span>
+                            </p>
+                            <p>
+                                <span class="me-1"><i class="fa-solid fa-location-dot"></i></span>
+                                <span th:text="${job.companyDto.city}"></span>
+                            </p>
+                            <p>
+                                <span th:each="skill : ${job.skills}" th:text="${skill}"
+                                      class="badge bg-warning text-dark me-1">Angular</span>
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div id="pagination-container" class="d-flex justify-content-center"></div>
+        </div>
+    </div>
+</div>
+
+<th:block id="js">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+            integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.5/pagination.min.js"
+            integrity="sha512-1zzZ0ynR2KXnFskJ1C2s+7TIEewmkB2y+5o/+ahF7mwNj9n3PnzARpqalvtjSbUETwx6yuxP5AJXZCpnjEJkQw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script th:inline="javascript">
+        let jobs = [[${jobs}]];
+
+        const formatPrice = price => {
+            return price.toString().replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " VND";
+        }
+
+        const listJobEl = document.querySelector(".list-job");
+        const renderJob = arr => {
+            listJobEl.innerHTML = "";
+
+            let html = "";
+            arr.forEach(e => {
+                html += `
+                    <div class="col-md-6">
+                        <a href="/viec-lam/${e.id}">
+                            <div class="job bg-white p-4 mb-4">
+                                <h2 class="fs-4 mb-4">${e.title}</h2>
+                                <div class="job-info">
+                                    <p>
+                                        <span class="me-1"><i class="fa-solid fa-sack-dollar"></i></span>
+                                        <span>${formatPrice(e.salary)}</span>
+                                    </p>
+                                    <p>
+                                        <span class="me-1"><i class="fa-solid fa-location-dot"></i></span>
+                                        <span>${e.companyDto.city}</span>
+                                    </p>
+                                    <p>
+                                        ${e.skills.map(skill => `<span class="badge bg-warning text-dark me-1">${skill}</span>`).join("")}
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                `
+            });
+
+            listJobEl.innerHTML = html;
+        }
+
+        $('#pagination-container').pagination({
+            dataSource: jobs,
+            pageSize: 6,
+            callback: function(data, pagination) {
+                renderJob(data);
+            }
+        });
+    </script>
+</th:block>
+</body>
+
+</html>

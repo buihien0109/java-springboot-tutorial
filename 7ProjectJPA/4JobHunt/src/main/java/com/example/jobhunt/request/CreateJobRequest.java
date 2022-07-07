@@ -5,9 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import java.time.LocalDate;
+
 import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class CreateJobRequest {
     private String title; // Tiêu đề của công việc
     private String description; // Mô tả cho công việc
-    private ArrayList<String> skills; // Các kỹ năng cần có
+    private List<String> skills; // Các kỹ năng cần có
     private int salary; // Mức lương
+    private int companyId; // Id của công ty
 }

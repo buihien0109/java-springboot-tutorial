@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(
+        ~{:: title},
+        ~{},
+        ~{:: #main},
+        ~{:: #js}
+      )}
+">
+
+  <head>
+    <title th:text="${blog.title}"></title>
+  </head>
+
+  <body>
+    <th:block id="main">
+      <div class="heading-page header-text">
+        <section class="page-heading">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="text-content">
+                  <h4>Post Details</h4>
+                  <h2>Single blog post</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section class="blog-posts grid-system">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8">
+              <div class="all-blog-posts">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="blog-post">
+                      <div class="blog-thumb">
+                        <img th:src="${blog.thumbnail}" th:alt="${blog.title}">
+                      </div>
+                      <div class="down-content">
+                        <a th:href="@{/blogs/{id}/{slug}(id = ${blog.id}, slug = ${blog.slug})}"><h4 th:text="${blog.title}">Aenean pulvinar gravida sem nec</h4></a>
+                        <ul class="post-info">
+                          <li><a href="#" th:text="${blog.authorInfo.name}">Admin</a></li>
+                          <li><a href="#" th:text="${blog.pulishedAt}">12/05/2020</a></li>
+                          <li><a href="#" th:text="|${blog.countComment} comments|">10 Comments</a></li>
+                        </ul>
+                          <p th:text="${blog.content}"></p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="sidebar-item comments">
+                      <div class="sidebar-heading">
+                        <h2 th:text="|${#lists.size(comments) + ' comments'}|">4 comments</h2>
+                      </div>
+                      <div class="content">
+                        <ul>
+                          <li th:each="comment : ${comments}">
+                            <div class="author-thumb">
+                              <img th:src="${comment.user.avatar}" th:alt="${comment.user.name}">
+                            </div>
+                            <div class="right-content">
+                              <h4>
+                                <th:block th:text="${comment.user.name}">Charles Kate</th:block>
+                                <span th:text="${#temporals.format(comment.createdAt, 'dd-MM-yyy')}">16/05/2020</span>
+                              </h4>
+                              <p th:text="${comment.content}">Fusce ornare mollis eros. Duis et diam vitae justo fringilla condimentum eu quis leo. Vestibulum id turpis porttitor sapien facilisis scelerisque. Curabitur a nisl eu lacus convallis eleifend posuere id tellus.</p>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="sidebar-item submit-comment">
+                      <div class="sidebar-heading">
+                        <h2>Your comment</h2>
+                      </div>
+                      <div class="content">
+                        <form id="comment" action="#" method="post">
+                          <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                              <fieldset>
+                                <input name="name" type="text" id="name" placeholder="Your name" required="">
+                              </fieldset>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                              <fieldset>
+                                <input name="email" type="text" id="email" placeholder="Your email" required="">
+                              </fieldset>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                              <fieldset>
+                                <input name="subject" type="text" id="subject" placeholder="Subject">
+                              </fieldset>
+                            </div>
+                            <div class="col-lg-12">
+                              <fieldset>
+                                <textarea name="message" rows="6" id="message" placeholder="Type your comment" required=""></textarea>
+                              </fieldset>
+                            </div>
+                            <div class="col-lg-12">
+                              <fieldset>
+                                <button type="submit" id="form-submit" class="main-button">Submit</button>
+                              </fieldset>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="sidebar">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="sidebar-item search">
+                      <div id="search_form">
+                        <input type="text" class="searchText" placeholder="type to search..." autocomplete="on">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="sidebar-item recent-posts">
+                      <div class="sidebar-heading">
+                        <h2>Recent Posts</h2>
+                      </div>
+                      <div class="content">
+                        <ul>
+                          <li>
+                            <a th:each="blog : ${blogsPopular}" th:href="@{/blogs/{id}/{slug}(id = ${blog.id}, slug = ${blog.slug})}">
+                              <h5 th:text="${blog.title}">Vestibulum id turpis porttitor sapien facilisis scelerisque</h5>
+                              <span th:text="${blog.pulishedAt}">31/05/2020</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="sidebar-item categories">
+                      <div class="sidebar-heading">
+                        <h2>Categories</h2>
+                      </div>
+                      <div class="content">
+                        <ul th:each="category : ${categories}">
+                          <li><a href="#" th:text="|${'- ' + category.name}|">- Nature Lifestyle</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </th:block>
+
+  <th:block id="js">
+    <script th:inline="javascript">
+      let comments = [[${comments}]];
+      console.log(comments);
+    </script>
+  </th:block>
+  </body>
+
+</html>
