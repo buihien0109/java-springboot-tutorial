@@ -5,11 +5,8 @@ import org.springframework.stereotype.Service;
 import vn.techmaster.blog.dto.BlogDetail;
 import vn.techmaster.blog.dto.BlogInfo;
 import vn.techmaster.blog.dto.PaginationInfo;
-import vn.techmaster.blog.entity.Blog;
 import vn.techmaster.blog.repository.BlogRepository;
-import vn.techmaster.blog.util.PageUtil;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
