@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import vn.techmaster.blog.dto.BlogDetail;
-import vn.techmaster.blog.dto.BlogDto;
 import vn.techmaster.blog.dto.BlogInfo;
 import vn.techmaster.blog.repository.BlogRepository;
 

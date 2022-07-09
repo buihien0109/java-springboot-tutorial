@@ -35,7 +35,7 @@ public class WebController {
 
     @GetMapping("/blogs/{id}/{slug}")
     public String getDetail(@PathVariable String id, Model model) {
-        model.addAttribute("blog", blogService.getBlogById(id));
+        model.addAttribute("blog", blogService.getBlogDetailById(id));
         model.addAttribute("comments", commentService.getCommentsByBlogId(id));
         model.addAttribute("categories", categoryRepository.getCategoriesPopular(5));
         model.addAttribute("blogsPopular", blogService.getBlogMostPopular(3));

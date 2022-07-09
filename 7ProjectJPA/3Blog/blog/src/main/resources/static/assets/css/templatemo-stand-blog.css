@@ -51,7 +51,7 @@ h1,h2,h3,h4,h5,h6 {
 	background-position: center center;
 	background-repeat: no-repeat;
 	background-size: cover;
-	background-image: url(../images/heading-bg.jpg);
+	background-image: url(/assets/images/heading-bg.jpg);
 }
 
 .page-heading .text-content h4 {

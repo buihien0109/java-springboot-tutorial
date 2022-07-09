@@ -157,7 +157,7 @@ public class UserService {
         user.setPassword(newPassword);
 
         // Send Mail
-        emailService.sendMail(user.getEmail(), "Đổi mật khẩu", "Mật khẩu mới của bạn là : " + newPassword);
+        // emailService.sendMail(user.getEmail(), "Đổi mật khẩu", "Mật khẩu mới của bạn là : " + newPassword);
 
         // Trả về thông tin password mới
         return newPassword;
@@ -208,7 +208,7 @@ public class UserService {
     }
 
     // Xóa file
-    public void deleteFile(int id, String fileName) {
-        fileService.deleteFile(id, fileName);
+    public void deleteFile(int id, String fileId) {
+        fileService.deleteFile(id, fileId);
     }
 }

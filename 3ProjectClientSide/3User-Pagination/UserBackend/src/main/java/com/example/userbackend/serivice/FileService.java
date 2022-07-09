@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -81,7 +82,8 @@ public class FileService {
         }
 
         // Check size file
-        if ((double) file.getSize() / 1_000_000L > 2) {
+        double sizeFile = (double) file.getSize() / 1_000_000L;
+        if (sizeFile > 2) {
             throw new BadRequestException("File không được vượt quá 2MB");
         }
     }
@@ -102,7 +104,11 @@ public class FileService {
             Resource resource = new UrlResource(file.toUri());
 
             if (resource.exists() || resource.isReadable()) {
-                return StreamUtils.copyToByteArray(resource.getInputStream());
+                InputStream stream = resource.getInputStream();
+                byte[] bytes = StreamUtils.copyToByteArray(stream);
+
+                stream.close();
+                return bytes;
             } else {
                 throw new RuntimeException("Không thể đọc file: " + fileId);
             }
@@ -117,8 +123,9 @@ public class FileService {
         Path userPath = rootDir.resolve(String.valueOf(id));
 
         // Kiểm tra đường dẫn file có tồn tại hay không
+        // Nếu không có thì trả về danh sách ảnh trống
         if (!Files.exists(userPath)) {
-            throw new RuntimeException("Lỗi khi lấy danh sách file");
+            return new ArrayList<>();
         }
 
         // Lấy danh sách tất cả file theo userId
@@ -129,14 +136,12 @@ public class FileService {
         }
 
         // Danh sách file path
-        List<String> filesPath = files
+        return files
                 .stream()
                 .map(File::getName)
                 .sorted(Comparator.reverseOrder())
                 .map(file -> "/api/v1/users/" + id + "/files/" + file)
                 .toList();
-
-        return filesPath;
     }
 
     // Xử lý phần xóa file

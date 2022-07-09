@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en"
+	  xmlns:th="https://www.thymeleaf.org"
+	  th:replace="~{/layout/layout-admin :: main-fragment(
+        ~{:: title},
+        ~{},
+        ~{:: .content-wrapper},
+        ~{}
+      )}
+">
+
+<head>
+	<title>Tất cả bài viết</title>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+	<div class="wrapper">
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<div class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-12">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item">
+									<a href="#">Dashboard</a>
+								</li>
+								<li class="breadcrumb-item active">
+									Danh sách bài viết
+								</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Main content -->
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row py-2">
+						<div class="col-12">
+							<button type="button" class="btn btn-primary">
+								<i class="fas fa-plus"></i> Viết bài
+							</button>
+							<button type="button" class="btn btn-info">
+								<i class="fas fa-redo"></i> Refresh
+							</button>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+								<div class="card-body">
+									<table class="table table-bordered table-hover">
+										<thead>
+											<tr>
+												<th>Tiêu đề</th>
+												<th>Tác giả</th>
+												<th>Danh mục</th>
+												<th>Trạng thái</th>
+												<th>Ngày tạo</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="blog : ${blogs}">
+												<td>
+													<a th:href="@{/admin/blogs/{id}/detail (id = ${blog.id})}" th:text="${blog.title}">Khai giảng khóa
+														Java Spring Boot 12A
+														- song song 2 hình
+														thức offline /
+														online đáp ứng nhu
+														cầu đào tạo từ xa</a>
+												</td>
+												<td>
+													<a href="#" th:text="${blog.user.name}">John Doe</a>
+												</td>
+												<td>
+													Java, Golang, Springboot
+												</td>
+												<td th:text="${blog.status == 1} ? 'Công khai' : 'Ẩn'">Công khai</td>
+												<td th:text="${#temporals.format(blog.createdAt, 'dd-MM-yyy')}">06-07-2022</td>
+											</tr>
+										</tbody>
+									</table>
+
+									<div class="d-flex justify-content-center mt-3" id="pagination">
+										<ul class="pagination mb-0">
+											<li class="paginate_button page-item previous disabled"
+												id="example2_previous">
+												<a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0"
+													class="page-link">Previous</a>
+											</li>
+											<li class="paginate_button page-item active">
+												<a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0"
+													class="page-link">1</a>
+											</li>
+											<li class="paginate_button page-item">
+												<a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0"
+													class="page-link">2</a>
+											</li>
+											<li class="paginate_button page-item">
+												<a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0"
+													class="page-link">3</a>
+											</li>
+											<li class="paginate_button page-item">
+												<a href="#" aria-controls="example2" data-dt-idx="4" tabindex="0"
+													class="page-link">4</a>
+											</li>
+											<li class="paginate_button page-item">
+												<a href="#" aria-controls="example2" data-dt-idx="5" tabindex="0"
+													class="page-link">5</a>
+											</li>
+											<li class="paginate_button page-item">
+												<a href="#" aria-controls="example2" data-dt-idx="6" tabindex="0"
+													class="page-link">6</a>
+											</li>
+											<li class="paginate_button page-item next" id="example2_next">
+												<a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0"
+													class="page-link">Next</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+
+</body>
+
+</html>

@@ -132,8 +132,16 @@ public class Blog {
 
     @PrePersist
     public void prePersist() {
-        createdAt = LocalDateTime.now().minusMonths(2);
-        updatedAt = createdAt;
+        createdAt = LocalDateTime.now();
+        if (status == 1) {
+            pulishedAt = createdAt;
+        }
+    }
+
+
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = LocalDateTime.now();
         if (status == 1) {
             pulishedAt = updatedAt;
         }

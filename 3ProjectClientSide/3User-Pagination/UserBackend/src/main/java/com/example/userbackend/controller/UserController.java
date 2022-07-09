@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("api/v1")
 @AllArgsConstructor
 public class UserController {
     private final UserService userService;
@@ -116,9 +116,9 @@ public class UserController {
     }
 
     // Xóa file
-    @DeleteMapping("users/{id}/files/{fileName}")
-    public ResponseEntity<?> deleteFile(@PathVariable int id, @PathVariable String fileName) {
-        userService.deleteFile(id, fileName);
+    @DeleteMapping("users/{id}/files/{fileId}")
+    public ResponseEntity<?> deleteFile(@PathVariable int id, @PathVariable String fileId) {
+        userService.deleteFile(id, fileId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

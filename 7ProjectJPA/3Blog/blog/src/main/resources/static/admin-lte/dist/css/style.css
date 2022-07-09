@@ -1,0 +1,10 @@
+img {
+    max-width: 100%;
+    display: block;
+    margin: auto;
+}
+
+.EasyMDEContainer {
+    position: relative;
+    z-index: 1039;
+}
