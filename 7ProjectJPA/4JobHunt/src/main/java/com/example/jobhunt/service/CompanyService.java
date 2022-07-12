@@ -27,11 +27,11 @@ public class CompanyService {
     private FileService fileService;
 
     // Lấy danh sách tất cả nhà tuyển dụng
-    // Sắp xếp theo số lượng công việc giảm dần
     public List<Company> getAll() {
         return companyRepo.findAll();
     }
 
+    // Lấy danh sách tất cả nhà tuyển dụng (có thêm số lượng công việc đang tuyển của công ty đó)
     public List<CompanyInfo> getAllCompanyInfo() {
         List<Company> companies = companyRepo.findAll();
 
@@ -49,7 +49,8 @@ public class CompanyService {
                 }).collect(Collectors.toList());
     }
 
-    public List<CompanyInfo> getTopConpanyInfo(int limit) {
+    // Lấy danh sách 1 số công ty có số lượng công việc đang tuyển GIẢM DẦN
+    public List<CompanyInfo> getTopCompanyInfo(int limit) {
         List<CompanyInfo> companies = getAllCompanyInfo();
         return companies.stream()
                 .sorted((a, b) -> b.getNumberJob() - a.getNumberJob())
@@ -57,12 +58,12 @@ public class CompanyService {
                 .collect(Collectors.toList());
     }
 
-    // Lấy chi tiết của nhà tuyển dụng theo id
+    // Lấy thông tin chi tiết của công ty theo id
     public Company getById(int id) {
         return companyRepo.getById(id);
     }
 
-    // Tạo nhà tuyển dụng mới
+    // Tạo công ty mới
     public Company createCompany(CreateCompanyRequest request) {
         Random rd = new Random();
 
@@ -79,7 +80,7 @@ public class CompanyService {
         return company;
     }
 
-    // Cập nhật thông tin của nhà tuyển dụng
+    // Cập nhật thông tin của công ty
     public Company updateCompany(int id, UpdateCompanyRequest request) {
         Company company = companyRepo.findById(id).orElseThrow(() -> {
             throw new NotFoundException("Không tìm thấy công ty có id = " + id);
@@ -94,13 +95,13 @@ public class CompanyService {
         return company;
     }
 
-    // Xóa nhà tuyển dụng
+    // Xóa công ty
     public void deleteCompany(int id) {
         Company company = companyRepo.getById(id);
         companyRepo.delete(company.getId());
     }
 
-    // Thay đổi logo nhà tuyển dụng
+    // Thay đổi logo của công ty
     public String updateLogoCompany(int id, MultipartFile file) {
         Company company = companyRepo.getById(id);
 
@@ -114,6 +115,7 @@ public class CompanyService {
         return filePath;
     }
 
+    // Xem file
     public byte[] readFile(int id, String fileId) {
         return fileService.readFile(id, fileId);
     }

@@ -1,5 +1,6 @@
 package com.example.jobhunt.controller;
 
+import com.example.jobhunt.constant.Constant;
 import com.example.jobhunt.model.Job;
 import com.example.jobhunt.request.CreateJobRequest;
 import com.example.jobhunt.request.UpdateJobRequest;
@@ -25,20 +26,23 @@ public class JobController {
     private ApplicantService applicantService;
 
     // API --> View
-    @GetMapping("/admin/jobs/create")
-    public String getJobCreatePage(Model model) {
-        model.addAttribute("companies", companyService.getAll());
-        return "admin/job-create";
-    }
-
     @GetMapping("/admin/jobs")
     public String getJobListPage(Model model) {
         model.addAttribute("jobs", jobService.getAll());
         return "admin/job-list";
     }
 
+    @GetMapping("/admin/jobs/create")
+    public String getJobCreatePage(Model model) {
+        model.addAttribute("skills", Constant.skills);
+        model.addAttribute("companies", companyService.getAll());
+        return "admin/job-create";
+    }
+
     @GetMapping("/admin/jobs/{id}")
     public String getJobDetailPage(Model model, @PathVariable int id) {
+        model.addAttribute("skills", Constant.skills);
+        model.addAttribute("companies", companyService.getAll());
         model.addAttribute("job", jobService.getJobById(id));
         model.addAttribute("applicants", applicantService.getApplicantsByJobId(id));
         return "admin/job-detail";

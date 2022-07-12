@@ -41,12 +41,7 @@
                     <div class="mb-3">
                         <label for="job-skill" class="form-label">Kỹ năng</label>
                         <select id="job-skill" class="form-control" multiple="multiple">
-                            <option value="Java">Java</option>
-                            <option value="Golang">Golang</option>
-                            <option value="PHP">PHP</option>
-                            <option value="Javascript">Javascript</option>
-                            <option value="React">React</option>
-                            <option value="SQL">SQL</option>
+                            <option th:each="skill : ${skills}" th:value="${skill}" th:text="${skill}">Java</option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -72,6 +67,10 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+    <script th:inline="javascript">
+        let skills = [[${skills}]];
+        console.log(skills);
+    </script>
     <script th:src="@{/js/job-create.js}"></script>
 </th:block>
 </body>

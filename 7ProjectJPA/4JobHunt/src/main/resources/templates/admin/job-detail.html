@@ -64,12 +64,13 @@
                             <div class="mb-3">
                                 <label for="job-skill" class="form-label">Kỹ năng</label>
                                 <select id="job-skill" class="form-control" multiple="multiple">
-                                    <option value="Java">Java</option>
-                                    <option value="Golang">Golang</option>
-                                    <option value="PHP">PHP</option>
-                                    <option value="Javascript">Javascript</option>
-                                    <option value="React">React</option>
-                                    <option value="SQL">SQL</option>
+                                    <option th:each="skill : ${skills}" th:value="${skill}" th:text="${skill}">Java</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="job-company" class="form-label">Công ty</label>
+                                <select id="job-company" class="form-control">
+                                    <option th:each="company : ${companies}" th:value="${company.id}" th:text="${company.name}" th:selected="${company.id} == ${job.companyId}">Techmaster</option>
                                 </select>
                             </div>
                             <div class="mb-3">

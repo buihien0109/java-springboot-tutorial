@@ -15,17 +15,18 @@ btnCreateCompany.addEventListener("click", async function () {
             website: websiteEl.value,
             email: emailEl.value,
             city: cityEl.value,
-            description : descriptionEl.value,
+            description: descriptionEl.value,
         });
 
-        if(res.data) {
-            alert("Tạo công ty thành công");
+        if (res.data) {
+            toastr.success("Tạo nhà tuyển dụng thành công");
         }
 
         setTimeout(() => {
-            window.location.href = "/admin/companies"
-        },1500)
+            window.location.href = "/admin/companies";
+        }, 1500);
     } catch (error) {
+        console.log(error);
         alert(error.response.data.message);
     }
 });

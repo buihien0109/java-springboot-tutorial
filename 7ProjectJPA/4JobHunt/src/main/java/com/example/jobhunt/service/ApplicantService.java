@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
 public class ApplicantService {
     @Autowired
     private ApplicantRepo applicantRepo;
 
+    // Lấy danh sách tất cả ứng viên của job
     public List<Applicant> getApplicantsByJobId(int jobId) {
         return applicantRepo.getApplicantsByJobId(jobId);
     }

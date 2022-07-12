@@ -24,7 +24,7 @@ public class WebController {
 
     @GetMapping("/")
     public String getIndexPage(Model model) {
-        model.addAttribute("companies", companyService.getTopConpanyInfo(4));
+        model.addAttribute("companies", companyService.getTopCompanyInfo(4));
         return "web/index";
     }
 

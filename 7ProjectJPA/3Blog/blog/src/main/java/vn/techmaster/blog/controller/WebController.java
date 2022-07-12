@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import vn.techmaster.blog.repository.CategoryRepository;
 import vn.techmaster.blog.service.BlogService;
+import vn.techmaster.blog.service.CategoryService;
 import vn.techmaster.blog.service.CommentService;
 
 @Controller
@@ -17,10 +18,10 @@ public class WebController {
     private BlogService blogService;
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CommentService commentService;
 
     @Autowired
-    private CommentService commentService;
+    private CategoryService categoryService;
 
     @GetMapping("/")
     public String getHome(
@@ -28,7 +29,7 @@ public class WebController {
             Model model
     ) {
         model.addAttribute("pageInfo", blogService.getAllBlog(page));
-        model.addAttribute("categories", categoryRepository.getCategoriesPopular(5));
+        model.addAttribute("categories", categoryService.getCategoriesPopular(5));
         model.addAttribute("blogsPopular", blogService.getBlogMostPopular(3));
         return "web/index";
     }
@@ -36,8 +37,8 @@ public class WebController {
     @GetMapping("/blogs/{id}/{slug}")
     public String getDetail(@PathVariable String id, Model model) {
         model.addAttribute("blog", blogService.getBlogDetailById(id));
-        model.addAttribute("comments", commentService.getCommentsByBlogId(id));
-        model.addAttribute("categories", categoryRepository.getCategoriesPopular(5));
+        model.addAttribute("comments", commentService.getComments(3));
+        model.addAttribute("categories", categoryService.getCategoriesPopular(5));
         model.addAttribute("blogsPopular", blogService.getBlogMostPopular(3));
         return "web/detail";
     }

@@ -16,6 +16,7 @@ public class CompanyRepo  {
         initCompany();
     }
 
+    // Tạo danh sách company ban đầu
     public void initCompany() {
         Random rd = new Random();
         Faker faker = new Faker();
@@ -38,10 +39,12 @@ public class CompanyRepo  {
         });
     }
 
+    // Lấy tất cả danh sách company
     public List<Company> findAll() {
         return companies;
     }
 
+    // Lấy thông tin company theo id
     public Company getById(int id) {
         Optional<Company> optionalCompany = findById(id);
         if (optionalCompany.isPresent()) {
@@ -51,14 +54,12 @@ public class CompanyRepo  {
         throw new NotFoundException("Không tìm thấy công ty có id = " + id);
     }
 
-    public Optional<Company> findById(int id) {
-        return companies.stream().filter(job -> job.getId() == id).findFirst();
-    }
-
+    // Lưu company
     public void save(Company company) {
         companies.add(company);
     }
 
+    // Xóa company
     public void delete(int id) {
         Optional<Company> optionalCompany = findById(id);
         if (optionalCompany.isEmpty()) {
@@ -66,5 +67,10 @@ public class CompanyRepo  {
         }
 
         companies.removeIf(company -> company.getId() == id);
+    }
+
+    // HELPER method : Tìm kiếm company theo id
+    public Optional<Company> findById(int id) {
+        return companies.stream().filter(job -> job.getId() == id).findFirst();
     }
 }

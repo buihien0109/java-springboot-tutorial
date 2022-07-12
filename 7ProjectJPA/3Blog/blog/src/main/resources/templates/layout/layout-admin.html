@@ -27,13 +27,10 @@
 
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
-    <!-- Navbar -->
-    <th:block th:replace="~{/fragments/header-admin :: f-header}"></th:block>
+    <!-- Header -->
+    <th:block th:replace="~{/fragments/header-admin :: header}"></th:block>
 
-    <!-- Main Sidebar Container -->
-    <th:block th:replace="~{/fragments/header-admin :: f-menu}"></th:block>
-
-    <!-- Content Wrapper. Contains page content -->
+    <!-- Content -->
     <th:block th:replace="${main}"></th:block>
 </div>
 

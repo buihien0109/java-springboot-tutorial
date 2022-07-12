@@ -1,5 +1,6 @@
 package com.example.jobhunt.repo;
 
+import com.example.jobhunt.constant.Constant;
 import com.example.jobhunt.model.Company;
 import com.example.jobhunt.model.Job;
 import com.example.jobhunt.exception.NotFoundException;
@@ -21,16 +22,17 @@ public class JobRepo  {
         initJob();
     }
 
+    // Khởi tạo dữ liệu ban đầu của job
     public void initJob() {
         Random rd = new Random();
         Faker faker = new Faker();
 
         jobs = new ArrayList<>();
 
+        // Lấy danh sách tất cả công ty
         List<Company> companies = companyRepo.findAll();
 
-        List<String> allSkills = Arrays.asList("Javascript", "Java", "Golang", "PHP", "React", "AWS", "Devops", ".Net", "Vue", "Angular");
-
+        // Tạo danh sách job
         IntStream.range(1, 20).forEach(n -> {
             // Random ra id công ty
             Company company = companies.get(rd.nextInt(companies.size()));
@@ -45,7 +47,7 @@ public class JobRepo  {
             int countSkill = rd.nextInt(3) + 2;
             List<String> skills = new ArrayList<>();
             for (int i = 0; i < countSkill; i++) {
-                String skillRandom = allSkills.get(rd.nextInt(allSkills.size()));
+                String skillRandom = Constant.skills.get(rd.nextInt(Constant.skills.size()));
                 if(!skills.contains(skillRandom)) {
                     skills.add(skillRandom);
                 }
@@ -59,15 +61,18 @@ public class JobRepo  {
         });
     }
 
+    // Lấy danh sách tất cả các job
     public List<Job> findAll() {
         return jobs;
     }
 
+    // Lấy danh sách tất cả các job theo công ty
     public List<Job> getJobsByCompanyId(int companyId) {
         Company company = companyRepo.getById(companyId);
         return jobs.stream().filter(job -> job.getCompanyId() == company.getId()).collect(Collectors.toList());
     }
 
+    // Lấy chi tiết job theo id
     public Job getJobById(int id) {
         Optional<Job> optionalJob = findById(id);
         if (optionalJob.isPresent()) {
@@ -77,25 +82,17 @@ public class JobRepo  {
         throw new NotFoundException("Không tìm thấy công việc có id = " + id);
     }
 
-    public Job getJobByCompanyId(int jobId, int companyId) {
-        Optional<Job> jobOptional =  jobs.stream()
-                .filter(job -> job.getId() == jobId & job.getCompanyId() == companyId)
-                .findFirst();
-
-        if(jobOptional.isEmpty()) {
-            throw new NotFoundException("Không tìm thấy công việc");
-        }
-        return jobOptional.get();
-    }
-
+    // Lưu job
     public void save(Job job) {
         jobs.add(job);
     }
 
+    // Xóa job
     public void delete(int id) {
         jobs.removeIf(job -> job.getId() == id);
     }
 
+    // HELPER method : Tìm kiếm job theo id
     public Optional<Job> findById(int id) {
         return jobs.stream().filter(job -> job.getId() == id).findFirst();
     }

@@ -129,6 +129,7 @@ public class JobService {
         job.setDescription(request.getDescription());
         job.setSkills(request.getSkills());
         job.setSalary(request.getSalary());
+        job.setCompanyId(request.getCompanyId());
 
         return job;
     }

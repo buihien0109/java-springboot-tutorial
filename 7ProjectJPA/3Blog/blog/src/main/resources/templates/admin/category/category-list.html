@@ -10,7 +10,7 @@
 ">
 
 <head>
-    <title>Tất cả bài viết</title>
+    <title>Danh sách category</title>
 </head>
 
 <body>
@@ -26,7 +26,7 @@
                             <a th:href="@{/admin/dashboard}">Dashboard</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            Tất cả bài viết
+                            Category
                         </li>
                     </ol>
                 </div>
@@ -39,12 +39,9 @@
         <div class="container-fluid">
             <div class="row py-2">
                 <div class="col-12">
-                    <a th:href="@{/admin/blogs/create}" class="btn btn-primary">
-                        <i class="fas fa-plus"></i> Viết bài
-                    </a>
-                    <a th:href="@{/admin/blogs}" class="btn btn-info">
-                        <i class="fas fa-redo"></i> Refresh
-                    </a>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-create-category">
+                        Tạo mới
+                    </button>
                 </div>
             </div>
             <div class="row">
@@ -54,31 +51,26 @@
                             <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <th>Tiêu đề</th>
-                                    <th>Tác giả</th>
-                                    <th>Danh mục</th>
-                                    <th>Trạng thái</th>
-                                    <th>Ngày tạo</th>
+                                    <th>Tên danh mục</th>
+                                    <th>Bài viết áp dụng</th>
+                                    <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="blog : ${blogs}">
+                                <tr>
+                                    <td>Lập trình Backend</td>
                                     <td>
-                                        <a th:href="@{/admin/blogs/{id}/detail (id = ${blog.id})}" th:text="${blog.title}">Khai giảng khóa
-                                            Java Spring Boot 12A
-                                            - song song 2 hình
-                                            thức offline /
-                                            online đáp ứng nhu
-                                            cầu đào tạo từ xa</a>
+                                        <p><a href="#">Bài viết 1</a></p>
+                                        <p><a href="#">Bài viết 2</a></p>
+                                        <p><a href="#">Bài viết 3</a></p>
                                     </td>
                                     <td>
-                                        <a href="#" th:text="${blog.user.name}">John Doe</a>
+                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-update-category">
+                                            Cập nhật
+                                        </button>
+                                        <button class="btn btn-danger">Xóa</button>
                                     </td>
-                                    <td th:text="${T(vn.techmaster.blog.util.Utils).generateCategoryString(blog.categories)}">
-                                        Java, Golang, Springboot
-                                    </td>
-                                    <td th:text="${blog.status} == 1 ? 'Công khai' : 'Ẩn'">Công khai</td>
-                                    <td th:text="${#temporals.format(blog.createdAt, 'dd-MM-yyy')}">06-07-2022</td>
+
                                 </tr>
                                 </tbody>
                             </table>
@@ -126,6 +118,56 @@
             </div>
         </div>
     </section>
+
+    <div class="modal fade" id="modal-create-category" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Tạo mới category</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Tên category</label>
+                        <input type="text" class="form-control" id="name-create">
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary" id="btn-create">Tạo mới</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal fade" id="modal-update-category" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Cập nhật category</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Tên category</label>
+                        <input type="text" class="form-control" id="name-update">
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary" id="btn-update">Cập nhật</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
 </div>
 
 </body>

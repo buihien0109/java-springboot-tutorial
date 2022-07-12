@@ -22,13 +22,11 @@ btnCreateJob.addEventListener("click", async function () {
         });
 
         if(res.data) {
-            titleEl.value = "";
-            descriptionEl.value = "";
-            salaryEl.value = "";
-            skillEl.val([]);
-            skillEl.trigger("change");
+            toastr.success("Tạo việc làm thành công");
 
-            alert("Tạo công việc thành công");
+            setTimeout(() => {
+                window.location.href = `/admin/jobs/${res.data.id}`;
+            }, 1500)
         }
     } catch (error) {
         console.log(error);

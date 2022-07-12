@@ -18,4 +18,5 @@ public class UpdateJobRequest {
     private String description; // Mô tả cho công việc
     private List<String> skills; // Các kỹ năng cần có
     private int salary; // Mức lương
+    private int companyId;
 }

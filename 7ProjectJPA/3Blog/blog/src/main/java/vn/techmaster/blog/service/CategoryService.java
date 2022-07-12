@@ -16,4 +16,8 @@ public class CategoryService {
     public List<Category> getAllCategory() {
         return categoryRepository.findAll();
     }
+
+    public List<Category> getCategoriesPopular(int limit) {
+        return categoryRepository.getCategoriesPopular(limit);
+    }
 }

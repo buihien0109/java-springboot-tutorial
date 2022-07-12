@@ -35,7 +35,7 @@
                 <tr th:each="company, state : ${companies}">
                     <td th:text="${state.index + 1}">1</td>
                     <td>
-                        <a th:href="@{/admin/companies/{id}/(id = ${company.id})}"
+                        <a th:href="@{/admin/companies/{id} (id = ${company.id})}"
                            th:text="${company.name}">Công ty Techmaster Việt Nam</a>
                     </td>
                     <th th:text="${company.city}">Hà Nội</th>

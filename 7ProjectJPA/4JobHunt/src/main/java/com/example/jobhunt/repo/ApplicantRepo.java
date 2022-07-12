@@ -2,13 +2,11 @@ package com.example.jobhunt.repo;
 
 import com.example.jobhunt.model.Applicant;
 import com.example.jobhunt.model.Job;
-import com.example.jobhunt.exception.NotFoundException;
 import com.github.javafaker.Faker;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -24,13 +22,17 @@ public class ApplicantRepo {
         initApplicant();
     }
 
+    // Khởi tạo danh sách ứng viên ban đầu
     public void initApplicant() {
         Random rd = new Random();
         Faker faker = new Faker();
 
         applicants = new ArrayList<>();
+
+        // Lấy danh sách job
         List<Job> jobs = jobRepo.findAll();
 
+        // Tạo ứng viên với job tương ứng
         IntStream.range(1, 51).forEach(n -> {
             // Random ra 1 job bất kỳ
             Job job = jobs.get(rd.nextInt(jobs.size()));
@@ -46,32 +48,16 @@ public class ApplicantRepo {
         });
     }
 
-    public List<Applicant> findAll() {
-        return applicants;
-    }
-
-    public Applicant getApplicantById(int id) {
-        Optional<Applicant> optionalApplicant = findById(id);
-        if (optionalApplicant.isPresent()) {
-            return optionalApplicant.get();
-        }
-
-        throw new NotFoundException("Không tìm thấy ứng viên có id = " + id);
-    }
-
+    // Lấy danh sách tất cả ứng viên theo job
     public List<Applicant> getApplicantsByJobId(int jobId) {
-        return applicants.stream().filter(applicant -> applicant.getJobId() == jobId).collect(Collectors.toList());
+        return applicants
+                .stream()
+                .filter(applicant -> applicant.getJobId() == jobId)
+                .collect(Collectors.toList());
     }
 
+    // Lưu ứng viên
     public void save(Applicant applicant) {
         applicants.add(applicant);
-    }
-
-    public void delete(int id) {
-        applicants.removeIf(applicant -> applicant.getId() == id);
-    }
-
-    public Optional<Applicant> findById(int id) {
-        return applicants.stream().filter(applicant -> applicant.getId() == id).findFirst();
     }
 }

@@ -13,8 +13,7 @@ import vn.techmaster.blog.entity.Blog;
 import vn.techmaster.blog.request.CreateBlogRequest;
 import vn.techmaster.blog.service.BlogService;
 import vn.techmaster.blog.service.CategoryService;
-
-import java.util.List;
+import vn.techmaster.blog.service.CommentService;
 
 @Controller
 public class BlogController {
@@ -25,6 +24,9 @@ public class BlogController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private CommentService commentService;
+
     @GetMapping("/admin/blogs")
     public String getBlogsPage(Model model) {
         model.addAttribute("blogs", blogService.getAllBlogDto());
@@ -33,7 +35,7 @@ public class BlogController {
 
     @GetMapping("/admin/blogs/own-blogs")
     public String getOwnBlogsPage(Model model) {
-        // Về sau lấy từ trong Authentication
+        // TODO : Về sau lấy từ trong Authentication
         int userId = 1;
 
         model.addAttribute("blogs", blogService.getBlogDtoByUserId(userId));
@@ -53,9 +55,26 @@ public class BlogController {
         return "admin/blog/blog-detail";
     }
 
+    @GetMapping("/admin/blogs/{id}/preview")
+    public String getPreviewBlogsPage(@PathVariable String id, Model model) {
+        // Lấy ngẫu nhiên 5 category
+        model.addAttribute("categoies", categoryService.getCategoriesPopular(5));
+
+        // Lấy ngẫu nhiên 3 bài blog
+        model.addAttribute("blogsPopular", blogService.getBlogMostPopular(3));
+
+        // Lấy ngẫu nhiên 5 comment
+        model.addAttribute("comments", commentService.getComments(5));
+
+        // Lấy chi tiết blog
+        model.addAttribute("blog", blogService.getBlogDetailById(id));
+
+        return "web/detail";
+    }
+
     @PostMapping("/api/admin/blogs")
     public ResponseEntity<?> createBlog(@RequestBody CreateBlogRequest request) {
-        // Về sau lấy từ trong Authentication
+        // TODO : Về sau lấy từ trong Authentication
         int userId = 1;
 
         // Tạo blog

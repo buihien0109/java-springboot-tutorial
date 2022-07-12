@@ -23,7 +23,7 @@ btnUpdateCompany.addEventListener("click", async () => {
         });
 
         if (res.data) {
-            alert("Cập nhật thông tin công ty thành công");
+            toastr.success("Cập nhật thông tin nhà tuyển dụng thành công");
         }
     } catch (e) {
         console.log(e.response.data.message);
@@ -37,8 +37,11 @@ btnDeleteCompany.addEventListener("click", async () => {
         if (isConfirm) {
             await axios.delete(`/api/admin/companies/${company.id}`);
 
-            alert("Xóa công ty thành công");
-            window.location.href = "/admin/companies";
+            toastr.success("Xóa nhà tuyển dụng thành công");
+
+            setTimeout(() => {
+                window.location.href = "/admin/companies";
+            }, 1500)
         }
     } catch (e) {
         alert(e.response.data.message);
@@ -53,7 +56,10 @@ logoInputEl.addEventListener("change", async (e) => {
         formData.append("file", file);
 
         let res = await axios.post(`/api/admin/companies/${company.id}/upload-logo`, formData)
-        logoEl.src = res.data;
+        if (res.data) {
+            toastr.success("Cập nhật logo thành công");
+            logoEl.src = res.data;
+        }
     } catch (e) {
         alert(e.response.data.message);
     }

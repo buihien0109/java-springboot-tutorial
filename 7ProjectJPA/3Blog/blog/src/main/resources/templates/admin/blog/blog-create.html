@@ -10,152 +10,143 @@
 ">
 
 <head>
-  <title>Tạo bài viết</title>
+    <title>Tạo bài viết</title>
 
-  <th:block id="css">
-    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css" />
+    <th:block id="css">
+        <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css"/>
 
-    <link rel="stylesheet" th:href="@{/admin-lte/plugins/select2/css/select2.min.css}" />
-    <link rel="stylesheet" th:href="@{/admin-lte/dist/css/style.css}">
-  </th:block>
+        <link rel="stylesheet" th:href="@{/admin-lte/plugins/select2/css/select2.min.css}"/>
+        <link rel="stylesheet" th:href="@{/admin-lte/dist/css/style.css}">
+    </th:block>
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed">
-  <div class="wrapper">
+<body>
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <div class="content-header">
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
         <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-12">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                  <a href="#">Dashboard</a>
-                </li>
-                <li class="breadcrumb-item">
-                  <a href="#">Blog</a>
-                </li>
-                <li class="breadcrumb-item active">
-                  Tạo bài viết
-                </li>
-              </ol>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Main content -->
-      <section class="content">
-        <div class="container-fluid">
-          <div class="row py-2">
-            <div class="col-6">
-              <button type="button" class="btn btn-default">
-                <i class="fas fa-chevron-left"></i> Quay lại
-              </button>
-              <button type="button" class="btn btn-info px-4" id="btn-create">
-                Lưu
-              </button>
-              <button type="button" class="btn btn-primary px-4">
-                Preview
-              </button>
-            </div>
-
-            <div class="col-6 d-flex justify-content-end">
-              <button type="button" class="btn btn-danger px-4">
-                Xóa
-              </button>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-12">
-              <div class="card">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-8">
-                      <div class="form-group">
-                        <label>Tiêu đề</label>
-                        <input type="text" class="form-control" id="title" />
-                      </div>
-
-                      <div class="form-group">
-                        <label>Nội dung</label>
-                        <textarea id="content"></textarea>
-                      </div>
-
-                      <div class="form-group">
-                        <label>Mô tả ngắn</label>
-                        <textarea id="description" class="form-control" rows="3"></textarea>
-                      </div>
-                    </div>
-
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label>Trạng thái</label>
-                        <select id="status" class="form-control">
-                          <option value="0">
-                            Nháp
-                          </option>
-                          <option value="1">
-                            Công khai
-                          </option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label>Danh mục</label>
-                        <div class="select2-purple">
-                          <select class="select2 form-control" multiple="multiple" id="category">
-                            <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <div class="thumbnail-preview-container mb-3">
-                          <img src="" alt="" id="thumbnail" />
-                        </div>
-                        <button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#modal-xl">
-                          Chọn hình ảnh
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a th:href="@{/admin/dashboard}">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a th:href="@{/admin/blogs/own-blogs}">Blog</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            Tạo bài viết
+                        </li>
+                    </ol>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </section>
-
-      <div class="modal fade" id="modal-xl" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Extra Large Modal</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <p>One fine body…</p>
-            </div>
-            <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">
-                Close
-              </button>
-              <button type="button" class="btn btn-primary">
-                Save changes
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <th:block id="js">
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row py-2">
+                <div class="col-6">
+                    <a th:href="@{/admin/blogs/own-blogs}" class="btn btn-default">
+                        <i class="fas fa-chevron-left"></i> Quay lại
+                    </a>
+                    <button type="button" class="btn btn-info px-4" id="btn-create">
+                        Lưu
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label>Tiêu đề</label>
+                                        <input type="text" class="form-control" id="title"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Nội dung</label>
+                                        <textarea id="content"></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Mô tả ngắn</label>
+                                        <textarea id="description" class="form-control" rows="3"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Trạng thái</label>
+                                        <select id="status" class="form-control">
+                                            <option value="0">
+                                                Nháp
+                                            </option>
+                                            <option value="1">
+                                                Công khai
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Danh mục</label>
+                                        <div class="select2-purple">
+                                            <select class="select2 form-control" multiple="multiple" id="category">
+                                                <option th:each="category : ${categories}" th:value="${category.id}"
+                                                        th:text="${category.name}"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="thumbnail-preview-container mb-3 border">
+                                            <img src="https://via.placeholder.com/1000x600" alt="" id="thumbnail"/>
+                                        </div>
+                                        <button type="button" class="btn btn-info btn-flat" data-toggle="modal"
+                                                data-target="#modal-xl">
+                                            Chọn hình ảnh
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal fade" id="modal-xl" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Extra Large Modal</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>One fine body…</p>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-primary">
+                        Save changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<th:block id="js">
     <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js"></script>
@@ -163,45 +154,45 @@
     <script th:src="@{/admin-lte/plugins/select2/js/select2.full.min.js}"></script>
 
     <script th:inline="javascript">
-      //Initialize Select2 Elements
-      $(".select2").select2();
+        //Initialize Select2 Elements
+        $(".select2").select2();
 
-      // Initialize editor
-      const easyMDE = new EasyMDE({
-        element: document.getElementById("content"),
-        spellChecker: false,
-        maxHeight: "500px",
-        renderingConfig: {
-          codeSyntaxHighlighting: true,
-        },
-      });
-
-      // Truy cập vào các thành phần
-      const titleEl = document.getElementById("title");
-      const descriptionEl = document.getElementById("description");
-      const statusEl = document.getElementById("status");
-      const categoryEl = $("#category");
-      const thumbnailEl = document.getElementById("thumbnail");
-      const btnCreate = document.getElementById("btn-create")
-
-      // Tạo Blog
-      btnCreate.addEventListener("click", function () {
-        let categories = categoryEl.val();
-        categories = categories.map(e => Number(e));
-
-        let res = axios.post("/api/admin/blogs", {
-          title : titleEl.value,
-          description : descriptionEl.value,
-          content : easyMDE.value(),
-          thumbnail : thumbnailEl.getAttribute("src"),
-          status : statusEl.value,
-          categories : categories
+        // Initialize editor
+        const easyMDE = new EasyMDE({
+            element: document.getElementById("content"),
+            spellChecker: false,
+            maxHeight: "500px",
+            renderingConfig: {
+                codeSyntaxHighlighting: true,
+            },
         });
 
-        console.log(res.data);
-      })
+        // Truy cập vào các thành phần
+        const titleEl = document.getElementById("title");
+        const descriptionEl = document.getElementById("description");
+        const statusEl = document.getElementById("status");
+        const categoryEl = $("#category");
+        const thumbnailEl = document.getElementById("thumbnail");
+        const btnCreate = document.getElementById("btn-create")
+
+        // Tạo Blog
+        btnCreate.addEventListener("click", function () {
+            let categories = categoryEl.val();
+            categories = categories.map(e => Number(e));
+
+            let res = axios.post("/api/admin/blogs", {
+                title: titleEl.value,
+                description: descriptionEl.value,
+                content: easyMDE.value(),
+                thumbnail: thumbnailEl.getAttribute("src"),
+                status: statusEl.value,
+                categories: categories
+            });
+
+            console.log(res.data);
+        })
     </script>
-  </th:block>
+</th:block>
 </body>
 
 </html>
