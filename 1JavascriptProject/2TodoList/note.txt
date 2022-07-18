@@ -1,7 +1,0 @@
-1	Tạo giao diện
-2	Mockup dữ liệu và render ra màn hình
-3	Add todo
-4	Delete/ Toggle status todo
-5	Update todo
-6	Filter
-7	Local storage

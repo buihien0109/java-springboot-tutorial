@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Danh sách công ty</title>
+
+    <link rel="icon" type="image/png" sizes="16x16" href="/image/favicon-16x16.png">
+
+    <!-- Link google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700;900&amp;display=swap"
+        rel="stylesheet">
+
+    <!-- Link bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Link icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <!--    toastr.js-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+        integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <!-- Link tự viết -->
+    <link rel="stylesheet" href="./css/style-admin.css">
+</head>
+
+<body>
+    <!--HEADER-->
+    <div class="header">
+        <div class="logo">
+            <a href="/admin/companies">
+                <img src="https://layerdrops.com/insur/main-html/assets/images/resources/logo-2.png" alt="logo">
+            </a>
+        </div>
+
+        <div class="sidebar ms-5">
+            <div class="menu">
+                <ul>
+                    <li class="menu-item">
+                        Quản lý công ty <span><i class="fa-solid fa-caret-down"></i></span>
+
+                        <ul class="sub-menu">
+                            <li class="sub-menu-item">
+                                <a href="/admin/companies">Danh sách công ty</a>
+                            </li>
+                            <li class="sub-menu-item">
+                                <a href="/admin/companies/create">Tạo công ty</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        Quản lý công việc <span><i class="fa-solid fa-caret-down"></i></span>
+
+                        <ul class="sub-menu">
+                            <li class="sub-menu-item">
+                                <a href="/admin/jobs">Danh sách công việc</a>
+                            </li>
+                            <li class="sub-menu-item">
+                                <a href="/admin/jobs/create">Tạo công việc</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- BODY -->
+    <div class="company-list mt-4 mb-4">
+        <div class="container">
+            <div class="mb-4">
+                <a href="/admin/companies/create" class="btn-custom btn-create-company">
+                    <span><i class="fa-solid fa-plus"></i></span>
+                    Tạo công ty
+                </a>
+                <a href="/admin/companies" class="btn-custom btn-refresh">
+                    <span><i class="fa-solid fa-arrow-rotate-right"></i></span>
+                    Refresh
+                </a>
+            </div>
+
+            <div class="company-list-inner p-2">
+                <table class="table company-table">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên công ty</th>
+                            <th>Thành phố</th>
+                            <th>Email</th>
+                            <th>Website</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>
+                                <a href="/admin/companies/1">Haley, Bailey and Brakus</a>
+                            </td>
+                            <th>Thành phố Hồ Chí Minh</th>
+                            <td>korey.hayes@yahoo.com</td>
+                            <td>
+                                <a href="www.flatleyllc.net">www.flatleyllc.net</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>
+                                <a href="/admin/companies/2">Armstrong, Nolan and Heaney</a>
+                            </td>
+                            <th>Thành phố Hà Nội</th>
+                            <td>sarina.ankunding@yahoo.com</td>
+                            <td>
+                                <a href="www.rolfsonquitzonandpacocha.net">www.rolfsonquitzonandpacocha.net</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>
+                                <a href="/admin/companies/3">Trantow, Collier and Kirlin</a>
+                            </td>
+                            <th>Thành phố Đà Nẵng</th>
+                            <td>odis.stoltenberg@yahoo.com</td>
+                            <td>
+                                <a href="www.gerlach-abbott.co">www.gerlach-abbott.co</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>
+                                <a href="/admin/companies/4">Hilll-Wiza</a>
+                            </td>
+                            <th>Thành phố Đà Nẵng</th>
+                            <td>elizabet.considine@yahoo.com</td>
+                            <td>
+                                <a href="www.lehnerinc.biz">www.lehnerinc.biz</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!--  toastr.js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</body>
+
+</html>
