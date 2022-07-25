@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(
+        ~{:: title},
+        ~{},
+        ~{:: .course-container},
+        ~{}
+      )}
+">
+
+<head>
+    <title th:text="${course.name}">Document</title>
+</head>
+
+<body>
+<div class="course-container mt-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="mb-4">
+                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/khoa-hoc">Khóa học</a></li>
+                            <li class="breadcrumb-item active" aria-current="page" th:text="${course.name}">Lập trình di động IOS Swift online
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+
+                <div class="main p-4 shadow-sm">
+                    <h2 class="course-title fs-5" th:text="${course.name}">Lập trình di động IOS Swift online</h2>
+
+                    <hr>
+
+                    <div class="supporter d-flex align-items-center">
+                        <div class="supporter-image me-4">
+                            <img th:src="${course.user.avatar}"
+                                 th:alt="${course.user.name}" class="rounded-circle border">
+                        </div>
+                        <div class="supporter-info">
+                            <p>
+                                <b>Tư vấn viên :</b>
+                                <th:block th:text="${course.user.name}"></th:block>
+                            </p>
+                            <p>
+                                <b>Email :</b>
+                                <th:block th:text="${course.user.email}"></th:block>
+                            </p>
+                            <p class="mb-0">
+                                <b>Số điện thoại :</b>
+                                <th:block th:text="${course.user.phone}"></th:block>
+                            </p>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="course-description">
+                        <p th:text="${course.description}">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi, minima voluptatem.
+                            Asperiores quos ipsum fugiat ex perferendis iusto, aliquid a dolores magnam repellat, optio
+                            sint omnis eum alias, adipisci velit! Nam quod voluptate sit tempore voluptatem accusantium
+                            non quis adipisci, rem dolores expedita consequatur repellendus alias explicabo
+                            reprehenderit harum nihil nemo cupiditate? Tempore quibusdam possimus quas, dolorem quasi
+                            facilis consectetur vero quisquam, incidunt asperiores voluptas autem. Incidunt aspernatur
+                            nihil, autem pariatur atque dolorum labore facilis odit possimus nemo quam excepturi rerum
+                            adipisci eaque hic assumenda tenetur similique! Ex ab libero fugit harum hic, vero, natus
+                            optio, alias accusamus maxime maiores.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout-admin :: main-fragment(
+        ~{:: title},
+        ~{},
+        ~{:: .course-list},
+        ~{:: #js}
+      )}
+">
+
+<head>
+    <title>Danh sách khóa học</title>
+</head>
+
+<body>
+<!-- BODY -->
+<div class="course-list mt-4 mb-4">
+    <div class="container">
+        <div class="mb-4">
+            <a href="/admin/courses/create" class="btn-custom btn-create-course">
+                <span><i class="fa-solid fa-plus"></i></span>
+                Tạo khóa học
+            </a>
+            <a href="/admin/courses" class="btn-custom btn-refresh">
+                <span><i class="fa-solid fa-arrow-rotate-right"></i></span>
+                Refresh
+            </a>
+        </div>
+
+        <div class="course-list-inner p-2">
+            <table class="table course-table">
+                <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tên khóa học</th>
+                    <th>Hình thức</th>
+                    <th>Chủ đề</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:with="courses=${data.content}">
+                    <tr th:each="course, state : ${courses}">
+                        <td th:text="${(state.index + 1) + ((data.pageNumber - 1) * data.pageSize)}">1</td>
+                        <td>
+                            <a th:href="@{/admin/courses/{id}/{slug} (id=${course.id}, slug=${course.slug})}"
+                               th:text="${course.name}">SpringBoot - Web Back End</a>
+                        </td>
+                        <td th:class="${course.type == 'onlab'} ? 'text-info' : 'text-warning'"
+                            th:text="${course.type}">onlab
+                        </td>
+                        <td th:text="${T(vn.techmaster.course.util.Utils).generateTopicString(course.topics)}">backend,
+                            cơ sở dữ liệu, lập trình web
+                        </td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+
+            <div class="d-flex justify-content-center mt-3" th:if="${data.totalPages.size()} > 1">
+                <nav>
+                    <ul class="pagination">
+                        <li class="page-item" th:if="${not data.first}">
+                            <a class="page-link"
+                               th:href="@{/admin/courses?page={pageNumber} (pageNumber = ${data.pageNumber - 1})}"
+                               aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item" th:each="p : ${data.totalPages}"
+                            th:classappend="${p == data.pageNumber} ? 'active' : ''">
+                            <a class="page-link" th:href="@{/admin/courses?page={pageNumber} (pageNumber = ${p})}"
+                               th:text="${p}">1</a>
+                        </li>
+                        <li class="page-item" th:if="${not data.last}">
+                            <a class="page-link"
+                               th:href="@{/admin/courses?page={pageNumber} (pageNumber = ${data.pageNumber + 1})}"
+                               aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block id="js">
+    <script th:inline="javascript">
+        let data = [[${data}]];
+        console.log(data);
+    </script>
+</th:block>
+</body>
+
+</html>

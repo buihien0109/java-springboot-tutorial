@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout-admin :: main-fragment(
+        ~{:: title},
+        ~{:: #css},
+        ~{:: .course-list},
+        ~{:: #js}
+      )}
+">
+
+<head>
+    <title th:text="${course.name}">Tạo khóa học</title>
+
+    <!-- Link select2 -->
+    <th:block id="css">
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    </th:block>
+</head>
+
+<body>
+<!-- BODY -->
+<div class="course-list mt-4 mb-4">
+    <div class="container">
+        <div class="mb-4 d-flex justify-content-between">
+            <div>
+                <button class="btn-custom btn-update-course" id="btn-update-course">
+                    <span><i class="fa-solid fa-plus"></i></span>
+                    Cập nhật
+                </button>
+                <a href="/admin/courses" class="btn-custom btn-refresh">
+                    <span><i class="fa-solid fa-angle-left"></i></span>
+                    Quay lại
+                </a>
+            </div>
+            <div>
+                <button class="btn-custom bg-danger" id="btn-delete-course">
+                    <span><i class="fa-solid fa-trash-can"></i></span>
+                    Xóa
+                </button>
+            </div>
+        </div>
+
+        <div class="course-list-inner p-2">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="mb-3">
+                        <label for="course-name" class="form-label fw-bold">Tên khóa học</label>
+                        <input type="text" class="form-control" id="course-name" th:value="${course.name}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="course-description" class="form-label fw-bold">Mô tả</label>
+                        <textarea class="form-control" id="course-description" rows="10"
+                                  th:text="${course.description}"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="course-type" class="form-label fw-bold">Hình thức học</label>
+                        <select class="form-control" id="course-type">
+                            <option hidden>- Chọn hình thức học</option>
+                            <option value="online" th:selected="${course.type} == 'online'">Online</option>
+                            <option value="onlab" th:selected="${course.type} == 'onlab'">Onlab</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="course-topic" class="form-label fw-bold">Chủ đề</label>
+                        <select class="form-control" id="course-topic" multiple="multiple">
+                            <option th:each="topic : ${topics}" th:value="${topic.id}" th:text="${topic.name}">Backend
+                            </option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="course-supporter" class="form-label fw-bold">Tư vấn viên</label>
+                        <select class="form-control" id="course-supporter">
+                            <option hidden>- Chọn tư vấn viên</option>
+                            <option th:each="supporter : ${supporters}" th:value="${supporter.id}"
+                                    th:text="${supporter.name}" th:selected="${course.user.id} == ${supporter.id}">
+                                Nguyễn Văn A
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Thumnail</label>
+                        <div class="course-logo-preview mb-3 rounded">
+                            <img id="course-logo-preview" class="rounded" th:src="${course.thumbnail}">
+                        </div>
+
+                        <label for="course-logo-input" class="btn btn-warning">Đổi ảnh</label>
+                        <input type="file" id="course-logo-input" class="d-none">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block id="js">
+    <!-- select2 -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script th:inline="javascript">
+        let course = [[${course}]]
+
+        // Truy cập vào các thành phần
+        const courseName = document.getElementById("course-name");
+        const courseDescription = document.getElementById("course-description");
+        const courseType = document.getElementById("course-type");
+        const courseTopic = $("#course-topic");
+        const courseSupporter = document.getElementById("course-supporter");
+        const courseLogoPreview = document.getElementById("course-logo-preview");
+        const courseLogoInput = document.getElementById("course-logo-input");
+
+        const btnUpdate = document.getElementById("btn-update-course");
+        const btnDelete = document.getElementById("btn-delete-course");
+
+        // Kích hoạt select2
+        courseTopic.select2({
+            placeholder: "- Chọn chủ đề",
+        });
+
+        // Set thông tin topic
+        courseTopic.val(course.topics.map(e => e.id.toString())).trigger("change");
+
+        // Cập nhật thông tin khóa học
+        btnUpdate.addEventListener("click", async () => {
+            let topics = courseTopic.val();
+            let topicsConvert = topics.map(e => Number(e));
+
+            try {
+                let res = await axios.put(`/api/admin/courses/${course.id}`, {
+                    name : courseName.value,
+                    description : courseDescription.value,
+                    type : courseType.value,
+                    topics : topicsConvert,
+                    supporterId : Number(courseSupporter.value)
+                })
+
+                if(res.data) {
+                    alert("Cập nhật khóa học thành công");
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        })
+
+        // Xóa khóa học
+        btnDelete.addEventListener("click", async () => {
+            let isConfirm = confirm("Bạn có muốn xóa không?");
+            if(isConfirm) {
+                await axios.delete(`/api/admin/courses/${course.id}`);
+
+                alert("Xóa khóa học thành công");
+                setTimeout(() => {
+                    window.location.href = `/admin/courses`
+                }, 1000)
+            }
+        })
+
+        // Upload file
+        courseLogoInput.addEventListener("change", async (event) => {
+            try {
+                const file = event.target.files[0];
+
+                let formData = new FormData();
+                formData.append("file", file);
+
+                let res = await axios.post(`/api/admin/courses/${course.id}/upload-file`, formData)
+
+                courseLogoPreview.src = res.data;
+            } catch (error) {
+                console.log(error);
+            }
+        })
+
+    </script>
+</th:block>
+
+</body>
+
+</html>

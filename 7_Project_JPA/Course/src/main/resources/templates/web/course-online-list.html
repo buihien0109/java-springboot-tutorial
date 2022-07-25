@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(
+        ~{:: title},
+        ~{},
+        ~{:: .course-container},
+        ~{:: #js}
+      )}
+">
+
+<head>
+    <title>Danh sách khóa học trực tuyến</title>
+</head>
+
+<body>
+<div class="course-container mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <h2 class="fs-5 mb-4">Chủ đề</h2>
+                <div class="topic-item input-group d-flex align-items-center mb-1" th:each="topic : ${topics}">
+                    <input type="radio" th:value="${topic.name}" th:id="${topic.name}" name="topic">
+                    <label th:for="${topic.name}" class="ms-2 fs-5" th:text="${topic.name}">Lập trình Backend</label>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="seach-form d-flex align-items-center rounded shadow-sm mb-4 pe-3">
+                            <input type="text" placeholder="Tìm kiếm khóa học"
+                                   class="form-control border-0 seach-form-input">
+                            <span class="text-black-50 seach-form-button"><i
+                                    class="fa-solid fa-magnifying-glass"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="course-list row">
+                    <h4 th:if="${#lists.isEmpty(courses)}">Không tìm thấy khóa học yêu cầu</h4>
+                    <div th:if="${not #lists.isEmpty(courses)}" class="col-md-4" th:each="course : ${courses}">
+                        <a th:href="@{/khoa-hoc/{id}/{slug} (id=${course.id}, slug=${course.slug})}">
+                            <div class="course-item shadow-sm rounded mb-4">
+                                <div class="course-item-image">
+                                    <img th:src="${course.thumbnail}"
+                                         th:alt="${course.name}">
+                                </div>
+                                <div class="course-item-info p-3">
+                                    <h2 class="fs-5 mb-3 text-dark" th:text="${course.name}">Spring Boot - Web Back End</h2>
+                                    <p class="type fw-light text-black-50" th:text="${course.type} == 'online' ? 'Trực tuyến' : 'Phòng lab'">Trực tuyến</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block id="js">
+    <script th:src="@{/js/main.js}"></script>
+</th:block>
+</body>
+
+</html>
