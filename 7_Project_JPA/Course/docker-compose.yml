@@ -1,4 +1,20 @@
-FROM openjdk:8-jdk-alpine
-MAINTAINER baeldung.com
-COPY target/docker-message-server-1.0.0.jar message-server-1.0.0.jar
-ENTRYPOINT ["java","-jar","/message-server-1.0.0.jar"]
+version: "3.8"
+
+services:
+  # MySQL
+  mysql:
+    image: mysql:latest
+    volumes:
+      - ./db-course.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: db-course
+  # web
+  web:
+    image : springboot_course:latest
+    depends_on:
+      - mysql
+    ports:
+      - "8089:8080"
+    restart: always

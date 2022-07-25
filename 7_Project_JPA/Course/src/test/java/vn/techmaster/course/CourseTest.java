@@ -19,9 +19,9 @@ public class CourseTest {
     private CourseRepository courseRepository;
 
     // Phân trang
-    @Test
-    void pagination_course_admin_test() {
-        Page<Course> page = courseRepository.findAll(PageRequest.of(0, 10));
-        System.out.println(page);
-    }
+//    @Test
+//    void pagination_course_admin_test() {
+//        Page<Course> page = courseRepository.findAll(PageRequest.of(0, 10));
+//        System.out.println(page);
+//    }
 }
