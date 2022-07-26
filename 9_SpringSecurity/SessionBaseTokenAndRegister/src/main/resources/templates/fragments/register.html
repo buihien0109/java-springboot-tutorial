@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<th:block th:fragment="f-register">
+  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-register">
+    Register
+  </button>
+
+  <!-- Modal register -->
+  <div class="modal fade" id="modal-register" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Register</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="r-name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="r-name">
+          </div>
+          <div class="mb-3">
+            <label for="r-email" class="form-label">Email</label>
+            <input type="text" class="form-control" id="r-email">
+          </div>
+          <div class="mb-3">
+            <label for="r-password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="r-password">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+          <button type="button" class="btn btn-primary" id="btn-register">Register</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</th:block>
+
+</body>
+</html>
