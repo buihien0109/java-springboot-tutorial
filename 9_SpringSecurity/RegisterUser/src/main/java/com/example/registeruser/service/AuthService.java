@@ -4,11 +4,17 @@ import com.example.registeruser.entity.Token;
 import com.example.registeruser.entity.User;
 import com.example.registeruser.exception.BadRequestException;
 import com.example.registeruser.exception.NotFoundException;
+import com.example.registeruser.request.LoginRequest;
 import com.example.registeruser.request.RegisterUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +35,33 @@ public class AuthService {
 
     @Autowired
     private MailService mailService;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    // LOGIN USER
+    public String login(LoginRequest request, HttpSession session) {
+        // Tạo đối tượng xác thực dựa trên thông tin request
+        UsernamePasswordAuthenticationToken token =
+                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
+
+        // Tiến hành xác thực
+        Authentication authentication = authenticationManager.authenticate(token);
+
+        // Lưu trữ thông tin của đối tượng đã đăng nhập
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        // Lưu thông tin vào trong session
+        session.setAttribute("MY_SESSION", authentication.getName());
+
+        return "login success";
+    }
+
+    // LOGOUT USER
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "logout success";
+    }
 
     // REGISTER USER
     public String register(RegisterUserRequest request) {
