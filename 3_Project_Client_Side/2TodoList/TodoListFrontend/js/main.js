@@ -174,21 +174,21 @@ async function updateTodo(todoUpdate) {
     }
 }
 
-// Lấy giá trị trong 1 ô input radio
-function getOptionSelected() {
-    for (let i = 0; i < todo_option_item.length; i++) {
-        if (todo_option_item[i].checked) {
-            return todo_option_item[i].value;
-        }
-    }
-}
+// // Lấy giá trị trong 1 ô input radio
+// function getOptionSelected() {
+//     for (let i = 0; i < todo_option_item.length; i++) {
+//         if (todo_option_item[i].checked) {
+//             return todo_option_item[i].value;
+//         }
+//     }
+// }
 
-todo_option_item.forEach((btn) => {
-    btn.addEventListener("change", function () {
-        let optionSelected = getOptionSelected();
-        getTodos(optionSelected);
-    });
-});
+// todo_option_item.forEach((btn) => {
+//     btn.addEventListener("change", function () {
+//         let optionSelected = getOptionSelected();
+//         getTodos(optionSelected);
+//     });
+// });
 
 // Thêm công việc và cập nhật tiêu đề công việc
 btn_add.addEventListener("click", function () {

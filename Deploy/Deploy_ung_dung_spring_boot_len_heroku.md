@@ -8,15 +8,15 @@ Truy cập vào trang web heroku.com, tiến hành đăng ký tài khoản và �
 
 **1. Tạo app trên heroku**
 
-![](./image/Create_New_App___Heroku.png)
+![](https://user-images.githubusercontent.com/49893899/182999719-5801710c-e6f3-47dc-bd5a-ec1e7d94f0a5.png)
 
-Hoặc sử dụng teminal (đã cài heroku CLI)
+Hoặc sử dụng teminal (đã cài heroku CLI - https://devcenter.heroku.com/articles/heroku-cli)
 
 ```bash
 $ heroku create springboot-course-app
 ```
 
-**2. Tạo database**
+**2. Tạo database (nếu app không sử dụng database thì có thể bỏ qua bước này)**
 
 Yêu cầu đăng ký thẻ visa trên heroku (free)
 
@@ -24,11 +24,11 @@ Vào phần https://dashboard.heroku.com/account/billing để đăng ký thẻ 
 
 Sau đó tìm kiếm Add-ons là : **ClearDB MySQL** và thêm vào
 
-![](./image/cleardatabase.png)
+![](https://user-images.githubusercontent.com/49893899/182999697-d94a7373-64a9-47d7-91ca-92eb0d6225bc.png)
 
 **3. Đẩy code lên trên heroku**
 
-Nếu trong project của bạn đang sử dụng java 17 thì hãy bổ sung thêm file **system.properies** với nội dung
+Nếu trong project của bạn đang sử dụng java 17 thì hãy bổ sung thêm file **system.properties** vào trong thư mục gốc chứa project với nội dung
 
 ```
 java.runtime.version=17
@@ -36,10 +36,10 @@ java.runtime.version=17
 
 Trong thư mục chứa project, bật terminal và thực hiện các câu lệnh sau
 
-![](./image/push-code-to-heroku.png)
+![](https://user-images.githubusercontent.com/49893899/182999740-d225dcc4-8265-46e1-9323-6d758c79f6ba.png)
 
 ```bash
-1. Login to heroku
+1. Login to heroku (xác nhận ở trên web)
 
 $ heroku login
 
@@ -49,27 +49,36 @@ $ git init
 $ git status
 $ git add .
 $ git commit -m "update"
-$ git push heroku main
+$ git push heroku main (nếu main không được thì đổi thành master)
 ```
+
+> Note :
+> - Nếu project không có database thì đến bước này là xong, chỉ cần truy cập vào link deploy của hero là được
+> - Nếu có database thì đến bước này mặc dù đã được tạo bảng nhưng dữ liệu trong các bảng không có gì
+> - Nếu muốn restore database đang có sẵn cho app thì chuyển qua bước tiếp theo
+>
 
 **4. Restore database**
 
-Sử dụng **phpMyAdmin** để tạo bản backup cho database, và có thể lưu vào thư mục chưa project để tiện cho việc copy vào container
+Sử dụng **phpMyAdmin** để tạo bản backup cho database, và có thể lưu vào thư mục chứa project để tiện cho việc copy vào container đang chạy mysql trên máy
 
+**Kết nối với database trong heroku (sử dụng terminal - để kết nối với docker)**
 
-**Kết nối với database trong heroku**
-
-1. Kiểm tra id của container đang chạy
+1. Kiểm tra id của **container mysql** đang chạy
 
 ```
 $ docker ps
 ```
 
-2. Exec vào trong container mysql đang chạy
+![](https://user-images.githubusercontent.com/49893899/182999728-2ba135c3-453d-4c9f-8f79-f0801f812006.png)
+
+2. Exec vào trong container mysql đang chạy để thực hiện các câu lệnh
 
 ```
 $ docker exec -it [container_id] /bin/sh
 ```
+
+![](https://user-images.githubusercontent.com/49893899/183000099-663e3c89-b18b-4e66-86b6-12caec27e77e.png)
 
 3. Kiểm tra tham số của database
 
@@ -77,7 +86,12 @@ $ docker exec -it [container_id] /bin/sh
 $ mysql -u [name] -p[password] -h [host]
 ```
 
-> Trong đó những tham số name, password, host lấy thông số của app
+
+> Trong đó những tham số name, password, host lấy thông số của app trên heroku
+
+![](https://user-images.githubusercontent.com/49893899/183000502-235d3c25-dc63-457f-903a-037d175ef732.png)
+
+![](https://user-images.githubusercontent.com/49893899/183000828-720398ba-1d9d-4024-b5a2-11a0701b6fe9.png)
 
 Connect to database
 

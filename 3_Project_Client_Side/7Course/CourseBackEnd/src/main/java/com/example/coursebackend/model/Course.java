@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,6 +18,6 @@ public class Course {
     private String type;
     private String image;
     private double rating;
-    private String[] topics;
+    private List<String> topics;
     private int supporterId;
 }

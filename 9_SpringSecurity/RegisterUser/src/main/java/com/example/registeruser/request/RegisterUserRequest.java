@@ -1,4 +1,4 @@
-package com.example.coursebackend.request;
+package com.example.registeruser.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FilterCourseRequest {
-    private String type;
-    private String topic;
+public class RegisterUserRequest {
+    private String name;
+    private String email;
+    private String password;
 }
