@@ -27,6 +27,9 @@ public class SercurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthorizationFilterCustom authorizationFilterCustom;
 
+    @Autowired
+    private AccessDeniedHandlerCustom accessDeniedHandlerCustom;
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -54,6 +57,7 @@ public class SercurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .exceptionHandling()
                     .authenticationEntryPoint(authenticationEntryPointCustom)
+                    .accessDeniedHandler(accessDeniedHandlerCustom)
                 .and()
                     .logout()
                     .logoutUrl("/api/auth/logout")
@@ -63,4 +67,6 @@ public class SercurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .addFilterBefore(authorizationFilterCustom, UsernamePasswordAuthenticationFilter.class);
     }
+
+
 }

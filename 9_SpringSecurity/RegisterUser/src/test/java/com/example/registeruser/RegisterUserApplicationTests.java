@@ -37,7 +37,15 @@ class RegisterUserApplicationTests {
                 .role(new ArrayList<>(List.of("USER")))
                 .build();
 
-        userRepository.saveAll(List.of(user1, user2));
+        User user3 = User.builder()
+                .name("Minh Duy")
+                .email("a@gmail.com")
+                .password(passwordEncoder.encode("111"))
+                .enabled(false)
+                .role(new ArrayList<>(List.of("USER")))
+                .build();
+
+        userRepository.saveAll(List.of(user1, user2, user3));
     }
 
 }
