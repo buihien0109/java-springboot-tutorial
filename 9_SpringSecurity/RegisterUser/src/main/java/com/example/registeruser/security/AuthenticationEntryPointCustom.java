@@ -18,20 +18,9 @@ import java.io.IOException;
 public class AuthenticationEntryPointCustom implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        ErrorMessage message = new ErrorMessage();
+        ErrorMessage message = new ErrorMessage(HttpStatus.UNAUTHORIZED, "Bạn cần đăng nhập");
 
-        if (authException.getClass().equals(BadCredentialsException.class)) {
-            message.setStatus(HttpStatus.UNAUTHORIZED);
-            message.setMessage("Tài khoản hoặc mật khẩu không chính xác");
-        } else if (authException.getClass().equals(DisabledException.class)) {
-            message.setStatus(HttpStatus.UNAUTHORIZED);
-            message.setMessage("Tài khoản chưa được kích hoạt");
-        } else {
-            message.setStatus(HttpStatus.UNAUTHORIZED);
-            message.setMessage("Bạn cần đăng nhập");
-        }
-
-//        ErrorMessage message = new ErrorMessage(HttpStatus.UNAUTHORIZED, "Bạn cần đăng nhập");
+        System.out.println(authException.toString());
 
         ObjectMapper objectMapper = new ObjectMapper();
         String messageJSON = objectMapper.writeValueAsString(message);
