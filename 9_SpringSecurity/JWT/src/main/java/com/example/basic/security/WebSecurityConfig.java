@@ -1,37 +1,33 @@
 package com.example.basic.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.basic.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
+@AllArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    private final UserService userService;
+    private final AuthenticationEntryPointCustom authenticationEntryPointCustom;
+    private final AuthorizationFilterCustom authorizationFilterCustom;
+    private final AccessDeniedHandlerCustom accessDeniedHandlerCustom;
 
-    @Autowired
-    private UserDetailsServiceCustom userDetailsServiceCustom;
-
-    @Autowired
-    private AuthenticationEntryPointCustom authenticationEntryPointCustom;
-
-    @Autowired
-    private AuthorizationFilterCustom authorizationFilterCustom;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsServiceCustom).passwordEncoder(passwordEncoder());
     }
 
     @Bean
@@ -41,24 +37,32 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
+    }
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                    .antMatchers("/", "/auth/login").permitAll()
-                    .antMatchers("/profile").hasRole("USER")
-                    .antMatchers("/admin/blogs").hasAnyRole("EDITOR", "ADMIN")
-                    .antMatchers("/admin/users").hasRole("ADMIN")
+                    .antMatchers("/api/auth/**", "/").permitAll()
+                    .antMatchers("/api/admin/**").hasRole("ADMIN")
+                    .anyRequest().authenticated()
                 .and()
                     .exceptionHandling()
                     .authenticationEntryPoint(authenticationEntryPointCustom)
+                    .accessDeniedHandler(accessDeniedHandlerCustom)
                 .and()
                     .logout()
-                    .logoutSuccessUrl("/")
-                    .invalidateHttpSession(true)
-                    .deleteCookies("TECHMASTER_SESSION")
+                    .logoutUrl("/api/auth/logout")
+                    .deleteCookies("JWT_TOKEN")
+                    .logoutSuccessHandler((new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK)))
                     .permitAll()
+                .and()
+                    .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                     .addFilterBefore(authorizationFilterCustom, UsernamePasswordAuthenticationFilter.class);
     }

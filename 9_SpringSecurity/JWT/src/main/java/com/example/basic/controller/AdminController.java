@@ -2,18 +2,21 @@ package com.example.basic.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
+@RequestMapping("api/admin")
 public class AdminController {
-    // Vào trang blogs -> Cần quyền EDITOR, ADMIN
-    @GetMapping("/admin/blogs")
+    // Chỉ có ROLE ADMIN mới được truy cập
+    @GetMapping("/blogs")
     public String getBlogPage() {
-        return "blog";
+        return "Blog Page";
     }
 
-    // Vào trang blogs -> Cần quyền ADMIN
-    @GetMapping("/admin/users")
+    // Chỉ có ROLE ADMIN mới được truy cập
+    @GetMapping("/users")
     public String getUserPage() {
-        return "user";
+        return "User Page";
     }
 }

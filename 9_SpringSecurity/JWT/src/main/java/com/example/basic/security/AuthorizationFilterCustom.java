@@ -1,5 +1,8 @@
 package com.example.basic.security;
 
+import com.example.basic.service.UserService;
+import io.jsonwebtoken.Claims;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,37 +15,47 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 
 @Component
+@AllArgsConstructor
 public class AuthorizationFilterCustom extends OncePerRequestFilter {
-
-    @Autowired
-    private UserDetailsServiceCustom userDetailsServiceCustom;
+    private JwtUtils jwtUtils;
+    private UserService userService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        // Lấy thông tin session
-        String userEmail = (String) request.getSession().getAttribute("TECHMASTER_SESSION");
-
-        // Tạo object Authentication
-        UsernamePasswordAuthenticationToken authentication = getAuthentication(userEmail);
-        if (authentication == null) {
+        // Lấy token từ trong header của request
+        String token = jwtUtils.getTokenFromCookie(request);
+        if(token == null) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        // Xác thực thành công, lưu object Authentication vào SecurityContextHolder
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        filterChain.doFilter(request, response);
-    }
-
-    // Lấy thông tin
-    private UsernamePasswordAuthenticationToken getAuthentication(String userEmail) {
-        if (userEmail == null) {
-            return null;
+        // Parse thông tin từ token
+        Claims claims = jwtUtils.getClaimsFromToken(token);
+        if (claims == null) {
+            filterChain.doFilter(request, response);
+            return;
         }
 
-        UserDetails user = userDetailsServiceCustom.loadUserByUsername(userEmail);
-        return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+        // Kiểm tra token đã hết hạn hay chưa
+        Date expiration = claims.getExpiration();
+        if (expiration.before(new Date())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        // Lấy thông tin của user dựa trên email
+        UserDetails user = userService.loadUserByUsername(claims.getSubject());
+
+        // Tạo đối tượng authentication
+        UsernamePasswordAuthenticationToken authentication =
+                new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+
+        // Lưu vào trong context
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        filterChain.doFilter(request, response);
     }
 }

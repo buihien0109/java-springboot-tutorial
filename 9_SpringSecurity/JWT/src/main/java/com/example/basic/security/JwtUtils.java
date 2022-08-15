@@ -1,13 +1,15 @@
 package com.example.basic.security;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.WebUtils;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,26 +33,32 @@ public class JwtUtils {
         // 1. Định nghĩa các claims: issuer, expiration, subject, id
         // 2. Mã hóa token sử dụng thuật toán HS512 và key bí mật
         // 3. Convert thành chuỗi URL an toàn
-        // 4. Cộng chuỗi đã sinh ra với tiền tố Bearer
-        String token = Jwts.builder()
+        return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + duration * 1000))
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
-
-        return token;
     }
 
     // Lấy thông tin được lưu trong token
     public Claims getClaimsFromToken(String token) {
-        // Kiểm tra token có bắt đầu bằng tiền tố
-        if (token == null) return null;
+        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+    }
 
-        try {
-            return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
-        } catch (ExpiredJwtException e) {
-            return null;
+    // Lấy token từ trong header của request
+    public String getTokenFromCookie(HttpServletRequest request) {
+        Cookie cookie = WebUtils.getCookie(request, "JWT_TOKEN");
+        System.out.println(cookie);
+        if(cookie != null) {
+            System.out.println(cookie.getValue());
+            return cookie.getValue();
         }
+        return null;
+    }
+
+    // Check token hết hạn
+    public boolean checkExpiredToken(Claims claims) {
+        return claims.getExpiration().before(new Date());
     }
 }
