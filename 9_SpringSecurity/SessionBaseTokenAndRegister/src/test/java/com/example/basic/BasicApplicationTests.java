@@ -56,13 +56,6 @@ class BasicApplicationTests {
     }
 
     @Test
-    void find_by_email() {
-        User user = userRepository.findByEmail("hien@techmaster.vn");
-
-        assertThat(user).isNotNull();
-    }
-
-    @Test
     void test_save_user() {
         User user = User.builder()
                 .name("Nguyễn Văn A")

@@ -3,6 +3,7 @@ package com.example.basic.service;
 import com.example.basic.entity.Token;
 import com.example.basic.entity.User;
 import com.example.basic.exception.BadRequestException;
+import com.example.basic.exception.NotFoundException;
 import com.example.basic.repository.TokenRepository;
 import com.example.basic.repository.UserRepository;
 import com.example.basic.request.LoginRequest;
@@ -19,120 +20,127 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class AuthService {
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private UserService userService;
 
     @Autowired
-    private UserRepository userRepository;
+    private TokenService tokenService;
 
     @Autowired
-    private TokenRepository tokenRepository;
-
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     private MailService mailService;
 
     @Autowired
-    private TokenService tokenService;
+    private AuthenticationManager authenticationManager;
 
-    // == ĐĂNG NHẬP ==
-    public void login(LoginRequest request, HttpSession session) {
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
-        try {
-            Authentication authentication = authenticationManager.authenticate(authenticationToken);
+    // LOGIN USER
+    public String login(LoginRequest request, HttpSession session) {
+        // Tạo đối tượng xác thực dựa trên thông tin request
+        UsernamePasswordAuthenticationToken token =
+                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
 
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            session.setAttribute("TECHMASTER_SESSION", authentication.getName());
-        } catch (DisabledException e) {
-            throw new BadRequestException("Tài khoản chưa được kích hoạt");
-        } catch (AuthenticationException e) {
-            throw new BadRequestException("Email hoặc mật khẩu không chính xác");
-        }
+        // Tiến hành xác thực
+        Authentication authentication = authenticationManager.authenticate(token);
+
+        // Lưu trữ thông tin của đối tượng đã đăng nhập
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        // Lưu thông tin vào trong session
+        session.setAttribute("MY_SESSION", authentication.getName());
+
+        return "login success";
     }
 
-    // == ĐĂNG KÝ ==
+    // LOGOUT USER
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "logout success";
+    }
+
+    // REGISTER USER
     public String register(RegisterUserRequest request) {
-        // Kiểm tra xem email đã tồn tại hay chưa
-        boolean userExists = userRepository.existsByEmail(request.getEmail());
-        if(userExists) {
-            throw new BadRequestException("Email đã tồn tại");
+        // Lấy thông tin user dựa trên email
+        Optional<User> userOptional = userService.getUser(request.getEmail());
+
+        if (userOptional.isPresent()) {
+            // Nếu user được tìm thấy có trùng các thuộc tính và chưa được kích hoạt
+            // Gửi email kích hoạt
+            User user = userOptional.get();
+            if (!user.getEnabled()
+                    && user.getName().equals(request.getName())
+                    && user.getEmail().equals(request.getEmail())) {
+                return generateTokenAndSendMail(user);
+            }
+
+            throw new BadRequestException("Email = " + request.getEmail() + " đã tồn tại");
         }
 
-        // Mã hóa password của user
-        String encodedPassword = bCryptPasswordEncoder
-                .encode(request.getPassword());
+        // Mã hóa password
+        String passwordEncode = passwordEncoder.encode(request.getPassword());
 
-        // Tạo ra đối tượng user
-        User user = User.builder()
-                .name(request.getName())
-                .email(request.getEmail())
-                .password(encodedPassword)
-                .role(List.of("USER"))
-                .enabled(false)
-                .build();
+        // Tạo user và lưu vào database
+        User newUser = new User(request.getName(), request.getEmail(), passwordEncode, new ArrayList<>(List.of("USER")));
+        userService.saveUser(newUser);
 
-        // Lưu thông tin của user
-        userRepository.save(user);
+        // Sinh ra token
+        return generateTokenAndSendMail(newUser);
+    }
 
-        // Generate token
-        String token = UUID.randomUUID().toString();
+    // SINH TOKEN - SEND MAIL
+    private String generateTokenAndSendMail(User user) {
+        // Sinh ra token
+        String tokenString = UUID.randomUUID().toString();
 
-        // Tạo đối tượng token
-        Token confirmationToken = new Token(
-                token,
+        // Tạo token và lưu token
+        Token token = new Token(
+                tokenString,
                 LocalDateTime.now(),
                 LocalDateTime.now().plusMinutes(15),
                 user
         );
+        tokenService.saveToken(token);
 
-        tokenRepository.save(confirmationToken);
+        // Gửi email
+        String link = "http://localhost:8080/api/auth/confirm?token=" + tokenString;
+        mailService.send(user.getEmail(), "Xác thực tài khoản", link);
 
-
-        String link = "http://localhost:8080/auth/confirm?token=" + token;
-        mailService.send(request.getEmail(), "Confirm Account", link);
-
-        return token;
+        return link;
     }
 
-    // == XÁC THỰC TÀI KHOẢN ==
-    public String confirm(String token) {
-        // Lấy ra thông tin của token
-        Token confirmationToken = tokenService
-                .getToken(token)
-                .orElseThrow(() ->
-                        new IllegalStateException("Không tìm thấy token"));
+    // VERIFY TOKEN
+    public String confirmToken(String tokenString) {
+        // Lấy thông tin của token
+        Token token = tokenService.getToken(tokenString).orElseThrow(() ->
+                new NotFoundException("Không tìm thấy token")
+        );
 
-        // Kiểm tra xem token đã được kích hoạt hay chưa
-        if (confirmationToken.getConfirmedAt() != null) {
-            throw new IllegalStateException("Tài khoản đã được kích hoạt");
+        // Xem token đã được confirm hay chưa
+        if (token.getConfirmedAt() != null) {
+            throw new BadRequestException("Token đã được xác thực");
         }
 
-        // Lấy ra thời gian hết hạn token
-        LocalDateTime expiredAt = confirmationToken.getExpiresAt();
-
-        // Kiểm tra token đã hết hạn hay chưa
+        // Xem token đã hết hạn chưa
+        LocalDateTime expiredAt = token.getExpiresAt();
         if (expiredAt.isBefore(LocalDateTime.now())) {
-            throw new IllegalStateException("Token đã hết hạn");
+            throw new BadRequestException("Token đã hết thời gian");
         }
 
-        // Set thời gian kích hoạt của token
-        tokenService.setConfirmedAt(token);
+        // Active token
+        tokenService.setConfirmedAt(tokenString);
 
-        // Kích hoạt user
-        enableUser(confirmationToken.getUser().getEmail());
+        // Active user
+        userService.enableUser(token.getUser().getEmail());
 
         return "confirmed";
-    }
-
-    public void enableUser(String email) {
-        userRepository.enableUser(email);
     }
 }

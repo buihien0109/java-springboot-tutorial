@@ -1,7 +1,7 @@
 package com.example.basic.controller;
 
+import com.example.basic.entity.User;
 import com.example.basic.repository.UserRepository;
-import com.example.basic.security.UserDetailsCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,8 +26,8 @@ public class WebController {
     // Vào trang profile -> Cần quyền USER
     @GetMapping("/profile")
     public String getProfilePage(Model model) {
-        UserDetailsCustom user = (UserDetailsCustom) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("user", user.getUser());
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", user);
         return "profile";
     }
 

@@ -14,7 +14,7 @@ btnLogin.addEventListener("click", async function() {
         let email = emailEl.value;
         let password = passwordEl.value;
 
-        await axios.post("/auth/login", {
+        await axios.post("/api/auth/login", {
             email : email,
             password : password
         })
@@ -36,13 +36,16 @@ btnRegister.addEventListener("click", async function (){
         let email = r_emailEl.value;
         let password = r_passwordEl.value;
 
-        await axios.post("/auth/register", {
+        let res = await axios.post("/api/auth/register", {
             name : name,
             email : email,
             password : password
         })
 
-        alert("Email kích hoạt đã được gửi đến hòm thư của bạn. Vui lòng kích hoạt");
+        if(res.data) {
+            toastr.success("Email kích hoạt đã được gửi đến hòm thư của bạn. Vui lòng kích hoạt");
+        }
+
     } catch (e) {
         alert(e.response.data.message);
     }

@@ -1,5 +1,6 @@
 package com.example.basic.security;
 
+import com.example.basic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,31 +18,28 @@ import java.io.IOException;
 public class AuthorizationFilterCustom extends OncePerRequestFilter {
 
     @Autowired
-    private UserDetailsServiceCustom userDetailsServiceCustom;
+    private UserService userService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        // Lấy thông tin session
-        String userEmail = (String) request.getSession().getAttribute("TECHMASTER_SESSION");
+        // Lấy ra thông tin trong session
+        String userEmail = (String) request.getSession().getAttribute("MY_SESSION");
 
-        // Tạo object Authentication
-        UsernamePasswordAuthenticationToken authentication = getAuthentication(userEmail);
-        if (authentication == null) {
+        // Kiểm tra userEmail
+        if(userEmail == null) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        // Xác thực thành công, lưu object Authentication vào SecurityContextHolder
+        // Lấy thông tin của user dựa trên email
+        UserDetails user = userService.loadUserByUsername(userEmail);
+
+        // Tạo đối tượng authentication
+        UsernamePasswordAuthenticationToken authentication =
+                new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+
+        // Lưu vào trong context
         SecurityContextHolder.getContext().setAuthentication(authentication);
         filterChain.doFilter(request, response);
-    }
-
-    private UsernamePasswordAuthenticationToken getAuthentication(String userEmail) {
-        if (userEmail == null) {
-            return null;
-        }
-
-        UserDetails user = userDetailsServiceCustom.loadUserByUsername(userEmail);
-        return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
     }
 }

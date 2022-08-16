@@ -19,12 +19,12 @@ public class TokenService {
         tokenRepository.save(token);
     }
 
-    // Lấy thông tin token theo tên
+    // Lấy thông tin của token
     public Optional<Token> getToken(String token) {
         return tokenRepository.findByToken(token);
     }
 
-    // Set thời gian confirm token
+    // Confirm time token
     public void setConfirmedAt(String token) {
         tokenRepository.updateConfirmedAt(token, LocalDateTime.now());
     }
