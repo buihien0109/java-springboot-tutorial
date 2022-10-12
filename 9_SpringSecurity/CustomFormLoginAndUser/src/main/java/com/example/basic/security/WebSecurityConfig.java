@@ -51,6 +51,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .deleteCookies("JSESSIONID")
                     .permitAll()
                 .and()
+                    .rememberMe().key("uniqueAndSecret")
+                .and()
                     .httpBasic();
     }
 }
