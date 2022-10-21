@@ -31,7 +31,7 @@ public class FileService {
 
         Image imageDb = imageRepository.save(image);
 
-        return "/api/v1/files/" + imageDb.getId();
+        return "/api/v1/users/" + user.getId() + "/files/" + imageDb.getId();
     }
 
     // Một số validate với file

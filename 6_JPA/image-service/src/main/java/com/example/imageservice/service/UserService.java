@@ -41,26 +41,20 @@ public class UserService {
     }
 
     // Lấy thông tin của user theo id
-    public UserDto getUserById(int id) {
-        Optional<User> userOptional = userRepository.findById(id);
-
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            return modelMapper.map(user, UserDto.class);
-        }
-
-        throw new NotFoundException("user with id = " + id + " not found");
+    public UserDto getUserById(Integer id) {
+        User user = userRepository.findById(id).orElseThrow(() -> {
+            throw new NotFoundException("user with id = " + id + " not found");
+        });
+        return modelMapper.map(user, UserDto.class);
     }
 
     // Xóa user
     public void deleteUser(int id) {
-        Optional<User> userOptional = userRepository.findById(id);
-
-        if (userOptional.isEmpty()) {
+        User user = userRepository.findById(id).orElseThrow(() -> {
             throw new NotFoundException("user with id = " + id + " not found");
-        }
+        });
 
-        userRepository.delete(userOptional.get());
+        userRepository.delete(user);
     }
 
     // Tạo user mới
@@ -83,13 +77,10 @@ public class UserService {
 
     // Cập nhật thông tin của user
     public UserDto updateUser(int id, UpdateUserRequest request) {
-        Optional<User> userOptional = userRepository.findById(id);
-
-        if (userOptional.isEmpty()) {
+        User user = userRepository.findById(id).orElseThrow(() -> {
             throw new NotFoundException("user with id = " + id + " not found");
-        }
+        });
 
-        User user = userOptional.get();
         user.setName(request.getName());
         user.setPhone(request.getPhone());
         user.setAddress(request.getAddress());
@@ -99,15 +90,11 @@ public class UserService {
         return modelMapper.map(user, UserDto.class);
     }
 
-
+    // Upload ảnh user
     public String uploadFile(int id, MultipartFile file) throws IOException {
-        Optional<User> userOptional = userRepository.findById(id);
-
-        if (userOptional.isEmpty()) {
+        User user = userRepository.findById(id).orElseThrow(() -> {
             throw new NotFoundException("user with id = " + id + " not found");
-        }
-
-        User user = userOptional.get();
+        });
         
         // Upload file
         String filePath = fileService.uploadFile(user, file);
@@ -119,34 +106,29 @@ public class UserService {
         return filePath;
     }
 
-    // Xem file
+    // Xem ảnh
     public byte[] readFile(int id, Integer fileId) {
-        Optional<User> userOptional = userRepository.findById(id);
-
-        if (userOptional.isEmpty()) {
+        User user = userRepository.findById(id).orElseThrow(() -> {
             throw new NotFoundException("user with id = " + id + " not found");
-        }
+        });
+
         return fileService.readFile(fileId);
     }
 
     // Lấy danh sách files upload của user
     public List<String> getFiles(int id) {
-        Optional<User> userOptional = userRepository.findById(id);
-
-        if (userOptional.isEmpty()) {
+        User user = userRepository.findById(id).orElseThrow(() -> {
             throw new NotFoundException("user with id = " + id + " not found");
-        }
+        });
 
         return fileService.getFiles(id);
     }
 
     // Xóa file
     public void deleteFile(int id, Integer fileId) {
-        Optional<User> userOptional = userRepository.findById(id);
-
-        if (userOptional.isEmpty()) {
+        User user = userRepository.findById(id).orElseThrow(() -> {
             throw new NotFoundException("user with id = " + id + " not found");
-        }
+        });
 
         fileService.deleteFile(fileId);
     }

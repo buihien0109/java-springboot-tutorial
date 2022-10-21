@@ -20,9 +20,6 @@ public class Image {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "url")
-    private String url;
-
     @Column(name = "uploaded_at")
     private LocalDateTime uploadedAt;
 

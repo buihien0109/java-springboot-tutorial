@@ -5,7 +5,6 @@ import com.example.imageservice.request.CreateUserRequest;
 import com.example.imageservice.request.UpdateUserRequest;
 import com.example.imageservice.service.UserService;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
